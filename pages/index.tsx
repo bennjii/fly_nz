@@ -1,50 +1,30 @@
 
 import Head from 'next/head'
+import Router from 'next/router'
+
 import styles from '@styles/Home.module.css'
 
+import Header from '@components/header'
 import Button from '@components/button'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-import { Router } from 'next/router'
+import Footer from '@components/footer'
 
 export default function Home() {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Create Next TypeScript App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <div className={styles.header}>
-        <div>
-          <div className={styles.headerIcon}>
-            <FontAwesomeIcon icon={faPaperPlane} /> 
-
-            <h3>
-              fly
-            </h3> 
-          </div>
-
-          <div className={styles.headerLinks}>
-            <a href="">Articles</a>
-            <a href="">Advice</a>
-            <a href="">Stocks</a>
-          </div>
-        </div>
-      </div>
+      <Header title={"Home"}/>
       
       <body className={styles.mainBody}>
         <section className={styles.homeSection}>
           <h1>Fly New Zealand</h1>
-          <p>Learn better financing with us</p>
+          <p>Learn better financing with us, wherever you are</p>
 
-          <Button title={"Label"} router={Router} onClick={(e, callback) => {
+          <Button title={"Get Started"} router={Router} onClick={(e, callback) => {
             callback();
           }}></Button>
         </section>
       </body>  
-         
+
+      <Footer />
     </div>
   )
 }

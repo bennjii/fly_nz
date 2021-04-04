@@ -3,10 +3,11 @@
     color: #262231;
     font-size: 1rem;
 
-    padding: .8rem 4.5rem;
+    padding: .5rem 1rem;
     background-color: #fff;
 
-    border-radius: 5px;
+    border-radius: 55px;
+    width: fit-content;
 
     font-weight: 400;
     box-shadow: #26223110 0px 1px 2px;
@@ -14,7 +15,6 @@
 
 .button:focus {
     border: 2px solid dodgerblue;
-    margin: -1px;
     outline: none;
 }
 
