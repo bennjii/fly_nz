@@ -1,0 +1,35 @@
+.button {
+    border: 1px solid #d8dbde;
+    color: #262231;
+    font-size: 1rem;
+
+    padding: .8rem 4.5rem;
+    background-color: #fff;
+
+    border-radius: 5px;
+
+    font-weight: 400;
+    box-shadow: #26223110 0px 1px 2px;
+}
+
+.button:focus {
+    border: 2px solid dodgerblue;
+    outline: none;
+}
+
+.hoverButton {
+    border-color: #bab8c2;
+    background-color: #fafbfb;
+    cursor: pointer;
+}
+
+.buttonDisabled {
+    border-color: #e9ebed;
+    background-color: #fafbfb;
+    color: #c3c8cd;
+}
+
+.buttonEnabled {
+    background-color: #1d1929;
+    color: #e5e5e6;
+}

@@ -2,8 +2,11 @@
 import Head from 'next/head'
 import styles from '@styles/Home.module.css'
 
+import Button from '@components/button'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { Router } from 'next/router'
 
 export default function Home() {
   return (
@@ -26,13 +29,21 @@ export default function Home() {
           <div className={styles.headerLinks}>
             <a href="">Articles</a>
             <a href="">Advice</a>
-          </div>  
+            <a href="">Stocks</a>
+          </div>
         </div>
       </div>
       
       <body className={styles.mainBody}>
-        
-      </body>
+        <section className={styles.homeSection}>
+          <h1>Fly New Zealand</h1>
+          <p>Learn better financing with us</p>
+
+          <Button title={"Label"} router={Router} onClick={(e, callback) => {
+            callback();
+          }}></Button>
+        </section>
+      </body>  
          
     </div>
   )

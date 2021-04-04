@@ -13,4 +13,24 @@ a {
 
 * {
   box-sizing: border-box;
+  font-family: "guillon";
+}
+
+
+@font-face {
+  font-family: "guillon";
+  src: url("../public/guillon_reg.woff2");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "guillon";
+  src: url("../public/guillon_demi.woff2");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "guillon";
+  src: url("../public/guillon_bold.woff2");
+  font-weight: 800;
 }
