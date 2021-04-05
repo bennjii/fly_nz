@@ -24,7 +24,8 @@ export default function Home() {
         </section>
       </body>  
 
-      <Footer />
+      <Footer />  
     </div>
   )
 }
+

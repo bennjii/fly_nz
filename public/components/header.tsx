@@ -8,7 +8,7 @@ import { faCircleNotch, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { Router, SingletonRouter } from 'next/router'
 import Link from 'next/link'
 
-export const Footer: React.FC<{ title: string }> = ({ title }) => {
+export const Header: React.FC<{ title: string }> = ({ title }) => {
     return (
         <div className={styles.header}>
              <Head>
@@ -33,9 +33,9 @@ export const Footer: React.FC<{ title: string }> = ({ title }) => {
                     <a>Advice</a>
                     </Link>
 
-                    <Link href={"/stocks"}>
-                    <a>Stocks</a>
-                    </Link>
+
+                    <a href="/stocks">Stocks</a>
+
 
                     <Link href={"/articles"}>
                     <a>Articles</a>
@@ -46,4 +46,4 @@ export const Footer: React.FC<{ title: string }> = ({ title }) => {
     )
 }
 
-export default Footer
+export default Header

@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 import { SingletonRouter } from 'next/router'
+import { Icon } from 'react-feather';
 
-export const Button: React.FC<{ title: string, active?: boolean, redirect?: string | never, router?: any | never, onClick?: Function, disabled?: boolean }> = ({ title, active, redirect, router, onClick, disabled }) => {
+export const Button: React.FC<{ title: string, Icon?: Icon, active?: boolean, redirect?: string | never, router?: any | never, onClick?: Function, disabled?: boolean }> = ({ title, Icon, active, redirect, router, onClick, disabled }) => {
     const [ buttonState, setButtonState ] = useState({
         active: false,
         hovered: false,
@@ -42,6 +43,13 @@ export const Button: React.FC<{ title: string, active?: boolean, redirect?: stri
             onMouseLeave={() => setButtonState({ ...buttonState, hovered: false })}
             disabled={disabled}
         >
+            {
+                (Icon) ?
+                <Icon size={21} color={"#fdfdfd"} strokeWidth={1.5} />
+                :
+                <></>
+            }
+            
             {
                 (!buttonState.activated)
                 ?
