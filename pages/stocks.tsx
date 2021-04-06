@@ -28,7 +28,7 @@ export default function Stocks() {
       // \/  Contrapositive
       if(!(ref?.data.length !== undefined && ref !== null && ref !== undefined && ref !== [] && ref !== 'null' && ref !== 'undefined')) {
         // Invalid Data
-        const ret = await axios.get(`https://cloud.iexapis.com/stable/ref-data/iex/symbols?token=pk_a1feb5ae49654f7cb82aaa9bd1fa3a77`);
+        const ret = await axios.get(`https://cloud.iexapis.com/stable/ref-data/symbols?token=pk_a1feb5ae49654f7cb82aaa9bd1fa3a77`);
         console.log(ret);
         localStorage.setItem('data-ref', JSON.stringify(ret));
       }

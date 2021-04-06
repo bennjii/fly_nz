@@ -24,7 +24,7 @@ export const Search: React.FC<{ callback: Function }> = ({ callback }) => {
     // Update Search Symbols Dynamically.
 
     const [ focused, setFocused ] = useState(false);
-    const [ results, setResults ] = useState(((process.browser) ? JSON.parse(localStorage.getItem('data-ref')).data : null));  
+    const [ results, setResults ] = useState(((process.browser && localStorage.getItem('data-ref')) ? JSON.parse(localStorage.getItem('data-ref')).data : null));  
 
     return (
         <div className={`${styles.search} ${(focused) ? styles.searchFocused : styles.searchUnFocused }`}>
@@ -88,8 +88,9 @@ export const Search: React.FC<{ callback: Function }> = ({ callback }) => {
                                         ss.push(e);
 
                                         return (
-                                            <div key={`ss${index}`} className={(searchSymbols[searchIndex].symbol == e.symbol) ? styles.selected : styles.deSelected}>
-                                                <h5>{e.symbol}</h5>
+                                            <div key={`ss${index}`} className={(searchSymbols[searchIndex]) && (searchSymbols[searchIndex].symbol == e.symbol) ? styles.selected : styles.deSelected}>
+                                                <h5>{e.symbol} - {e.name}</h5>
+                                                <p>{(e.type == 'cs') ? 'Common Stock' : e.type}&nbsp; |&nbsp; {e.exchange}&nbsp; |&nbsp; {e.region}</p>
                                             </div>
                                         )
                                     }
