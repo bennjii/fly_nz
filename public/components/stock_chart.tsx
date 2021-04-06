@@ -9,8 +9,6 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
 
     const labels = data.map(e => e.label);
     const close = data.map(e => e.close);
-    
-    console.log(close);
 
     const positive = stockData.change >= 0;
 
