@@ -2,15 +2,11 @@ import React, { useEffect, useState } from 'react'
 import styles from '@styles/Stocks.module.css'
 
 import { Search as SearchIcon } from 'react-feather'
-import Head from 'next/head'
-import Link from 'next/link'
-
-import Button from '@components/button'
 import axios from 'axios'
-import { resourceLimits } from 'node:worker_threads'
-import { isBuffer } from 'node:util'
 
-export const Search: React.FC<{ callback: Function }> = ({ callback }) => {
+import token from '@components/token'
+
+export const Search: React.FC<{ stockInfo: Function, chartInfo: Function }> = ({ stockInfo, chartInfo }) => {
     const [ query, setQuery ] = useState("");
     const [ value, setValue ] = useState("");
 
@@ -71,13 +67,20 @@ export const Search: React.FC<{ callback: Function }> = ({ callback }) => {
                         if(e.nativeEvent.key == "Enter") 
                         {
                             debounce(async () => {
-                                await axios.get(`https://cloud.iexapis.com/stable/stock/${value}/quote?token=pk_a1feb5ae49654f7cb82aaa9bd1fa3a77`)
+                                await axios.get(`https://cloud.iexapis.com/stable/stock/${value}/quote?token=${token}`)
                                 .then((res) => {
                                     console.log(res);
     
-                                    callback(res);
+                                    stockInfo(res);
                                 });
-                            }, 2500)
+
+                                await axios.get(`https://cloud.iexapis.com/stable/stock/${value}/chart/1y?token=${token}`)
+                                .then((res) => {
+                                    console.log(res);
+    
+                                chartInfo(res);
+                                });
+                            }, 0)
                         }
                     }}
                 />
