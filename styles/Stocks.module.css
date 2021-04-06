@@ -227,7 +227,7 @@
     background-color: var(--background-dark);
 
     position: absolute;
-    top: calc(100% - 2px);
+    top: calc(100%);
 
     border-radius: 5px;
     border-top-left-radius: 0px;

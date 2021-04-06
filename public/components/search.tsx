@@ -8,6 +8,7 @@ import Link from 'next/link'
 import Button from '@components/button'
 import axios from 'axios'
 import { resourceLimits } from 'node:worker_threads'
+import { isBuffer } from 'node:util'
 
 export const Search: React.FC<{ callback: Function }> = ({ callback }) => {
     const [ query, setQuery ] = useState("");
@@ -24,7 +25,18 @@ export const Search: React.FC<{ callback: Function }> = ({ callback }) => {
     // Update Search Symbols Dynamically.
 
     const [ focused, setFocused ] = useState(false);
-    const [ results, setResults ] = useState(((process.browser && localStorage.getItem('data-ref')) ? JSON.parse(localStorage.getItem('data-ref')).data : null));  
+    const [ results, setResults ] = useState(((process.browser && localStorage.getItem('data-ref')) ? JSON.parse(localStorage.getItem('data-ref')).data : []));
+    
+    if(process.browser) {
+        useEffect(() => {
+            setResults(
+            (localStorage.getItem('data-ref') !== null && localStorage.getItem('data-ref') !== undefined) ?
+                JSON.parse(localStorage.getItem('data-ref')).data
+            :
+                []
+            );
+        }, [localStorage.getItem('data-ref')])
+    }
 
     return (
         <div className={`${styles.search} ${(focused) ? styles.searchFocused : styles.searchUnFocused }`}>
