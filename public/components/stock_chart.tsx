@@ -22,7 +22,7 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                     datasets: [{
                         label: 'CLOSE',
                         data: close,
-                        backgroundColor: positive ? '#3a514d' : '#4d383e',
+                        backgroundColor: positive ? '#3a514d70' : '#4d383e70',
                         borderColor: positive ? '#47bc85' : '#cc4d48',
                         borderWidth: 1,
                         tension: 0.2,
@@ -74,6 +74,7 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                             beginAtZero: false,
                             gridLines: {
                               drawTicks: false,
+                              borderColor: '#ffffff'
                             },
                           }],
                       

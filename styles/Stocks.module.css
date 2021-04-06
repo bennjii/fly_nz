@@ -311,7 +311,7 @@
     position: relative;
     overflow: hidden;
 
-    background-color: #38393e;
+    background-color: var(--background-dark);
     border-radius: 5px;
     margin-top: 1rem;
 
