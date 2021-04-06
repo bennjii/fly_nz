@@ -74,7 +74,14 @@ export default function Stocks() {
                                 </div>
                             </div>
                             
-                            <p>{ stockInfo?.data?.previousClose } { stockInfo?.data?.change >= 0 ? "+" : "-" } {stockInfo?.data?.change}</p>
+                            <div className={(stockInfo?.data?.changePercent >= 0) ? styles.changePositive : styles.changeNegative}>
+                                
+                                { stockInfo?.data?.latestPrice } 
+                                &nbsp;&nbsp;
+                                {/* { stockInfo?.data?.change >= 0 ? "+" : "-" } */}
+                                { stockInfo?.data?.changePercent >= 0 ? <ChevronUp size={18}/> : <ChevronDown size={18}/> }
+                                {stockInfo?.data?.change}
+                            </div>
                         </div>
                     </div>
 

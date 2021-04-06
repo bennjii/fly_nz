@@ -24,8 +24,12 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                         data: close,
                         backgroundColor: positive ? '#3a514d' : '#4d383e',
                         borderColor: positive ? '#47bc85' : '#cc4d48',
-                        borderWidth: 2,
-                        
+                        borderWidth: 1,
+                        tension: 0.2,
+
+                        pointBorderColor: positive ? '#47bc85' : '#cc4d48',
+                        pointBackgroundColor: positive ? '#47bc85' : '#cc4d48',
+                        pointHoverBorderWidth: 2,
                         
                         fill: true
                     }]
@@ -82,7 +86,6 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                               padding: 20,
                               labelOffset: 20,
                               callback(value, index) {
-                                console.log(value, index);
                                 if (index % 5 == 0) return value;
                                 return '';
                               },
