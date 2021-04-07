@@ -48,7 +48,7 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                             return data['datasets'][0]['data'][tooltipItem['index']];
                           }
                         },
-                        backgroundColor: '#141419',
+                        backgroundColor: '#222429',
                         titleFontSize: 12,
                         titleFontColor: '#fdfdfd',
                         bodyFontColor: '#55575a',

@@ -10,6 +10,7 @@ import Button from '@components/button'
 import Search from '@components/search'
 import StockHeader from '@components/stock_header';
 import StockChart from '@components/stock_chart'
+import token from '@components/token'
 
 export default function Stocks() {
     const [ stockInfo, setStockInfo ] = useState(null);
@@ -25,7 +26,7 @@ export default function Stocks() {
         // \/  Contrapositive
         if(!(ref?.data.length !== undefined && ref !== null && ref !== undefined && ref !== [] && ref !== 'null' && ref !== 'undefined')) {
         // Invalid Data
-        const ret = await axios.get(`https://cloud.iexapis.com/stable/ref-data/symbols?token=pk_a1feb5ae49654f7cb82aaa9bd1fa3a77`);
+        const ret = await axios.get(`https://cloud.iexapis.com/stable/ref-data/symbols?token=${token}`);
         console.log(ret);
         localStorage.setItem('data-ref', JSON.stringify(ret));
         }
@@ -61,7 +62,9 @@ export default function Stocks() {
                     <div>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center', justifyContent: 'space-between' }}>
                             <h1>{ stockInfo?.data?.symbol ?? "..." }</h1>
-                            <Button title={"Add to Watchlist"} Icon={Plus}></Button>
+                            <Button title={"Add to Watchlist"} Icon={Plus} onClick={(e, callback) => {
+                                callback();
+                            }}></Button>
                         </div>
                         
                         <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center', justifyContent: 'space-between' }}>
