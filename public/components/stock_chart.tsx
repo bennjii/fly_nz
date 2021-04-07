@@ -34,7 +34,7 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                 }} 
 
                 options={{
-                    maintainAspectRatio: true,
+                    maintainAspectRatio: false,
                     aspectRatio: 3.5,
                     legend: {
                         display: false
@@ -102,8 +102,8 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                     
                 }}
 
-                width={null}
-                height={null}
+                // width={null}
+                // height={null}
             />
         </div>
     )

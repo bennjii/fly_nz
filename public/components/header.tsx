@@ -11,7 +11,7 @@ import Link from 'next/link'
 export const Header: React.FC<{ title: string }> = ({ title }) => {
     return (
         <div className={styles.header}>
-             <Head>
+            <Head>
                 <title>{title}</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>

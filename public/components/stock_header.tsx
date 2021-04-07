@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import styles from '@styles/Stocks.module.css'
 
+import Head from 'next/head'
 import { Search as SearchIcon, BarChart2 } from 'react-feather'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,6 +24,10 @@ export const StockHeader: React.FC<{ page: 'home' | 'search' | 'stocks' | 'news'
             <FontAwesomeIcon icon={faPaperPlane} /> 
         </Link>
         
+        <Head>
+            <title>FLY Stocks</title>
+            <link rel="icon" href="/favicon.ico" />
+        </Head>
 
         <div>
             <Link href={'/search'}>
