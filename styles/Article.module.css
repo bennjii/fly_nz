@@ -92,3 +92,127 @@
     border-color: #bab8c2;
     background-color: #fafbfb;
 }
+
+.article {
+    flex: 1 1;
+    width: 100%;
+    padding: 42px 0px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.article section:not(:first-of-type) {
+    width: 58%;
+    margin: .8rem auto;
+}
+
+.articleHeader {
+    --color: #fdfdfd;
+    --background-light: #222429;
+    --background-dark: rgb(20, 20, 25); 
+    --border-color: #282a2e;
+
+    border-bottom: 2px solid var(--background-light);
+    background-color: var(--background-dark);
+    color: var(--color);
+
+    width: 100%;
+    margin: 0;
+
+    padding: 12rem 0rem 1rem 0rem;
+}
+
+.articleHeader h1 {
+    font-size: 5rem;
+    font-weight: 900;
+
+    margin: 0;
+}
+
+.articleHeader > div {
+    width: 58%;
+    margin: .8rem auto;
+}
+
+.articleBody {
+    color: #222429;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.articleBody h1 {
+    font-weight: 600;
+    font-size: 2rem;
+    font-family: "guillon", sans-serif;
+    line-height: 1.23em;
+    
+    margin-bottom: 1rem;
+}
+
+.articleBody h2 {
+    font-weight: 600;
+    font-size: 1.4rem;
+
+    margin: 6px 0px;
+    font-family: "guillon", sans-serif;
+}
+
+.articleBody h3 {
+    font-weight: 400;
+    font-size: 1.2rem;
+
+    margin: .4rem 0rem;
+    font-family: "public sans", sans-serif;
+}
+
+.articleBody p {
+    opacity: 0.9;
+    text-align: justify;
+    margin: .6rem 0rem;
+
+    font-size: .95rem;
+    line-height: 1.2rem;
+}
+
+.articlePageBreak {
+    height: 15px;
+    align-self: center;
+    justify-self: center;
+
+    opacity: 0.5;
+    margin: 1rem 0rem;
+}
+
+.pageLine {
+    display: flex;
+    flex-direction: row;
+    
+    align-items: center;
+    margin: 0;
+}
+
+.pageLine svg {
+    height: 1rem;
+}
+
+.pageLine hr {
+    background-color: #222429;
+    border: none;
+
+    width: 100%;
+    height: 1px;
+
+    margin: 0;
+
+    border-radius: 5px;
+    max-height: 1px;
+}
+
+.invisivblePageLine {
+    opacity: 0;
+}
+
+.visiblePageLine {
+    opacity: .3;
+}

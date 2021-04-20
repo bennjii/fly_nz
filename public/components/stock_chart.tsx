@@ -5,9 +5,7 @@ import token from '@components/token'
 import { Line } from 'react-chartjs-2'
 
 export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, stockData }) => {
-    //if(!stockData || !data) return <></>;
-
-    const labels = data.map(e => e.label);
+	const labels = data.map(e => e.label);
     const close = data.map(e => e.close);
 
     const positive = stockData.change >= 0;
