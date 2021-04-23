@@ -134,4 +134,5 @@ const debounce = (callback, time) => {
     }
 }
 
+export const foo = 'foo';
 export default Search

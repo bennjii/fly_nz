@@ -7,7 +7,7 @@ import styles from '@styles/Stocks.module.css'
 import { Search as SearchIcon, BarChart2, Plus, ChevronDown, ChevronUp } from 'react-feather'
 
 import Button from '@components/button'
-import Search from '@components/search'
+import { Search } from '@components/search'
 import StockHeader from '@components/stock_header';
 import StockChart from '@components/stock_chart'
 import token from '@components/token'
