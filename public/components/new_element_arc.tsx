@@ -3,7 +3,7 @@ import styles from '@styles/Article.module.css'
 
 import { Plus } from 'react-feather'
 
-export const NewElement: React.FC<{ index: number, callmap: { content: string, type: string }[] }> = ({ index, callmap }) => {
+export const NewElement: React.FC<{ index: number, callmap: { content: string, type: string }[], callback: Function }> = ({ index, callmap, callback }) => {
     const [ hovered, setHovered ] = useState(false);
 
     return ( 
@@ -11,6 +11,14 @@ export const NewElement: React.FC<{ index: number, callmap: { content: string, t
             className={`${styles.pageLine} ${hovered ? styles.visiblePageLine : styles.invisivblePageLine}`} 
             onMouseOver={() => setHovered(true)} 
             onMouseLeave={() => setHovered(false)}
+            onClick={() => {
+                const newContent = {
+                    type: "p",
+                    content: '...'
+                };
+                
+                callback([...callmap.slice(0, index), newContent, ...callmap.slice(index, callmap.length)]);
+            }}
         > 
             <Plus strokeWidth={1.5}/> 
             <hr/>
