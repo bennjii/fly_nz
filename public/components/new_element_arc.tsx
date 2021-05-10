@@ -14,7 +14,8 @@ export const NewElement: React.FC<{ index: number, callmap: { content: string, t
             onClick={() => {
                 const newContent = {
                     type: "p",
-                    content: '...'
+                    content: '...',
+                    input: false
                 };
                 
                 callback([...callmap.slice(0, index), newContent, ...callmap.slice(index, callmap.length)]);

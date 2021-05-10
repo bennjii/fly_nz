@@ -19,11 +19,13 @@ export default function Home() {
     const [ articleData, setArticleData ] = useState([
         {
             type: "h1",
-            content: 'Taxation'
+            content: 'Taxation',
+            input: false
         },
         {
             type: "p",
-            content: 'Taxation or Tax is the way in which the government charges the general public money, which in-turn is invested into infrastructure, funding hospitals and much more... \n This is important as without it, our society would not be able to function in as humane way as it does now. However, these benefits come at a cost to the population - namely through tax. \n\n The most common forms of tax for the general public being: GST & Income Tax.'
+            content: 'Taxation or Tax is the way in which the government charges the general public money, which in-turn is invested into infrastructure, funding hospitals and much more... \n This is important as without it, our society would not be able to function in as humane way as it does now. However, these benefits come at a cost to the population - namely through tax. \n\n The most common forms of tax for the general public being: GST & Income Tax.',
+            input: false
         }
     ]);
 
@@ -31,7 +33,7 @@ export default function Home() {
         <div className={styles.container}>
             <Header title={"Home"}/>
             
-            <body className={articleSyles.article}>
+            <div className={articleSyles.article}>
                 <section className={articleSyles.articleHeader}>
                     <div>
                         <h1>What are Taxes?</h1>
@@ -39,77 +41,71 @@ export default function Home() {
                 </section>
 
                 <section className={articleSyles.articleBody}>
-                    {/* <h1>Header 1</h1>
-                    <h2>Header 2</h2>
-                    <h3>Header 3</h3>
-                    <p>Normal Text</p>
-                    <br/>
-                    <p>line break</p>
-                    <br/> <br/>
-                    <p>paragraph break</p>
-                    <PageBreak />
-                    
-                    <p>section break</p> */}
-
                     {
                         articleData.map((element, index) => {
                             return (
-                                <div>
-                                    {
-                                        (index == 0) && <NewElement index={index} callmap={articleData} callback={setArticleData}/>
-                                    }
+                                <div key={index}>
+                                    { (index == 0) && <NewElement index={index} callmap={articleData} callback={setArticleData}/> }
 
+                                    <div onClick={() => {
+                                        const newData = articleData;
+                                        newData[index].input = !newData[index].input;
+                                        setArticleData(newData);
+                                    }}>
                                     {
+                                        element.input ?
+                                        <input placeholder={element.content} />
+                                        :
                                         (() => {
-                                                switch(element.type) {
-                                                    case "h1":
-                                                        return (
-                                                            <h1>
-                                                                {
-                                                                    element.content
-                                                                }
-                                                            </h1> 
-                                                        )
-                                                    case "h2":
-                                                        return (
-                                                            <h2>
-                                                                {
-                                                                    element.content
-                                                                }
-                                                            </h2> 
-                                                        )
-                                                    case "h3":
-                                                        return (
-                                                            <h3>
-                                                                {
-                                                                    element.content
-                                                                }
-                                                            </h3> 
-                                                        )
-                                                    case "p":
-                                                        return (
-                                                            <p>
-                                                                {
-                                                                    element.content
-                                                                }
-                                                            </p> 
-                                                        )
-                                                    case "pageBreak":
-                                                        return (
-                                                            <PageBreak />
-                                                        )
-                                                    default:
-                                                        return (
-                                                            <p>
-                                                                {
-                                                                    element.content
-                                                                }
-                                                            </p> 
-                                                        )
-                                            }
+                                            switch(element.type) {
+                                                case "h1":
+                                                    return (
+                                                        <h1>
+                                                            {
+                                                                element.content
+                                                            }
+                                                        </h1> 
+                                                    )
+                                                case "h2":
+                                                    return (
+                                                        <h2>
+                                                            {
+                                                                element.content
+                                                            }
+                                                        </h2> 
+                                                    )
+                                                case "h3":
+                                                    return (
+                                                        <h3>
+                                                            {
+                                                                element.content
+                                                            }
+                                                        </h3> 
+                                                    )
+                                                case "p":
+                                                    return (
+                                                        <p>
+                                                            {
+                                                                element.content
+                                                            }
+                                                        </p> 
+                                                    )
+                                                case "pageBreak":
+                                                    return (
+                                                        <PageBreak />
+                                                    )
+                                                default:
+                                                    return (
+                                                        <p>
+                                                            {
+                                                                element.content
+                                                            }
+                                                        </p> 
+                                                    )
                                             
-                                        })()
+                                        }})()
                                     }
+                                    </div>
 
                                     <NewElement index={index+1} callmap={articleData} callback={setArticleData} />
                                 </div>
@@ -117,7 +113,7 @@ export default function Home() {
                         })
                     }
                 </section>
-            </body>  
+            </div>  
 
             <Footer />  
         </div>
