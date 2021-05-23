@@ -147,6 +147,7 @@
     font-family: "guillon", sans-serif;
     line-height: 1.23em;
     
+    margin-top: 1rem !important;
     margin-bottom: 1rem;
 }
 
@@ -175,6 +176,51 @@
     line-height: 1.2rem;
 }
 
+.articleInput_h1 {
+    font-weight: 600 !important;
+    font-size: 2rem !important;
+    font-family: "guillon", sans-serif !important;
+    line-height: 1.23em !important;
+    
+    margin-bottom: 1rem !important;
+    margin-top: 1rem !important;
+}
+
+.articleInput_h2 {
+    font-weight: 600 !important;
+    font-size: 1.4rem !important;
+
+    margin: 6px 0px !important; 
+    font-family: "guillon", sans-serif !important;
+}
+
+.articleInput_h3 {
+    font-weight: 400 !important;
+    font-size: 1.2rem !important;
+
+    margin: .4rem 0rem !important;
+    font-family: "public sans", sans-serif !important;
+}
+
+.articleInput_p {
+    opacity: 0.9 !important;
+    text-align: justify !important;
+    margin: .6rem 0rem !important;
+
+    font-size: .95rem !important;
+    line-height: 1.2rem !important;
+
+    outline: none !important;
+    border: none !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    flex: 1 !important;
+
+    white-space: pre-wrap !important;
+}
+
 .articlePageBreak {
     height: 15px;
     align-self: center;
@@ -182,6 +228,45 @@
 
     opacity: 0.5;
     margin: 1rem 0rem;
+
+    width: 100%;
+}
+
+.articleInput {
+    display: flex;
+    width: 100%;
+
+    background-color: transparent;
+
+    opacity: 0.9;
+    text-align: justify;
+
+    font-size: .95rem;
+    line-height: 1.2rem;
+
+    padding: 0;
+
+    outline: none;
+    border: none;
+
+    font-family: 'Public Sans';
+}
+
+.currentInput {
+    height: auto;
+    width: 5px;
+
+    background-color: transparent
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: row;
+
+    height: 100%;
+    width: 100%;
+
+    border-radius: 5px;
 }
 
 .pageLine {
@@ -190,6 +275,10 @@
     
     align-items: center;
     margin: 0;
+}
+
+.pageLine:hover {
+    cursor: pointer;
 }
 
 .pageLine svg {
@@ -215,4 +304,51 @@
 
 .visiblePageLine {
     opacity: .3;
+}
+
+.inputFieldContainer {
+    display: flex;
+    position: relative;
+
+    align-items: center;
+
+    transition: .55s ease all;
+}
+
+.relativeEditor {
+    position: absolute;
+    left: -30px;
+}
+
+.relativeEditor:hover {
+    cursor: pointer;
+}
+
+.inputModule {
+    display: flex;
+}
+
+.editorSettings {
+    position: absolute;
+    bottom: 20px;
+    border: 0px solid #22242921;
+
+    background-color: #fdfdfd;
+    border-radius: 5px;
+    padding: .3rem .8rem;
+
+    width: 130px;
+    box-shadow: #13151b63 0px 2px 6px;
+}
+
+.editorSettings p {
+    width: 100%;
+    background-color: #fafbfb;
+
+    border-radius: 5px;
+    padding: .2rem .5rem;
+}
+
+.editorSettings p:hover {
+    background-color: #22242918;
 }

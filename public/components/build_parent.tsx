@@ -1,0 +1,51 @@
+import React, { useContext, useEffect, useState } from 'react'
+import styles from '@styles/Stocks.module.css'
+
+import { Search as SearchIcon } from 'react-feather'
+import axios from 'axios'
+
+import token from '@components/token'
+import PageBreak from './page_break'
+import BuildInput from './build_input'
+import BuildValue from './build_value'
+import { ClientContext } from './context'
+
+export const BuildParent: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function }> = ({ content, callback }) => {
+    const { articleData, setArticleData } = useContext(ClientContext);
+    const [ itemState, setItemState ] = useState(articleData[content[0]]);
+
+    useEffect(() => {
+        console.log(itemState)
+    }, [itemState])
+
+    return (
+        <div className={styles.inputModule} onClick={(e) => {
+            console.log(e.target)
+            //@ts-expect-error
+            if(e.target.tagName !== 'svg' && e.target.tagName !== 'P') setItemState({ ...itemState, input: true });
+        }}>
+        {
+            itemState.input ?
+            <BuildInput content={[content[0], itemState]} callback={setItemState} onLeave={(value) => setArticleData([...articleData.slice(0, content[0]), value, ...articleData.slice(content[0]+1, articleData.length)])}/>
+            :
+            <BuildValue content={[content[0], itemState]} callback={setItemState} />
+        }
+        </div>
+    )
+}
+
+let lastUpdate = new Date().getTime();
+
+const debounceStorageUpdate = (data, callback) => {
+    console.log(new Date().getTime() - lastUpdate);
+    
+    if(new Date().getTime() - lastUpdate >= 2500) {
+        callback(data);
+
+        lastUpdate = new Date().getTime();
+    }else {
+        setTimeout(() => debounceStorageUpdate(data, callback), 2500);
+    }
+}   
+
+export default BuildParent

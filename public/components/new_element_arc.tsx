@@ -6,6 +6,8 @@ import { Plus } from 'react-feather'
 export const NewElement: React.FC<{ index: number, callmap: { content: string, type: string }[], callback: Function }> = ({ index, callmap, callback }) => {
     const [ hovered, setHovered ] = useState(false);
 
+
+
     return ( 
         <div 
             className={`${styles.pageLine} ${hovered ? styles.visiblePageLine : styles.invisivblePageLine}`} 
@@ -15,7 +17,7 @@ export const NewElement: React.FC<{ index: number, callmap: { content: string, t
                 const newContent = {
                     type: "p",
                     content: '...',
-                    input: false
+                    input: true
                 };
                 
                 callback([...callmap.slice(0, index), newContent, ...callmap.slice(index, callmap.length)]);
