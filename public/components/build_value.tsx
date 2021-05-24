@@ -42,6 +42,7 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                         <p onClick={() => { callback({ ...content[1], type: 'h3' }); setItemSettings(false) }}>Header 3</p>
                         <p onClick={() => { callback({ ...content[1], type: 'p' }); setItemSettings(false) }}>Text</p>
                         <p onClick={() => { callback({ ...content[1], type: 'pageBreak' }); setItemSettings(false) }}>Page Break</p>
+                        <p style={{ color: '#f00f004e', backgroundColor: '#f00f000e' }} onClick={() => { callback({ }); setItemSettings(false) }}>Delete</p>
                     </div>
                 </div>
             }
@@ -51,35 +52,41 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                     setItemSettings(!itemSettings)
                 }}/>
             </div>
-            {
-                (() => {
-                    switch(data.type) {
-                        case "h1":
-                            return (
-                                <h1 dangerouslySetInnerHTML={{ __html: clone }} /> 
-                            )
-                        case "h2":
-                            return (
-                                <h2 dangerouslySetInnerHTML={{ __html: clone }} />
-                            )
-                        case "h3":
-                            return (
-                                <h3 dangerouslySetInnerHTML={{ __html: clone }} />
-                            )
-                        case "p":
-                            return (
-                                <p dangerouslySetInnerHTML={{ __html: clone }} />
-                            )
-                        case "pageBreak":
-                            return (
-                                <PageBreak />
-                            )
-                        default:
-                            return (
-                                <p dangerouslySetInnerHTML={{ __html: clone }} /> 
-                            )
-                }})()
-            }
+            <div className={styles.relativeEditorContent} onClick={(e) => {
+                console.log(e.target)
+                //@ts-expect-error
+                if(e.target.tagName !== 'svg' && e.target.tagName !== 'P') setItemState({ ...itemState, input: true });
+            }}>
+                {
+                    (() => {
+                        switch(data.type) {
+                            case "h1":
+                                return (
+                                    <h1 dangerouslySetInnerHTML={{ __html: clone }} /> 
+                                )
+                            case "h2":
+                                return (
+                                    <h2 dangerouslySetInnerHTML={{ __html: clone }} />
+                                )
+                            case "h3":
+                                return (
+                                    <h3 dangerouslySetInnerHTML={{ __html: clone }} />
+                                )
+                            case "p":
+                                return (
+                                    <p dangerouslySetInnerHTML={{ __html: clone }} />
+                                )
+                            case "pageBreak":
+                                return (
+                                    <PageBreak />
+                                )
+                            default:
+                                return (
+                                    <p dangerouslySetInnerHTML={{ __html: clone }} /> 
+                                )
+                    }})()
+                }
+            </div>
         </div>
     )
 }

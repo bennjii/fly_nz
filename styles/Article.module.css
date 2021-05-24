@@ -352,3 +352,7 @@
 .editorSettings p:hover {
     background-color: #22242918;
 }
+
+.relativeEditorContent {
+    width: 100%;
+}
