@@ -36,3 +36,17 @@ a {
   src: url("../public/guillon_bold.woff2");
   font-weight: 800;
 }
+
+:root {
+  --header-primary: #edf2f9;
+  --header-secondary: #b9bbbe;
+
+  --text-normal: #fdfdfd;
+  --text-muted: #72767d;
+  --text-link: #00b0f4;
+  --text-positive: #4fdc7b;
+
+  --background-primary: #222429;
+  --background-secondary: #141419;
+  --background-secondary-alt: #282a2e;
+}

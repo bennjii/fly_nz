@@ -11,11 +11,28 @@ import BuildParent from '@components/build_parent'
 import { ClientContext } from '@components/context'
 
 import client from '@components/client'
+import { Router, useRouter } from 'next/router'
+
+export async function getStaticProps(context) {
+    if(client.auth.user())
+        return ({ props: client })
+    else
+        return {
+            redirect: {
+                destination: '/admin/auth',
+                permanent: false,
+            },
+        }
+}
 
 export default function Home() {
     const [ articleData, setArticleData ] = useState([ ]);
 
     const [ informationUpdated, setInformationUpdated ] = useState(false);
+
+    if(!client.auth.user()) {
+        
+    }
 
     useEffect(() => {
         console.log(articleData)
@@ -75,6 +92,10 @@ const debounceStorageUpdate = (data, callback) => {
 
     if(new Date().getTime() - lastUpdate >= 2500) {
         console.log('UPDATED!!!')
+
+        //client.from('articles')
+
+        callback(true);
 
         lastUpdate = new Date().getTime();
     }else {

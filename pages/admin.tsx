@@ -1,33 +1,51 @@
 import { useEffect, useState } from 'react' 
-
 import styles from '@styles/Home.module.css'
-import articleSyles from '@styles/Article.module.css'
 
-import Header from '@components/header'
-import Footer from '@components/footer'
+import client from '@components/client'
+import Auth from '@components/auth'
+import { AdminViewport } from '@components/admin_viewport'
 
-export default function Home() {
-    const [ articleData, setArticleData ] = useState([
-        
-    ]);
+const fetcher = (url, token) =>
+  fetch(url, {
+    method: 'GET',
+    headers: new Headers({ 'Content-Type': 'application/json', token }),
+    credentials: 'same-origin',
+  }).then((res) => res.json())
 
-    useEffect(() => {
-        console.log(articleData)
+export default function Home({ usr }) {
+    const session = client.auth.session()
+	
+	const [ cssProperties, setCssProperties ] = useState({
+		"--color-primary": "#7289da",
+		"--color-primary-rgb": "114, 137, 218"
+	}) // Fetch User prefernces
 
-        debounceStorageUpdate(articleData);
-    }, [articleData])
+	const [ user, setUser ] = useState(client.auth.user());
+	const [ authView, setAuthView ] = useState('sign_in')
+
+	useEffect(() => {
+		if(session)
+			fetcher('/api/getUser', session.access_token).then(e => {
+				setUser(e);
+			});
+		
+		const { data: authListener } = client.auth.onAuthStateChange((event, session) => {
+			setUser(client.auth.user());
+		})
+	}, []);
+
+    if(!user) 
+        return (
+            <div className={styles.container}>
+                <Auth callback={setUser}/>
+            </div>
+        )
 
     return (
         <div className={styles.container}>
-            <Header title={"Admin"}/>
-            
-            <div>
-                
-            </div>
-
-            <Footer />  
+            <AdminViewport client={client} user={user}/>
         </div>
-    )
+    ) 
 }
 
 let lastUpdate = new Date().getTime();
