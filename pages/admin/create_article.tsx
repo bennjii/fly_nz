@@ -13,18 +13,6 @@ import { ClientContext } from '@components/context'
 import client from '@components/client'
 import { Router, useRouter } from 'next/router'
 
-export async function getStaticProps(context) {
-    if(client.auth.user())
-        return ({ props: client })
-    else
-        return {
-            redirect: {
-                destination: '/admin/auth',
-                permanent: false,
-            },
-        }
-}
-
 export default function Home() {
     const [ articleData, setArticleData ] = useState([ ]);
 

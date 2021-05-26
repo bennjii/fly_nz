@@ -13,7 +13,7 @@ export default function Home() {
     <div className={styles.container}>
       <Header title={"Home"}/>
       
-      <body className={styles.mainBody}>
+      <div className={styles.mainBody}>
         <section className={styles.homeSection}>
           <h1>Fly New Zealand</h1>
           <p>Learn better financing with us, wherever you are</p>
@@ -22,7 +22,7 @@ export default function Home() {
             callback();
           }}></Button>
         </section>
-      </body>  
+      </div>  
 
       <Footer />  
     </div>
