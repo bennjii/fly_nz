@@ -4,6 +4,7 @@ import styles from '@styles/Home.module.css'
 import client from '@components/client'
 import Auth from '@components/auth'
 import { AdminViewport } from '@components/admin_viewport'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -11,6 +12,10 @@ const fetcher = (url, token) =>
     headers: new Headers({ 'Content-Type': 'application/json', token }),
     credentials: 'same-origin',
   }).then((res) => res.json())
+
+const getServerSideProps = () => {
+    console.log(SupabaseClient)
+}
 
 export default function Home({ usr }) {
     const session = client.auth.session()
@@ -34,18 +39,19 @@ export default function Home({ usr }) {
 		})
 	}, []);
 
-    if(!user) 
+    if(user) 
         return (
             <div className={styles.container}>
-                <Auth callback={setUser}/>
+                <AdminViewport client={client} user={user}/>
             </div>
-        )
-
+        ) 
+    
+    console.log(client.auth.user())
     return (
         <div className={styles.container}>
-            <AdminViewport client={client} user={user}/>
+            <Auth callback={setUser}/>
         </div>
-    ) 
+    )
 }
 
 let lastUpdate = new Date().getTime();

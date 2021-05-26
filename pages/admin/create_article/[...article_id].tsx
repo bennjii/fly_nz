@@ -11,16 +11,27 @@ import BuildParent from '@components/build_parent'
 import { ClientContext } from '@components/context'
 
 import client from '@components/client'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 export default function Home() {
     const [ articleData, setArticleData ] = useState([ ]);
-
     const [ informationUpdated, setInformationUpdated ] = useState(false);
 
-    if(!client.auth.user()) {
-        
-    }
+    const router = useRouter()
+    const { id } = router.query;
+
+    useEffect(() => {
+        console.log(router)
+
+        client
+            .from('articles')
+            .select()
+            .eq('id', id)
+            .then(e => {
+                console.log(e);
+                setArticleData(e.data);
+            });
+    }, [])
 
     useEffect(() => {
         console.log(articleData)
