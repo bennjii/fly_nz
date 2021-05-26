@@ -17,25 +17,19 @@ export default function Home() {
     const [ articleData, setArticleData ] = useState([ ]);
     const [ informationUpdated, setInformationUpdated ] = useState(false);
 
-    const router = useRouter()
-    const { id } = router.query;
-
     useEffect(() => {
-        console.log(router)
-
-        client
-            .from('articles')
-            .select()
-            .eq('id', id)
-            .then(e => {
-                console.log(e);
-                setArticleData(e.data);
-            });
+        if(process.browser)
+            client
+                .from('articles')
+                .select()
+                .eq('id', window.location.href.split('/')[window.location.href.split('/').length - 1])
+                .then(e => {
+                    console.log(e.data[0].content);
+                    setArticleData(e.data[0].content);
+                });
     }, [])
 
     useEffect(() => {
-        console.log(articleData)
-
         debounceStorageUpdate(articleData, setInformationUpdated);
     }, [articleData])
 
