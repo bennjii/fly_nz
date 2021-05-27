@@ -13,6 +13,8 @@ import { ClientContext } from '@components/context'
 import client from '@components/client'
 import { useRouter } from 'next/router'
 
+import { Check, RefreshCw } from 'react-feather'
+
 const INDEX = (process.browser) ? window.location.href.split('/')[window.location.href.split('/').length - 1] : null;
 
 export default function Home() {
@@ -52,17 +54,16 @@ export default function Home() {
         if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
 
         if(articleData) debounceStorageUpdate({ ...articleData, content: filteredData }, (e) => {
-            setArticleData(e.data[0]);
             setInformationUpdated(true)
         });
     }, [articleContent]);
 
-    useEffect(() => {
-        setInformationUpdated(false);
+    // useEffect(() => {
+    //     setInformationUpdated(false);
 
-        const filteredData = articleContent?.filter(e => e.content !== '');
-        if(articleData) debounceStorageUpdate({ ...articleData, content: filteredData }, setInformationUpdated);
-    }, [articleData])
+    //     const filteredData = articleContent?.filter(e => e.content !== '');
+    //     if(articleData) debounceStorageUpdate({ ...articleData, content: filteredData }, setInformationUpdated);
+    // }, [articleData])
 
     return (
         <div className={styles.container}>
@@ -76,11 +77,13 @@ export default function Home() {
                         {
                             informationUpdated ?
                             <div className={articleSyles.articleSynced}>
-                                Synced
+                                Synced 
+                                <Check size={18} />
                             </div>
                             :
                             <div className={articleSyles.articleSyncing}>
                                 Syncing
+                                <RefreshCw size={18} />
                             </div>
                         }
                     </div>

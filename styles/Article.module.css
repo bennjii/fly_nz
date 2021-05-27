@@ -368,17 +368,42 @@
 .articleSyncing {
     border-radius: 55px;
 
-    padding: .1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: .7rem;
+
+    padding: .5rem 1rem;
     width: auto;
 
     background-color: #f0a83c5d;
     color: #ffbb00;
 }
 
+.articleSyncing svg {
+    animation: Spin infinite 2s ease-in-out;
+}
+
+@keyframes Spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .articleSynced {
     border-radius: 55px;
 
-    padding: .1rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: .7rem;
+
+    padding: .5rem 1rem;
     width: auto;
 
     background-color: #3cf06333;

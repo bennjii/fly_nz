@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from '@styles/Article.module.css'
-
-import { Search as SearchIcon } from 'react-feather'
-import axios from 'axios'
-
-import token from '@components/token'
 
 export const BuildInput: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function, onLeave: Function }> = ({ content, callback, onLeave }) => {
     const [ index, data ] = content;
     const [ inputState, setInputState ] = useState(data); 
+    const [ saveState, setSaveState ] = useState(data.content);
 
-    const updateParent = (e) => {
-        setInputState({ ...inputState, content: e.target.value });
+    const closeAndUpdate = () => {
+        setInputState({ ...inputState, content: saveState });
+
+        onLeave({ ...inputState, content: saveState, input: false });
+        callback({  ...inputState, content: saveState, input: false });
     }
 
     const [ keyPressed, setKeyPressed ] = useState([]);
@@ -22,12 +21,11 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
                 autoFocus
                 placeholder={"Type here..."}
                 defaultValue={inputState.content}
-                onChange={updateParent}
+                onChange={(e) => setSaveState(e.target.value)}
                 rows={inputState.content.split(/\r\n|\r|\n/).length}
                 onKeyDown={(e) => {
                     if(e.code == "Enter") {
-                        onLeave({ ...inputState, input: false });
-                        callback({ ...inputState, input: false });
+                        closeAndUpdate();
                     }
 
                     setKeyPressed([ ...keyPressed, e.code ]);
