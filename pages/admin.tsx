@@ -46,7 +46,11 @@ export default function Home({ usr }) {
             </div>
         ) 
     
-    console.log(client.auth.user())
+    //console.log(client.auth.user())
+
+
+    return null;
+    
     return (
         <div className={styles.container}>
             <Auth callback={setUser}/>

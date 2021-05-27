@@ -16,7 +16,7 @@ export const NewElement: React.FC<{ index: number, callmap: { content: string, t
             onClick={() => {
                 const newContent = {
                     type: "p",
-                    content: '...',
+                    content: '',
                     input: true
                 };
                 

@@ -44,23 +44,29 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
+        if(!articleData) return;
+
         setInformationUpdated(false);
 
         const filteredData = articleContent?.filter(e => e.content !== '');
-        console.log("Filtered", filteredData);
+        if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
 
-        setArticleData({ ...articleData, content: filteredData });
+        if(articleData) debounceStorageUpdate({ ...articleData, content: filteredData }, (e) => {
+            setArticleData(e.data[0]);
+            setInformationUpdated(true)
+        });
     }, [articleContent]);
 
     useEffect(() => {
         setInformationUpdated(false);
-        
-        if(articleData) debounceStorageUpdate({ ...articleData, content: articleData.content.filter(e => e.content !== '')}, setInformationUpdated);
+
+        const filteredData = articleContent?.filter(e => e.content !== '');
+        if(articleData) debounceStorageUpdate({ ...articleData, content: filteredData }, setInformationUpdated);
     }, [articleData])
 
     return (
         <div className={styles.container}>
-            <Header title={"Create"}/>
+            <Header title={articleData?.title ? articleData?.title : 'create'}/>
             
             <div className={articleSyles.article}>
                 <section className={articleSyles.articleHeader}>
@@ -113,9 +119,7 @@ const debounceStorageUpdate = (data, callback) => {
             .from('articles')
             .update(data)
             .eq('id', INDEX)
-            .then(e => console.log(e))
-
-        callback(true);
+            .then(e => callback(e))
 
         lastUpdate = new Date().getTime();
     }else {

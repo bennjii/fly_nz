@@ -20,13 +20,14 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
         <div className={styles.inputContainer}>
             <textarea 
                 autoFocus
+                placeholder={"Type here..."}
                 defaultValue={inputState.content}
                 onChange={updateParent}
                 rows={inputState.content.split(/\r\n|\r|\n/).length}
                 onKeyDown={(e) => {
                     if(e.code == "Enter") {
                         onLeave({ ...inputState, input: false });
-                        callback({ ...inputState, input: false })
+                        callback({ ...inputState, input: false });
                     }
 
                     setKeyPressed([ ...keyPressed, e.code ]);
@@ -37,6 +38,10 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
                             setKeyPressed(keyPressed.splice(index, 1));
                         }
                     });
+                }}
+                onBlur={() => {
+                    onLeave({ ...inputState, input: false });
+                    callback({ ...inputState, input: false });
                 }}
                 className={
                     `
