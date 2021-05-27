@@ -42,7 +42,7 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                         <p onClick={() => { callback({ ...content[1], type: 'h3' }); setItemSettings(false) }}>Header 3</p>
                         <p onClick={() => { callback({ ...content[1], type: 'p' }); setItemSettings(false) }}>Text</p>
                         <p onClick={() => { callback({ ...content[1], type: 'pageBreak' }); setItemSettings(false) }}>Page Break</p>
-                        <p style={{ color: '#f00f004e', backgroundColor: '#f00f000e' }} onClick={() => { callback({ }); setItemSettings(false) }}>Delete</p>
+                        <p style={{ color: '#f00f00a4', backgroundColor: '#f00f000e' }} onClick={() => { callback({ }); setItemSettings(false) }}>Delete</p>
                     </div>
                 </div>
             }
@@ -55,7 +55,7 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
             <div className={styles.relativeEditorContent} onClick={(e) => {
                 console.log(e.target)
                 //@ts-expect-error
-                if(e.target.tagName !== 'svg' && e.target.tagName !== 'P') setItemState({ ...itemState, input: true });
+                if(e.target.tagName !== 'svg') callback({ ...content[1], input: true });
             }}>
                 {
                     (() => {

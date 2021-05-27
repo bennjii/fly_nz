@@ -35,12 +35,12 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
 
                     <div className={styles.articleTable}>
                         {
-                            (!usersArticles) ?
+                            (!usersArticles || usersArticles == []) ?
                                 <div>
                                     <Loader />
                                 </div>
                             :  
-                                usersArticles.map(e => {
+                                usersArticles?.map(e => {
                                     console.log(e);
 
                                     return (

@@ -5,7 +5,6 @@ import { Search as SearchIcon } from 'react-feather'
 import axios from 'axios'
 
 import token from '@components/token'
-import { forEachChild } from 'typescript'
 
 export const BuildInput: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function, onLeave: Function }> = ({ content, callback, onLeave }) => {
     const [ index, data ] = content;
@@ -31,28 +30,9 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
                     }
 
                     setKeyPressed([ ...keyPressed, e.code ]);
-
-                    console.log(keyPressed);
-
-                    // let enter_down = false;
-                    // let shift_down = false;
-
-                    // keyPressed.forEach(e => {
-                    //     console.log(e)
-                    //     if(e == "Enter") enter_down = true;
-                    //     else if(e == "ShiftLeft") shift_down = true;
-                    // });
-
-                    // console.log(enter_down, shift_down)
-
-                    // if(enter_down && !shift_down) {
-                    //     onLeave({ ...inputState, input: false });
-                    //     callback({ ...inputState, input: false })
-                    // }
                 }}
                 onKeyUp={(e) => {
                     keyPressed.forEach((el, index) => {
-                        console.log(el, e.code)
                         if(el == e.code) {
                             setKeyPressed(keyPressed.splice(index, 1));
                         }
@@ -66,7 +46,6 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
                 }
             />
         </div>
-        
     )
 }
 

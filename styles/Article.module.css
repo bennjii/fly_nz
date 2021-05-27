@@ -122,6 +122,14 @@
     padding: 12rem 0rem 1rem 0rem;
 }
 
+.articleHeader > div {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
 .articleHeader h1 {
     font-size: 5rem;
     font-weight: 900;
@@ -350,9 +358,29 @@
 }
 
 .editorSettings p:hover {
-    background-color: #22242918;
+    background-color: #a2a3a518;
 }
 
 .relativeEditorContent {
     width: 100%;
+}
+
+.articleSyncing {
+    border-radius: 55px;
+
+    padding: .1rem 1rem;
+    width: auto;
+
+    background-color: #f0a83c5d;
+    color: #ffbb00;
+}
+
+.articleSynced {
+    border-radius: 55px;
+
+    padding: .1rem 1rem;
+    width: auto;
+
+    background-color: #3cf06333;
+    color: #52dd12;
 }

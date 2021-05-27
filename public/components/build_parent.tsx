@@ -6,11 +6,12 @@ import BuildValue from './build_value'
 import { ClientContext } from './context'
 
 export const BuildParent: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function }> = ({ content, callback }) => {
-    const { articleData, setArticleData } = useContext(ClientContext);
+    const { articleContent: articleData, setArticleContent: setArticleData } = useContext(ClientContext);
     const [ itemState, setItemState ] = useState(articleData[content[0]]);
-
+    
     useEffect(() => {
         // check for deletion
+        
         if(articleData[content[0]] !== itemState) setArticleData([...articleData.slice(0, content[0]), itemState, ...articleData.slice(content[0]+1, articleData.length)])
     }, [itemState]);
 

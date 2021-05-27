@@ -13,8 +13,11 @@ import { ClientContext } from '@components/context'
 import client from '@components/client'
 import { useRouter } from 'next/router'
 
+const INDEX = (process.browser) ? window.location.href.split('/')[window.location.href.split('/').length - 1] : null;
+
 export default function Home() {
-    const [ articleData, setArticleData ] = useState([ ]);
+    const [ articleData, setArticleData ] = useState(null);
+    const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(null);
     const [ informationUpdated, setInformationUpdated ] = useState(false);
 
     useEffect(() => {
@@ -22,15 +25,37 @@ export default function Home() {
             client
                 .from('articles')
                 .select()
-                .eq('id', window.location.href.split('/')[window.location.href.split('/').length - 1])
+                .eq('id', INDEX)
                 .then(e => {
-                    console.log(e.data[0].content);
-                    setArticleData(e.data[0].content);
+                    setArticleData(
+                        { 
+                            ...e.data[0], 
+                            content: 
+                                ( e.data[0].content == [] ? 
+                                    [{ type: "p", content: 'START WRITING HERE', input: false}] 
+                                    : 
+                                    e.data[0].content
+                                ) 
+                        }
+                    );
+
+                    setArticleContent(e.data[0].content)
                 });
-    }, [])
+    }, []);
 
     useEffect(() => {
-        debounceStorageUpdate(articleData, setInformationUpdated);
+        setInformationUpdated(false);
+
+        const filteredData = articleContent?.filter(e => e.content !== '');
+        console.log("Filtered", filteredData);
+
+        setArticleData({ ...articleData, content: filteredData });
+    }, [articleContent]);
+
+    useEffect(() => {
+        setInformationUpdated(false);
+        
+        if(articleData) debounceStorageUpdate({ ...articleData, content: articleData.content.filter(e => e.content !== '')}, setInformationUpdated);
     }, [articleData])
 
     return (
@@ -40,15 +65,15 @@ export default function Home() {
             <div className={articleSyles.article}>
                 <section className={articleSyles.articleHeader}>
                     <div>
-                        <h1>What are Taxes?</h1>
+                        <h1>{ articleData?.title }</h1>
 
                         {
                             informationUpdated ?
-                            <div>
+                            <div className={articleSyles.articleSynced}>
                                 Synced
                             </div>
                             :
-                            <div>
+                            <div className={articleSyles.articleSyncing}>
                                 Syncing
                             </div>
                         }
@@ -56,15 +81,15 @@ export default function Home() {
                 </section>
 
                 <section className={articleSyles.articleBody}>
-                    <ClientContext.Provider value={{ articleData, setArticleData }}>
-                        <NewElement index={0} callmap={articleData} callback={setArticleData}/>
+                    <ClientContext.Provider value={{ articleContent, setArticleContent }}>
+                        <NewElement index={0} callmap={articleContent} callback={setArticleContent}/>
                         {
-                            articleData.map((element, index) => {
+                            articleContent?.map((element, index) => {
                                 return (
                                     <div key={Math.random() * 10000}>
-                                        <BuildParent content={[index, element]} callback={setArticleData} />
+                                        <BuildParent content={[index, element]} callback={setArticleContent} />
 
-                                        <NewElement index={index+1} callmap={articleData} callback={setArticleData} />
+                                        <NewElement index={index+1} callmap={articleContent} callback={setArticleContent} />
                                     </div>
                                 )
                             })
@@ -84,9 +109,11 @@ const debounceStorageUpdate = (data, callback) => {
     console.log(new Date().getTime() - lastUpdate);
 
     if(new Date().getTime() - lastUpdate >= 2500) {
-        console.log('UPDATED!!!')
-
-        //client.from('articles')
+        client
+            .from('articles')
+            .update(data)
+            .eq('id', INDEX)
+            .then(e => console.log(e))
 
         callback(true);
 
