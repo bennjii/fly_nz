@@ -29,19 +29,21 @@ export default function Home() {
                 .select()
                 .eq('id', INDEX)
                 .then(e => {
-                    setArticleData(
-                        { 
-                            ...e.data[0], 
-                            content: 
-                                ( e.data[0].content == [] ? 
-                                    [{ type: "p", content: 'START WRITING HERE', input: false}] 
-                                    : 
-                                    e.data[0].content
-                                ) 
-                        }
-                    );
+                    if(e.data) {
+                        setArticleData(
+                            { 
+                                ...e.data[0], 
+                                content: 
+                                    ( e.data[0].content == [] ? 
+                                        [{ type: "p", content: 'START WRITING HERE', input: false}] 
+                                        : 
+                                        e.data[0].content
+                                    ) 
+                            }
+                        );
 
-                    setArticleContent(e.data[0].content)
+                        setArticleContent(e.data[0].content)
+                    }
                 });
     }, []);
 
@@ -53,7 +55,7 @@ export default function Home() {
         const filteredData = articleContent?.filter(e => e.content !== '');
         if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
 
-        if(articleData) debounceStorageUpdate({ ...articleData, content: filteredData }, (e) => {
+        if(JSON.stringify(articleData) !== JSON.stringify({ ...articleData, content: filteredData })) debounceStorageUpdate({ ...articleData, content: filteredData }, (e) => {
             setInformationUpdated(true)
         });
     }, [articleContent]);
@@ -115,8 +117,6 @@ export default function Home() {
 let lastUpdate = new Date().getTime();
 
 const debounceStorageUpdate = (data, callback) => {
-    console.log(new Date().getTime() - lastUpdate);
-
     if(new Date().getTime() - lastUpdate >= 2500) {
         client
             .from('articles')

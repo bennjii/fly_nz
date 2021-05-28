@@ -12,7 +12,7 @@ export const BuildParent: React.FC<{ content: [number, { type: string, content: 
     useEffect(() => {
         // check for deletion
         
-        if(articleData[content[0]] !== itemState) setArticleData([...articleData.slice(0, content[0]), itemState, ...articleData.slice(content[0]+1, articleData.length)])
+        if(articleData[content[0]].content !== itemState.content) setArticleData([...articleData.slice(0, content[0]), itemState, ...articleData.slice(content[0]+1, articleData.length)])
     }, [itemState]);
 
     return (
