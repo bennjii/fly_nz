@@ -99,6 +99,8 @@
     padding: 42px 0px 0px;
     display: flex;
     flex-direction: column;
+
+    position: relative;
 }
 
 .article section:not(:first-of-type) {

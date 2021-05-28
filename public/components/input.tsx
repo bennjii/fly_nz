@@ -10,13 +10,14 @@ interface State {
     activated: boolean
 }
 
-class Input extends React.Component<{type: string, title?: string, defaultValue?: string, placeholder?: string, onChange?: Function, disabled?: boolean}, State> {
+class Input extends React.Component<{type: string, title?: string, defaultValue?: string, onKeyDown?: Function, placeholder?: string, onChange?: Function, disabled?: boolean}, State> {
     constructor(props) {
         super(props)
 
         this.state = { active: false, hovered: false, value: '', activated: false }
 
         this.handleChange = this.handleChange.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
     }
 
     handleChange(e) {
@@ -30,11 +31,16 @@ class Input extends React.Component<{type: string, title?: string, defaultValue?
         }
     }
 
+    onKeyDown(e) {
+        this.props.onKeyDown(e);
+    }
+
     render() {
         return (
             <div className={styles.inputModule}>
                 <h4>{this.props?.title}</h4>
                 <input 
+                    onKeyDown={this.onKeyDown}
                     defaultValue={this.props.defaultValue}
                     type={this.props.type} 
                     onChange={this.handleChange}  

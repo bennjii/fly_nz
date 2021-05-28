@@ -13,12 +13,16 @@ import { ClientContext } from '@components/context'
 import client from '@components/client'
 import { useRouter } from 'next/router'
 
-import { Check, RefreshCw } from 'react-feather'
+import { Check, RefreshCw, MoreVertical } from 'react-feather'
+import Button from '@components/button'
+import Input from '@components/input'
 
 export default function Home() {
     const [ articleData, setArticleData ] = useState(null);
     const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(null);
     const [ informationUpdated, setInformationUpdated ] = useState(false);
+
+    const [ articleSettingsOverlay, setArticleSettingsOverlay ] = useState(false);
 
     const router = useRouter();
     const INDEX = (router.query.id) ? router.query.id : null;
@@ -67,22 +71,81 @@ export default function Home() {
             <Header title={articleData?.title ? articleData?.title : 'create'}/>
             
             <div className={articleSyles.article}>
+                {
+                    articleSettingsOverlay ?
+                    <div className={styles.settingsOverlay} onClick={(e) => {
+                        //@ts-expect-error
+                        if(e.target.classList.contains(styles.settingsOverlay)) {
+                            setArticleSettingsOverlay(false);
+                        }
+                    }}>
+                        <div>
+                            <h1>Settings</h1>
+
+                            <div>
+                                <h3>Article Visiblity</h3> <p>{articleData?.published ? "Published" : "Draft"}</p>
+                            </div>
+
+                            <Button title={articleData?.published ? "Redact" : "Publish"} onClick={(e, callback) => {
+                                debounceStorageUpdate({ ...articleData, published: !articleData?.published }, INDEX, (e) => {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true);
+                                    callback();
+                                });
+                            }}></Button>
+
+                            <div>
+                                <h3>Title</h3> <p>{articleData?.title}</p>
+                            </div>
+
+                            <Input type={"text"} defaultValue={articleData?.title} onKeyDown={(e) => {
+                                if(e.code == "Enter")
+                                    debounceStorageUpdate({ ...articleData, title: e.target.value }, INDEX, (e) => {
+                                        setArticleData(e.data[0]);
+                                        setInformationUpdated(true)
+                                    });
+                            }}/>
+
+                            <div>
+                                <h3>Sync Status</h3> <p>{informationUpdated ? "Synced" : "Syncing"}</p>
+                            </div>
+
+                            <Button title={"Force Sync"} onClick={() => {
+                                debounceStorageUpdate(articleData, INDEX, (e) => {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                });
+                            }}></Button>
+                        </div>
+                    </div>
+                    :
+                    <></>
+                }
+
                 <section className={articleSyles.articleHeader}>
                     <div>
                         <h1>{ articleData?.title }</h1>
 
-                        {
-                            informationUpdated ?
-                            <div className={articleSyles.articleSynced}>
-                                Synced 
-                                <Check size={18} />
+                        <div className={styles.headerTitleAid}>
+                            <div onClick={() => {
+                                setArticleSettingsOverlay(!articleSettingsOverlay);
+                            }}>
+                                <MoreVertical size={18} />
                             </div>
-                            :
-                            <div className={articleSyles.articleSyncing}>
-                                Syncing
-                                <RefreshCw size={18} />
-                            </div>
-                        }
+
+                            {
+                                informationUpdated ?
+                                <div className={articleSyles.articleSynced}>
+                                    Synced 
+                                    <Check size={18} />
+                                </div>
+                                :
+                                <div className={articleSyles.articleSyncing}>
+                                    Syncing
+                                    <RefreshCw size={18} />
+                                </div>
+                            }
+                        </div>
                     </div>
                 </section>
 
@@ -101,6 +164,8 @@ export default function Home() {
                             })
                         }
                     </ClientContext.Provider>
+
+                    
                 </section>
             </div>  
 

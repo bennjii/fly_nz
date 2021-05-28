@@ -391,3 +391,77 @@
   background-color: #3cf0635d;
   color: #3cf063a2;
 }
+
+.headerTitleAid {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.headerTitleAid > div:first-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  grid-gap: .7rem;
+  gap: .7rem;
+  padding: .5rem .5rem;
+
+  width: auto;
+  color: #ffffff;
+
+  cursor: pointer;
+}
+
+.settingsOverlay {
+  position: absolute;
+  z-index: 999;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  user-select: none;
+}
+
+.settingsOverlay > div {
+  height: fit-content;
+  width: 30%;
+
+  border: 1px solid #d8dbde;
+  color: #262231;
+  font-size: 1rem;
+
+  padding: 2.5rem;
+  background-color: #fff;
+
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  font-weight: 400;
+  box-shadow: #26223110 0px 1px 2px;
+}
+
+.settingsOverlay > div div {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.settingsOverlay > div div > h3 {
+  margin: 0;
+}
+
+.settingsOverlay button {
+  width: fit-content;
+}
