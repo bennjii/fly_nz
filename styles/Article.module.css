@@ -379,6 +379,8 @@
 
     background-color: #f0a83c5d;
     color: #ffbb00;
+
+    user-select: none;
 }
 
 .articleSyncing svg {
@@ -408,4 +410,6 @@
 
     background-color: #3cf06333;
     color: #52dd12;
+
+    user-select: none;
 }

@@ -11,15 +11,24 @@ export const BuildParent: React.FC<{ content: [number, { type: string, content: 
     
     useEffect(() => {
         // check for deletion
+
+        if(itemState.type == 'deleted' || (itemState.content == '' && itemState.input == false)) 
+            setArticleData([...articleData.slice(0, content[0]), ...articleData.slice(content[0]+1, articleData.length)])
         
-        if(articleData[content[0]].content !== itemState.content) setArticleData([...articleData.slice(0, content[0]), itemState, ...articleData.slice(content[0]+1, articleData.length)])
+        if(articleData[content[0]].content !== itemState.content) 
+            setArticleData([...articleData.slice(0, content[0]), itemState, ...articleData.slice(content[0]+1, articleData.length)])
     }, [itemState]);
 
     return (
         <div className={styles.inputModule}>
         {
             itemState.input ?
-            <BuildInput content={[content[0], itemState]} callback={setItemState} onLeave={(value) => setArticleData([...articleData.slice(0, content[0]), value, ...articleData.slice(content[0]+1, articleData.length)])}/>
+            <BuildInput content={[content[0], itemState]} callback={setItemState} onLeave={(value) =>  {
+                value.content ?
+                setArticleData([...articleData.slice(0, content[0]), value, ...articleData.slice(content[0]+1, articleData.length)])
+                :
+                setArticleData([...articleData.slice(0, content[0]), ...articleData.slice(content[0]+1, articleData.length)])
+            }}/>
             :
             <BuildValue content={[content[0], itemState]} callback={setItemState} />
         }

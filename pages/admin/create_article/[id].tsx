@@ -15,15 +15,16 @@ import { useRouter } from 'next/router'
 
 import { Check, RefreshCw } from 'react-feather'
 
-const INDEX = (process.browser) ? window.location.href.split('/')[window.location.href.split('/').length - 1] : null;
-
 export default function Home() {
     const [ articleData, setArticleData ] = useState(null);
     const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(null);
     const [ informationUpdated, setInformationUpdated ] = useState(false);
 
+    const router = useRouter();
+    const INDEX = (router.query.id) ? router.query.id : null;
+
     useEffect(() => {
-        if(process.browser)
+        if(process.browser && INDEX !== null)
             client
                 .from('articles')
                 .select()
@@ -42,10 +43,11 @@ export default function Home() {
                             }
                         );
 
-                        setArticleContent(e.data[0].content)
+                        setArticleContent(e.data[0].content);
+                        setInformationUpdated(true);
                     }
                 });
-    }, []);
+    }, [INDEX]);
 
     useEffect(() => {
         if(!articleData) return;
@@ -55,17 +57,10 @@ export default function Home() {
         const filteredData = articleContent?.filter(e => e.content !== '');
         if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
 
-        if(JSON.stringify(articleData) !== JSON.stringify({ ...articleData, content: filteredData })) debounceStorageUpdate({ ...articleData, content: filteredData }, (e) => {
+        if(JSON.stringify(articleData) !== JSON.stringify({ ...articleData, content: filteredData })) debounceStorageUpdate({ ...articleData, content: filteredData }, INDEX, (e) => {
             setInformationUpdated(true)
         });
     }, [articleContent]);
-
-    // useEffect(() => {
-    //     setInformationUpdated(false);
-
-    //     const filteredData = articleContent?.filter(e => e.content !== '');
-    //     if(articleData) debounceStorageUpdate({ ...articleData, content: filteredData }, setInformationUpdated);
-    // }, [articleData])
 
     return (
         <div className={styles.container}>
@@ -92,7 +87,7 @@ export default function Home() {
                 </section>
 
                 <section className={articleSyles.articleBody}>
-                    <ClientContext.Provider value={{ articleContent, setArticleContent }}>
+                    <ClientContext.Provider value={{ articleContent, setArticleContent, setInformationUpdated }}>
                         <NewElement index={0} callmap={articleContent} callback={setArticleContent}/>
                         {
                             articleContent?.map((element, index) => {
@@ -116,16 +111,16 @@ export default function Home() {
 
 let lastUpdate = new Date().getTime();
 
-const debounceStorageUpdate = (data, callback) => {
-    if(new Date().getTime() - lastUpdate >= 2500) {
+const debounceStorageUpdate = (data, info, callback) => {
+    if(new Date().getTime() - lastUpdate >= 1500) {
         client
             .from('articles')
             .update(data)
-            .eq('id', INDEX)
+            .eq('id', info)
             .then(e => callback(e))
 
         lastUpdate = new Date().getTime();
     }else {
-        setTimeout(() => debounceStorageUpdate(data, callback), 2500);
+        setTimeout(() => debounceStorageUpdate(data, info, callback), 1500);
     }
 }   

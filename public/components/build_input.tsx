@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styles from '@styles/Article.module.css'
+import { ClientContext } from './context';
 
 export const BuildInput: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function, onLeave: Function }> = ({ content, callback, onLeave }) => {
+    const { setInformationUpdated } = useContext(ClientContext);
     const [ index, data ] = content;
     const [ inputState, setInputState ] = useState(data); 
     const [ saveState, setSaveState ] = useState(data.content);
@@ -21,7 +23,10 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
                 autoFocus
                 placeholder={"Type here..."}
                 defaultValue={inputState.content}
-                onChange={(e) => setSaveState(e.target.value)}
+                onChange={(e) => { 
+                    setSaveState(e.target.value);
+                    // setInformationUpdated(false);
+                }}
                 rows={inputState.content.split(/\r\n|\r|\n/).length}
                 onKeyDown={(e) => {
                     if(e.code == "Enter") {

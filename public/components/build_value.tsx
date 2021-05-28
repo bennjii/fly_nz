@@ -42,7 +42,7 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                         <p onClick={() => { callback({ ...content[1], type: 'h3' }); setItemSettings(false) }}>Header 3</p>
                         <p onClick={() => { callback({ ...content[1], type: 'p' }); setItemSettings(false) }}>Text</p>
                         <p onClick={() => { callback({ ...content[1], type: 'pageBreak' }); setItemSettings(false) }}>Page Break</p>
-                        <p style={{ color: '#f00f00a4', backgroundColor: '#f00f000e' }} onClick={() => { callback({ }); setItemSettings(false) }}>Delete</p>
+                        <p style={{ color: '#f00f00a4', backgroundColor: '#f00f000e' }} onClick={() => { callback({ content: '', type: 'deleted', input: false }); setItemSettings(false) }}>Delete</p>
                     </div>
                 </div>
             }
