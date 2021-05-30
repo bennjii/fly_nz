@@ -10,7 +10,7 @@ import Button from '@components/button'
 export default function Articles() {
   return (
     <div className={styles.container}>
-      <Header title={"Articles"}/>
+      <Header title={"Articles"} type={"user"}/>
       
       <body className={styles.mainBody}>
         <section className={styles.homeSection}>

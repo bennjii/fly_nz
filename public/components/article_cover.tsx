@@ -3,6 +3,7 @@ import styles from "@styles/Article.module.css"
 
 import { Router } from 'next/router'
 import { Pill, Color }  from '@components/pill'
+import Link from 'next/link'
 interface Tag {
     title: string,
     color: Color
@@ -13,38 +14,42 @@ export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc
     return (    
         (size == 0) ?
         // Small
-        <div className={styles.articleSmall}>
-            <img src={image} alt=""/>
+        <Link href={`/article/${redirect}`}>
+            <div className={styles.articleSmall}>
+                <img src={image} alt=""/>
 
-            <div>
-                <h3>{title}</h3>
-                <p>{desc}</p>
-                {
-                    tags.map((e) => {
-                        return (
-                            <Pill title={e.title} color={e.color}/>
-                        )
-                    })
-                }
+                <div>
+                    <h3>{title}</h3>
+                    <p>{desc}</p>
+                    {
+                        tags.map((e) => {
+                            return (
+                                <Pill title={e.title} color={e.color}/>
+                            )
+                        })
+                    }
+                </div>
             </div>
-        </div>
+        </Link>
         :
         // Large
-        <div className={styles.articleLarge}>
-            <img src={image} alt=""/>
+        <Link href={`/article/${redirect}`}>
+            <div className={styles.articleLarge}>
+                <img src={image} alt=""/>
 
-            <div>
-                <h3>{title}</h3>
-                <p>{desc}</p>
-                {
-                    tags.map((e) => {
-                        return (
-                            <Pill title={e.title} color={e.color}/>
-                        )
-                    })
-                }
+                <div>
+                    <h3>{title}</h3>
+                    <p>{desc}</p>
+                    {
+                        tags.map((e) => {
+                            return (
+                                <Pill title={e.title} color={e.color}/>
+                            )
+                        })
+                    }
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

@@ -8,42 +8,75 @@ import { faCircleNotch, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { Router, SingletonRouter } from 'next/router'
 import Link from 'next/link'
 
-export const Header: React.FC<{ title: string }> = ({ title }) => {
-    return (
-        <div className={styles.header}>
-            <Head>
-                <title>{title}</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+export const Header: React.FC<{ title: string, type: string }> = ({ title, type }) => {
+    if(type !== "admin")
+        return (
+            <div className={styles.header}>
+                <Head>
+                    <title>{title}</title>
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
 
-            <div>
-                <Link href={"/"}>
-                    <div className={styles.headerIcon}>
-                        <FontAwesomeIcon icon={faPaperPlane} /> 
+                <div>
+                    <Link href={"/"}>
+                        <div className={styles.headerIcon}>
+                            <FontAwesomeIcon icon={faPaperPlane} /> 
 
-                        <h3>
-                            fly
-                        </h3> 
+                            <h3>
+                                fly
+                            </h3> 
+                        </div>
+                    </Link>
+                    
+
+                    <div className={styles.headerLinks}>
+                        <Link href={"/advice"}>
+                        <a>Advice</a>
+                        </Link>
+
+
+                        <a href="/stocks">Stocks</a>
+
+
+                        <Link href={"/articles"}>
+                        <a>Articles</a>
+                        </Link>
                     </div>
-                </Link>
-                
-
-                <div className={styles.headerLinks}>
-                    <Link href={"/advice"}>
-                    <a>Advice</a>
-                    </Link>
-
-
-                    <a href="/stocks">Stocks</a>
-
-
-                    <Link href={"/articles"}>
-                    <a>Articles</a>
-                    </Link>
                 </div>
             </div>
-      </div>
-    )
+        )
+    else 
+        return (
+            <div className={styles.header}>
+                <Head>
+                    <title>{title}</title>
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
+
+                <div>
+                    <Link href={"/"}>
+                        <div className={styles.headerIcon}>
+                            <FontAwesomeIcon icon={faPaperPlane} /> 
+
+                            <h3>
+                                fly
+                            </h3> 
+                        </div>
+                    </Link>
+                    
+
+                    <div className={styles.headerLinks}>
+                        <Link href={"/"}>
+                            <a>FlyNZ Home</a>
+                        </Link>
+
+                        <Link href={"/admin"}>
+                            <a>Your Articles</a>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        )
 }
 
 export default Header

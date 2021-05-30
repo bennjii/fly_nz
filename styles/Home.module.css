@@ -166,8 +166,62 @@
   padding: 82px 0px 0px;
 }
 
+.mainBodyBody {
+  flex: 1;
+  width: 100%;
+  
+  padding: 82px 0px 0px;
+}
+
+.articlesList {
+  display: flex;
+}
+
+@media screen and (min-width: 800px) {
+  .homeSection {
+    padding: 0px 0px 80px;
+  
+    display: flex;
+    flex-direction: column;
+  
+    justify-content: space-between;
+  }
+
+  .column {
+    flex: 1;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex-basis: 100%;
+}
+
 .homeSection {
   padding: 0px 0px 80px;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+}
+
+.homeSection > div:first-of-type h1 {
+  font-size: 7rem;
+}
+
+.homeSection > div:first-of-type button {
+  margin-bottom: 2rem;
+}
+
+.homeSection > div:not(:first-of-type) {
+  margin-top: 2rem;
+  padding: 5rem;
 }
 
 .articles {
@@ -184,6 +238,21 @@
   color: rgb(29, 25, 41);
 
   margin-bottom: 1rem;
+}
+
+.mainBodyBody h1 {
+  font-weight: 800;
+  font-size: 72px;
+  font-family: "guillon", sans-serif;
+  line-height: 1.23em;
+  color: rgb(29, 25, 41);
+
+  margin-bottom: 1rem;
+}
+
+.mainBodyBody section {
+  width: 50%;
+  margin: .8rem auto;
 }
 
 .mainBody section {
@@ -277,6 +346,9 @@
 
   font-weight: 400;
   box-shadow: #26223110 0px 1px 2px;
+
+  border: 1px solid #d8dbde;
+  box-shadow: #26223110 0px 1px 2px;
 }
 
 .input:focus {
@@ -329,6 +401,11 @@
   font-weight: 400;
 
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
 }
 
 .tableElement {
@@ -381,15 +458,18 @@
   padding: .1rem 1rem;
   width: auto;
 
-  background-color: #f0a83c5d;
-  color: #d48b1ed5;
+  background-color: #e691125d;
+  color: #331f00d5;
 }
 
 .articlePublished {
-  border-radius: 5px;
+  border-radius: 55px;
 
-  background-color: #3cf0635d;
-  color: #3cf063a2;
+  padding: .1rem 1rem;
+  width: auto;
+
+  background-color: #7afe975d;
+  color: #03711b;
 }
 
 .headerTitleAid {
@@ -419,13 +499,19 @@
   z-index: 999;
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
+
+  top: 0;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   user-select: none;
+
+  background-color: #1414195b;
+
+  transition: .55s ease all;
 }
 
 .settingsOverlay > div {
@@ -463,5 +549,15 @@
 }
 
 .settingsOverlay button {
-  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.settingsOverlay hr {
+  width: 100%;
+  border: none;
+  height: 1px;
+
+  background-color: #1414191e;
 }

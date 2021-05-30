@@ -55,20 +55,22 @@ export default function Home() {
 
     useEffect(() => {
         if(!articleData) return;
-
-        setInformationUpdated(false);
-
+        
         const filteredData = articleContent?.filter(e => e.content !== '');
         if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
 
-        if(JSON.stringify(articleData) !== JSON.stringify({ ...articleData, content: filteredData })) debounceStorageUpdate({ ...articleData, content: filteredData }, INDEX, (e) => {
-            setInformationUpdated(true)
-        });
+        if(JSON.stringify(articleData) !== JSON.stringify({ ...articleData, content: filteredData })) {
+            setInformationUpdated(false);
+
+            debounceStorageUpdate({ ...articleData, content: filteredData }, INDEX, (e) => {
+                setInformationUpdated(true)
+            });
+        }
     }, [articleContent]);
 
     return (
         <div className={styles.container}>
-            <Header title={articleData?.title ? articleData?.title : 'create'}/>
+            <Header title={articleData?.title ? articleData?.title : 'create'} type={"admin"}/>
             
             <div className={articleSyles.article}>
                 {
@@ -94,6 +96,8 @@ export default function Home() {
                                 });
                             }}></Button>
 
+                            <hr />
+
                             <div>
                                 <h3>Title</h3> <p>{articleData?.title}</p>
                             </div>
@@ -106,14 +110,31 @@ export default function Home() {
                                     });
                             }}/>
 
+                            <hr />
+
+                            <div>
+                                <h3>Description</h3> <p>{articleData?.description}</p>
+                            </div>
+
+                            <Input type={"text"} defaultValue={articleData?.description} onKeyDown={(e) => {
+                                if(e.code == "Enter")
+                                    debounceStorageUpdate({ ...articleData, description: e.target.value }, INDEX, (e) => {
+                                        setArticleData(e.data[0]);
+                                        setInformationUpdated(true)
+                                    });
+                            }}/>
+
+                            <hr />
+
                             <div>
                                 <h3>Sync Status</h3> <p>{informationUpdated ? "Synced" : "Syncing"}</p>
                             </div>
 
-                            <Button title={"Force Sync"} onClick={() => {
+                            <Button title={"Force Sync"} onClick={(e, callback) => {
                                 debounceStorageUpdate(articleData, INDEX, (e) => {
                                     setArticleData(e.data[0]);
-                                    setInformationUpdated(true)
+                                    setInformationUpdated(true);
+                                    callback();
                                 });
                             }}></Button>
                         </div>
@@ -178,6 +199,8 @@ let lastUpdate = new Date().getTime();
 
 const debounceStorageUpdate = (data, info, callback) => {
     if(new Date().getTime() - lastUpdate >= 1500) {
+        console.log("Debounce Failed")
+
         client
             .from('articles')
             .update(data)
@@ -186,6 +209,7 @@ const debounceStorageUpdate = (data, info, callback) => {
 
         lastUpdate = new Date().getTime();
     }else {
+        console.log("Debounce Failed")
         setTimeout(() => debounceStorageUpdate(data, info, callback), 1500);
     }
 }   

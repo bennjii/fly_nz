@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 import { SingletonRouter } from 'next/router'
-import { Icon } from 'react-feather';
+import { Icon, Loader } from 'react-feather';
 
 export const Button: React.FC<{ title: string, Icon?: Icon, active?: boolean, redirect?: string | never, router?: any | never, onClick?: Function, disabled?: boolean }> = ({ title, Icon, active, redirect, router, onClick, disabled }) => {
     const [ buttonState, setButtonState ] = useState({
@@ -55,11 +55,9 @@ export const Button: React.FC<{ title: string, Icon?: Icon, active?: boolean, re
                 ?
                 title
                 :
-                <FontAwesomeIcon
-                icon={faCircleNotch}
-                size="1x"
-                spin
-                />   
+                <Loader
+                    size={18}
+                    />   
             }
         </button>
     )

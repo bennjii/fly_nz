@@ -9,6 +9,7 @@ import { Loader } from 'react-feather'
 import { format } from 'timeago.js';
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Button from './button'
 
 const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ client, user }) => {
     const [ usersArticles, setUsersArticles ] = useState(null);
@@ -27,11 +28,42 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
 
     return (
         <div className={styles.container}>
-            <Header title={"Admin"}/>
+            <Header title={"Admin"} type={"admin"}/>
             
             <div className={styles.mainBody}>
                 <section className={styles.homeSection}>
-                    <h1>Your Articles</h1>
+                    <div>
+                        <h1>Your Articles</h1>
+
+                        <Button title={"Create Article"} onClick={(__e, callback) => {
+                            client
+                                .from('articles')
+                                .insert({
+                                    title: 'New Article',
+                                    description: "A New Article Desc",
+                                    published: false,
+                                    content: [{
+                                        type: 'p',
+                                        content: 'Click here to begin',
+                                        input: false
+                                    }],
+                                    author: {
+                                        id: user,
+                                        data: {
+                                            name: "Template Name", // REPLACE IMMEDIATELYYYY
+                                            iconURL: "",
+                                        }
+                                    },
+                                    authorID: user.id,
+                                    creation_date: new Date()
+                                })
+                                .then(e => {
+                                    setUsersArticles([ ...usersArticles, e.data ]);
+                                    callback();
+                                })
+                        }}></Button>
+                    </div>
+                    
 
                     <div className={styles.articleTable}>
                         {
@@ -41,8 +73,6 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                                 </div>
                             :  
                                 usersArticles?.map(e => {
-                                    console.log(e);
-
                                     return (
                                         <Link href={`/admin/create_article/${e.id}`}>
                                             <div key={Math.random() * 10000} className={styles.tableElement}>

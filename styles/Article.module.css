@@ -3,8 +3,8 @@
 
     border-radius: 5px;
 
-    max-width: 25%;
-    max-height: auto;
+    max-width: 20%;
+    max-height: 30%;
 
     display: flex;
     flex: 1 1 auto;
@@ -20,12 +20,17 @@
     flex: 1 1;
 }
 
+.articleSmall h3 {
+    color: #262231;
+    font-weight: 700;
+}
+
 .articleSmall img {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
     object-fit: cover;
-    max-height: 40%;
+    max-height: 200px;
 }
 
 .articleSmall > div {
@@ -40,7 +45,6 @@
     border-top-right-radius: 0px;
 
     overflow: hidden;
-    height: 100%;
 }
 
 .articleSmall:hover {
