@@ -31,7 +31,7 @@ export default function Home() {
       	<Header title={"Home"} type={"user"}/>
       
 		<div className={styles.mainBodyBody}>
-			<section className={styles.homeSection}>
+			<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
 				<div>
 					<h1>Fly New <br/>Zealand</h1>
 					<p>Learn better financing with us, wherever you are</p>

@@ -211,6 +211,32 @@
   justify-content: space-between;
 }
 
+.adminViewportSection {
+  padding: 0px 0px 80px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+}
+
+.adminViewportSection > div:first-of-type {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.adminViewportSection > div:first-of-type button {
+  margin-bottom: 2rem;
+}
+
+.homeSection > div:first-of-type {
+  display: flex;
+  flex-direction: column;
+}
+
 .homeSection > div:first-of-type h1 {
   font-size: 7rem;
 }

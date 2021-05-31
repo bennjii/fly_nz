@@ -31,7 +31,7 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
             <Header title={"Admin"} type={"admin"}/>
             
             <div className={styles.mainBody}>
-                <section className={styles.homeSection}>
+                <section className={styles.adminViewportSection}>
                     <div>
                         <h1>Your Articles</h1>
 
