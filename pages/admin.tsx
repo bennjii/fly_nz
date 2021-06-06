@@ -13,11 +13,8 @@ const fetcher = (url, token) =>
     credentials: 'same-origin',
   }).then((res) => res.json())
 
-const getServerSideProps = () => {
-    console.log(SupabaseClient)
-}
-
-export default function Home({ usr }) {
+const Index = () => {
+    if(!process.browser) return null; 
     const session = client.auth.session()
 	
 	const [ cssProperties, setCssProperties ] = useState({
@@ -39,24 +36,22 @@ export default function Home({ usr }) {
 		})
 	}, []);
 
-    if(user) 
+    if(client.auth.currentUser || client.auth.user() || user)
         return (
             <div className={styles.container}>
                 <AdminViewport client={client} user={user}/>
             </div>
         ) 
-    
-    //console.log(client.auth.user())
-
+    else 
+        return (
+            <div className={styles.container}>
+                <Auth callback={setUser}/>
+            </div>
+        )    
 
     return null;
-    
-    return (
-        <div className={styles.container}>
-            <Auth callback={setUser}/>
-        </div>
-    )
 }
+
 
 let lastUpdate = new Date().getTime();
 
@@ -71,3 +66,5 @@ const debounceStorageUpdate = (data) => {
         setTimeout(() => debounceStorageUpdate(data), 2500);
     }
 }   
+
+export default Index;

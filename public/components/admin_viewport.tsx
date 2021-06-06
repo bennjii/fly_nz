@@ -10,6 +10,7 @@ import { format } from 'timeago.js';
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Button from './button'
+import Auth from './auth'
 
 const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ client, user }) => {
     const [ usersArticles, setUsersArticles ] = useState(null);
@@ -99,6 +100,14 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                     </div>
                 </section>
             </div>  
+             
+            <div>
+                <h2>{client.auth.user().email}</h2>
+                <Button title={"Sign Out"} onClick={() => {
+                    client.auth.signOut();
+                }}></Button>
+            </div>
+            
 
             <Footer />  
         </div>

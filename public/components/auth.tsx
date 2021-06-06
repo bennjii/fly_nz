@@ -42,7 +42,6 @@ const Auth = ({ callback }) => {
                                         email: authInputState.email,
                                         password: authInputState.password,
                                     }).then((e) => {
-                                        callback(e.user)
                                     })
                                 }}/>
                                 <p>Don't have an account? <a href="#" onClick={() => setAuthState('auth-signup')}>Sign Up</a></p> 
@@ -72,12 +71,12 @@ const Auth = ({ callback }) => {
                                             password: authInputState.password,
                                         }).then(u => {
                                             console.log(u);
-                                            client.from('users').insert([
+                                            client.from('users').insert(
                                                 {
                                                     id: u.user.id,
-                                                    username: authInputState.username
+                                                    username: authInputState.username,
                                                 }
-                                            ]).then(e => {
+                                            ).then(e => {
                                                 callback();
                                                 setAuthState('auth-email')
                                             });

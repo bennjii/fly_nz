@@ -32,7 +32,7 @@ class Input extends React.Component<{type: string, title?: string, defaultValue?
     }
 
     onKeyDown(e) {
-        this.props.onKeyDown(e);
+        if(this.props.onKeyDown) this.props.onKeyDown(e);
     }
 
     render() {
