@@ -17,6 +17,8 @@ import { Check, RefreshCw, MoreVertical } from 'react-feather'
 import Button from '@components/button'
 import Input from '@components/input'
 
+import _ from 'underscore'
+
 export default function Home() {
     const [ articleData, setArticleData ] = useState(null);
     const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(null);
@@ -89,6 +91,8 @@ export default function Home() {
                             </div>
 
                             <Button title={articleData?.published ? "Redact" : "Publish"} onClick={(e, callback) => {
+                                setInformationUpdated(false);
+
                                 debounceStorageUpdate({ ...articleData, published: !articleData?.published }, INDEX, (e) => {
                                     setArticleData(e.data[0]);
                                     setInformationUpdated(true);
@@ -103,11 +107,14 @@ export default function Home() {
                             </div>
 
                             <Input type={"text"} defaultValue={articleData?.title} onKeyDown={(e) => {
-                                if(e.code == "Enter")
+                                if(e.code == "Enter") {
+                                    setInformationUpdated(false);
+
                                     debounceStorageUpdate({ ...articleData, title: e.target.value }, INDEX, (e) => {
                                         setArticleData(e.data[0]);
                                         setInformationUpdated(true)
                                     });
+                                }                           
                             }}/>
 
                             <hr />
@@ -117,11 +124,14 @@ export default function Home() {
                             </div>
 
                             <Input type={"text"} defaultValue={articleData?.description} onKeyDown={(e) => {
-                                if(e.code == "Enter")
+                                if(e.code == "Enter") {
+                                    setInformationUpdated(false);
+
                                     debounceStorageUpdate({ ...articleData, description: e.target.value }, INDEX, (e) => {
                                         setArticleData(e.data[0]);
                                         setInformationUpdated(true)
                                     });
+                                } 
                             }}/>
 
                             <hr />
@@ -131,6 +141,8 @@ export default function Home() {
                             </div>
 
                             <Button title={"Force Sync"} onClick={(e, callback) => {
+                                setInformationUpdated(false);
+
                                 debounceStorageUpdate(articleData, INDEX, (e) => {
                                     setArticleData(e.data[0]);
                                     setInformationUpdated(true);
