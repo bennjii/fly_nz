@@ -419,3 +419,7 @@
 
     user-select: none;
 }
+
+.readonlyDiv {
+    cursor: inherit !important;
+}

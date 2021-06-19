@@ -9,7 +9,7 @@ import PageBreak from './page_break'
 
 import { MoreVertical } from 'react-feather'
 
-export const BuildValue: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function }> = ({ content, callback }) => {
+export const BuildValue: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function, readonly?: boolean }> = ({ content, callback, readonly }) => {
     const [ index, data ] = content;
 
     const [ hovered, setHovered ] = useState(false);
@@ -27,6 +27,43 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
     const updateParent = (e) => {
         console.log(e.target.value)
     }
+
+    if(readonly)
+        return (
+            <div className={styles.inputFieldContainer}>
+                <div className={styles.relativeEditorContent + " " + styles.readonlyDiv}>
+                    {
+                        (() => {
+                            switch(data.type) {
+                                case "h1":
+                                    return (
+                                        <h1 dangerouslySetInnerHTML={{ __html: clone }} /> 
+                                    )
+                                case "h2":
+                                    return (
+                                        <h2 dangerouslySetInnerHTML={{ __html: clone }} />
+                                    )
+                                case "h3":
+                                    return (
+                                        <h3 dangerouslySetInnerHTML={{ __html: clone }} />
+                                    )
+                                case "p":
+                                    return (
+                                        <p dangerouslySetInnerHTML={{ __html: clone }} />
+                                    )
+                                case "pageBreak":
+                                    return (
+                                        <PageBreak />
+                                    )
+                                default:
+                                    return (
+                                        <p dangerouslySetInnerHTML={{ __html: clone }} /> 
+                                    )
+                        }})()
+                    }
+                </div>
+            </div>
+        )
 
     return (
         <div className={styles.inputFieldContainer} 
