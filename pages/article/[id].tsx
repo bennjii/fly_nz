@@ -82,7 +82,7 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section className={articleSyles.articleBody}>
+                <section className={articleSyles.articleBody + " " + articleSyles.articleBodyView}>
                     <ClientContext.Provider value={{ articleContent, setArticleContent, setInformationUpdated }}>
                         {
                             articleContent?.map((element, index) => {
