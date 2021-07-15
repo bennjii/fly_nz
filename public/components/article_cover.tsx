@@ -16,13 +16,18 @@ export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc
         // Small
         <Link href={`/article/${redirect}`}>
             <div className={styles.articleSmall}>
-                <img src={image} alt=""/>
+                {
+                    image ? 
+                    <img src={image} alt=""/>
+                    :
+                    <div className={styles.imagePlaceholder}></div>           
+                }
 
                 <div>
                     <h3>{title}</h3>
                     <p>{desc}</p>
                     {
-                        tags.map((e) => {
+                        tags?.map((e) => {
                             return (
                                 <Pill title={e.title} color={e.color}/>
                             )
@@ -35,13 +40,18 @@ export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc
         // Large
         <Link href={`/article/${redirect}`}>
             <div className={styles.articleLarge}>
-                <img src={image} alt=""/>
+                {
+                    image ? 
+                    <img src={image} alt=""/>
+                    :
+                    <div className={styles.imagePlaceholder}></div>             
+                }
 
                 <div>
                     <h3>{title}</h3>
                     <p>{desc}</p>
                     {
-                        tags.map((e) => {
+                        tags?.map((e) => {
                             return (
                                 <Pill title={e.title} color={e.color}/>
                             )

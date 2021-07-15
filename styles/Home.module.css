@@ -211,6 +211,22 @@
   justify-content: space-between;
 }
 
+.homeSection > div:not(:first-of-type) {
+  height: 250px;
+  width: 250px;
+
+  padding: 0 !important;
+  position: relative;
+}
+
+.homeSection > div:not(:first-of-type) img {
+  height: 500px;
+  width: 500px;
+
+  position: absolute;
+  left: -50%;
+}
+
 .adminViewportSection {
   padding: 0px 0px 80px;
 
@@ -239,6 +255,20 @@
 
 .homeSection > div:first-of-type h1 {
   font-size: 6rem;
+  position: relative;
+}
+
+.homeSection > div:first-of-type h1::after {
+  height: 20px;
+  width: 20px;
+
+  border-radius: 50%;
+  background-color: #62e6ac;
+
+  right: -6%;
+  content: "";
+  position: absolute;
+  bottom: 20px;
 }
 
 .homeSection > div:first-of-type button {
@@ -281,6 +311,10 @@
   margin: .8rem auto;
 }
 
+.mainBody > section:first-of-type {
+  align-items: center;
+}
+
 .mainBody section {
   width: 78%;
   margin: .8rem auto;
@@ -291,7 +325,7 @@
   flex-direction: row;
 
   width: 100%;
-  border-bottom: 1px solid rgba(63, 63, 63, 0.123);
+  /* border-bottom: 1px solid rgba(63, 63, 63, 0.123); */
 
   padding: 16px 0px;
 
@@ -302,9 +336,10 @@
   width: 100%;
   padding: 16px 0px;
 
-  border-bottom: 1px solid #edf2f9;
+  /* border-bottom: 1px solid #edf2f9; */
 
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.288);
+  backdrop-filter: blur(5px);
   color: #1d1929;
 }
 
@@ -315,7 +350,7 @@
 
   justify-content: space-between;
 
-  width: 78%;
+  width: 88%;
   margin: .8rem auto;
 }
 
@@ -333,7 +368,7 @@
 .headerLinks {
   gap: 3rem;
 
-  font-size: 1.05rem;
+  font-size: 1rem;
 
   display: flex;
   flex-direction: row;
@@ -586,4 +621,24 @@
   height: 1px;
 
   background-color: #1414191e;
+}
+
+.homeArt {
+  /* background-color: #62e6ac; */
+  height: 250px;
+  width: 250px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  top: 100px;
+}
+
+.homeArt img {
+  height: 850px;
+  position: absolute;
+  left: 0;
+
+  transform: scaleX(-1);
 }

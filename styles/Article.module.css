@@ -33,6 +33,18 @@
     max-height: 200px;
 }
 
+.articleSmall .imagePlaceholder {
+    background-color: #62e6ac;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    object-fit: cover;
+    max-height: 200px;
+
+    border: none;
+}
+
 .articleSmall > div {
     border: 1px solid #d8dbde;
     border-top: none;
@@ -56,6 +68,7 @@
 
 .articleLarge {
     border-radius: 5px;
+
     display: flex;
     flex-direction: row;
 
@@ -73,7 +86,26 @@
     max-width: 40%;
 }
 
-.articleLarge > div {
+.articleLarge .imagePlaceholder {
+    background-color: #62e6ac;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    object-fit: cover;
+    max-height: 200px;
+
+    border: none;
+    padding: 1.8rem 1.8rem;
+    padding-top: .5rem;
+
+    width: 100%;
+    flex: 1;
+
+    height: 100%;
+}
+
+.articleLarge > div:not(.imagePlaceholder) {
     border: 1px solid #d8dbde;
     border-left: none;
 

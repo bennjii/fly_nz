@@ -73,7 +73,7 @@ export default function Home() {
 
     return (
         <div className={styles.container}>
-            <Header title={articleData?.title ? articleData?.title : 'create'} type={"admin"}/>
+            <Header title={articleData?.title ? articleData?.title : 'create'} type={"user"}/>
             
             <div className={articleSyles.article}>
                 <section className={articleSyles.articleHeader}>

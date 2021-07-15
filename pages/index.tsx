@@ -31,6 +31,7 @@ export default function Home() {
       	<Header title={"Home"} type={"user"}/>
       
 		<div className={styles.mainBodyBody}>
+			<div className={styles.homeArt}><img src="../art.svg" alt="" /></div>
 			<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
 				<div>
 					<h1>Fly New <br/>Zealand</h1>
@@ -42,8 +43,7 @@ export default function Home() {
 				</div>
 
 				<div>
-					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum est minus ut ea voluptates quibusdam fuga quia voluptas, assumenda illum.</p>
-					<h2>Stats and Stock Updates go here</h2>
+					<img src={'../plane.png'}></img>
 				</div>
 			</section>
 
@@ -59,7 +59,7 @@ export default function Home() {
 		</div>  
 
 		<Footer />  
-		</div>
+	</div>
   )
 }
 
