@@ -36,7 +36,7 @@ const Index = () => {
 		})
 	}, []);
 
-    if(client.auth.currentUser || client.auth.user() || user)
+    if(client.auth.user() || user)
         return (
             <div className={styles.container}>
                 <AdminViewport client={client} user={user}/>

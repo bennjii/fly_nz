@@ -11,18 +11,31 @@ import { useEffect, useState } from 'react'
 import client from '@components/client'
 import Article from '@components/article_cover'
 
-export default function Home() {
-  const [ data, setData ] = useState(null);
+export async function getStaticProps() {
+	return {
+		props: {
+			some_data: await client
+						.from('articles')
+						.select()
+						.eq('published', true)
+						.limit(25)
+						.then(e => e.data)
+		}
+	}
+}
+
+export default function Home({ some_data }) {
+  const [ data, setData ] = useState(some_data);
 
   useEffect(() => {
-    client
-      .from('articles')
-      .select()
-      .eq('published', true)
-      .limit(25)
-      .then(e => {
-        setData(e.data)
-      });
+    // client
+    //   .from('articles')
+    //   .select()
+    //   .eq('published', true)
+    //   .limit(25)
+    //   .then(e => {
+    //     setData(e.data)
+    //   });
       
   }, []);
 
@@ -51,7 +64,7 @@ export default function Home() {
 				{	
 					data?.map(e => {
 						return (
-							<Article title={e.title} tags={[{title: "Finance", color: {background: '124, 180, 239', foreground: '124, 180, 239'}}]} image={"https://www.techicy.com/wp-content/uploads/2018/12/How-could-you-save-money.jpg"} desc={e.description} size={0} redirect={e.id}/>
+							<Article title={e.title} tags={e.tags} image={e.image} desc={e.description} size={0} redirect={e.id}/>
 						)
 					})
 				}

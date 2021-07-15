@@ -18,42 +18,97 @@ import Button from '@components/button'
 import Input from '@components/input'
 
 import _ from 'underscore'
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 
-export default function Home() {
-    const [ articleData, setArticleData ] = useState(null);
-    const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(null);
+export const getStaticPaths: GetStaticPaths = async (a) => {
+    const articles = await client
+        .from('articles')
+        .select('id')
+        .then(e => e.data)
+
+    const paths = articles.map((article) => ({
+        params: { id: article.id.toString() },
+    }))
+
+    return {
+        paths: paths, //indicates that no page needs be created at build time
+        fallback: 'blocking' //indicates the type of fallback
+    }
+}
+
+export const getStaticProps: GetStaticProps = async (
+    context: GetStaticPropsContext
+  ) => {
+    
+    const INDEX = context.params.id;
+
+    return {
+        props: {
+            some_data: await client
+                        .from('articles')
+                        .select()
+                        .eq('id', INDEX)
+                        .then(e => {
+                            if(e.data) {
+                                return { 
+                                        ...e.data[0], 
+                                        content: 
+                                            ( e.data[0].content == [] ? 
+                                                [{ type: "p", content: 'START WRITING HERE', input: false}] 
+                                                : 
+                                                e.data[0].content
+                                            ) 
+                                    }
+                            }
+                        }),
+            index: INDEX
+        }
+    }
+  }
+
+export default function Home({ some_data, index }) {
+
+    const [ articleData, setArticleData ] = useState(some_data);
+    const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(some_data.content);
     const [ informationUpdated, setInformationUpdated ] = useState(false);
 
     const [ articleSettingsOverlay, setArticleSettingsOverlay ] = useState(false);
 
     const router = useRouter();
-    const INDEX = (router.query.id) ? router.query.id : null;
+    const INDEX = index;
 
     useEffect(() => {
-        if(process.browser && INDEX !== null)
-            client
-                .from('articles')
-                .select()
-                .eq('id', INDEX)
-                .then(e => {
-                    if(e.data) {
-                        setArticleData(
-                            { 
-                                ...e.data[0], 
-                                content: 
-                                    ( e.data[0].content == [] ? 
-                                        [{ type: "p", content: 'START WRITING HERE', input: false}] 
-                                        : 
-                                        e.data[0].content
-                                    ) 
-                            }
-                        );
+        console.log(some_data);
 
-                        setArticleContent(e.data[0].content);
-                        setInformationUpdated(true);
-                    }
-                });
-    }, [INDEX]);
+        setArticleContent(articleData.content);
+        setInformationUpdated(true);
+    }, []);
+
+    // useEffect(() => {
+    //     if(process.browser && INDEX !== null)
+    //         client
+    //             .from('articles')
+    //             .select()
+    //             .eq('id', INDEX)
+    //             .then(e => {
+    //                 if(e.data) {
+    //                     setArticleData(
+    //                         { 
+    //                             ...e.data[0], 
+    //                             content: 
+    //                                 ( e.data[0].content == [] ? 
+    //                                     [{ type: "p", content: 'START WRITING HERE', input: false}] 
+    //                                     : 
+    //                                     e.data[0].content
+    //                                 ) 
+    //                         }
+    //                     );
+
+    //                     setArticleContent(e.data[0].content);
+    //                     setInformationUpdated(true);
+    //                 }
+    //             });
+    // }, [INDEX]);
 
     useEffect(() => {
         if(!articleData) return;

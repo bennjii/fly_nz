@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Button from './button'
 import Auth from './auth'
+import supabase from './client'
 
 const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ client, user }) => {
     const [ usersArticles, setUsersArticles ] = useState(null);
@@ -75,7 +76,7 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                             :  
                                 usersArticles?.map(e => {
                                     return (
-                                        <Link href={`/admin/create_article/${e.id}`}>
+                                        <div onClick={() => router.push(`/admin/create_article/${e.id}`)}>
                                             <div key={Math.random() * 10000} className={styles.tableElement}>
                                                 <h4>
                                                     { e.title }
@@ -93,7 +94,7 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                                                     { e?.published ? "Published" : "Draft" }
                                                 </div>
                                             </div>
-                                        </Link>
+                                        </div>
                                     )
                                 })
                         }

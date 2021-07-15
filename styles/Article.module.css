@@ -3,8 +3,8 @@
 
     border-radius: 5px;
 
-    max-width: 25%;
-    max-height: 30%;
+    /* max-width: 25%;
+    max-height: 30%; */
 
     display: flex;
     flex: 1 1 auto;
@@ -36,11 +36,13 @@
 .articleSmall .imagePlaceholder {
     background-color: #62e6ac;
 
+    border-radius: 0px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
     object-fit: cover;
     max-height: 200px;
+    min-height: 100px;
 
     border: none;
 }
@@ -132,7 +134,7 @@
 .article {
     flex: 1 1;
     width: 100%;
-    padding: 42px 0px 0px;
+    /* padding: 42px 0px 0px; */
     display: flex;
     flex-direction: column;
 
@@ -161,7 +163,7 @@
     width: 100%;
     margin: 0;
 
-    padding: 12rem 0rem 1rem 0rem;
+    padding: 17rem 0rem 1rem 0rem;
 }
 
 .articleHeader > div {
@@ -479,4 +481,12 @@
 
 .readonlyDiv {
     cursor: inherit !important;
+}
+
+.articleElementDiv {
+    height: auto;
+    width: auto;
+
+    max-width: 25%;
+    max-height: 35%;
 }

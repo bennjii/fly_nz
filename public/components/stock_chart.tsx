@@ -12,7 +12,7 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
 
     return (
         <div className={`${styles.stockChart} ${positive ? styles.postiveChart : styles.negativeChart}`}>
-            <Line 
+            {/* <Line 
                 data={{
                     labels: labels,
                     datasets: [{
@@ -99,10 +99,7 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                     }
                     
                 }}
-
-                // width={null}
-                // height={null}
-            />
+            /> */}
         </div>
     )
 }
