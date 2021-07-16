@@ -31,15 +31,13 @@ export const Header: React.FC<{ title: string, type: string }> = ({ title, type 
 
                     <div className={styles.headerLinks}>
                         <Link href={"/advice"}>
-                        <a>Advice</a>
+                            <a>Advice</a>
                         </Link>
-
 
                         <a href="/stocks">Stocks</a>
 
-
                         <Link href={"/articles"}>
-                        <a>Articles</a>
+                            <a>Articles</a>
                         </Link>
                     </div>
                 </div>

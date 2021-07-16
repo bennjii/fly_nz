@@ -310,7 +310,7 @@
 }
 
 .mainBodyBody section {
-  width: 50%;
+  width: 50% !important;
   margin: .8rem auto;
 }
 

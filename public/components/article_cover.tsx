@@ -14,10 +14,7 @@ export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc
 
     return (   
         <div 
-        className={styles.articleElementDiv}
-        onClick={() => {
-            router.push(`/article/${redirect}`);
-        }}>
+        className={styles.articleElementDiv}>
             {
                 (size == 0) ?
                 // Small

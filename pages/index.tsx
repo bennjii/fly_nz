@@ -10,6 +10,13 @@ import Footer from '@components/footer'
 import { useEffect, useState } from 'react'
 import client from '@components/client'
 import Article from '@components/article_cover'
+import Link from 'next/link'
+
+import dynamic from "next/dynamic"
+
+const NoSSRComponent = dynamic(() => import("@components/article_cover"), {
+	ssr: false,
+});
 
 export async function getStaticProps() {
 	return {
@@ -24,55 +31,56 @@ export async function getStaticProps() {
 	}
 }
 
-export default function Home({ some_data }) {
-  const [ data, setData ] = useState(some_data);
+export default function Home({ some_data }) { // { some_data }
+	// if(!process.browser) return <div></div>
+	const [ data, setData ] = useState(some_data);
 
-  useEffect(() => {
-    // client
-    //   .from('articles')
-    //   .select()
-    //   .eq('published', true)
-    //   .limit(25)
-    //   .then(e => {
-    //     setData(e.data)
-    //   });
-      
-  }, []);
+	useEffect(() => {
+		client
+		.from('articles')
+		.select()
+		.eq('published', true)
+		.limit(25)
+		.then(e => {
+			setData(e.data)
+		});
+		
+	}, []);
 
-  return (
-    <div className={styles.container}>
-      	<Header title={"Home"} type={"user"}/>
-      
-		<div className={styles.mainBodyBody}>
-			<div className={styles.homeArt}><img src="../art.svg" alt="" /></div>
-			<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
-				<div>
-					<h1>Fly New <br/>Zealand</h1>
-					<p>Learn better financing with us, wherever you are</p>
+	return (
+		<div className={styles.container}>
+			<Header title={"Home"} type={"user"}/>
+		
+			<div className={styles.mainBodyBody}>
+				<div className={styles.homeArt}><img src="../art.svg" alt="" /></div>
+				<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
+					<div>
+						<h1>Fly New <br/>Zealand</h1>
+						<p>Learn better financing with us, wherever you are</p>
 
-					{/* <Button title={"Get Started"} router={Router} onClick={(e, callback) => {
-						callback();
-					}}></Button> */}
-				</div>
+						{/* <Button title={"Get Started"} router={Router} onClick={(e, callback) => {
+							callback();
+						}}></Button> */}
+					</div>
 
-				<div>
-					<img src={'../plane.png'}></img>
-				</div>
-			</section>
+					<div>
+						<img src={'../plane.png'}></img>
+					</div>
+				</section>
 
-			<section className={styles.articlesList}>
-				{	
-					data?.map(e => {
-						return (
-							<Article title={e.title} tags={e.tags} image={e.image} desc={e.description} size={0} redirect={e.id}/>
-						)
-					})
-				}
-			</section>
-		</div>  
+				<section className={styles.articlesList}>
+					{	
+						data?.map(e => {
+							return (
+								<Article key={`K-${e.id}`} title={e.title} tags={e.tags} image={e.image} desc={e.description} size={0} redirect={e.id}/>
+							)
+						})
+					}
+				</section>
+			</div>  
 
-		<Footer />  
-	</div>
-  )
+			<Footer />  
+		</div>
+	)
 }
 
