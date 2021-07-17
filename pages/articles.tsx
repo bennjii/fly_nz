@@ -28,7 +28,7 @@ export default function Articles() {
       <Header title={"Articles"} type={"user"}/>
       
       <body className={styles.mainBody}>
-        <section className={styles.homeSection}>
+        <section className={styles.homeSection + " " + styles.articleMainBody}>
           <h1>Articles</h1>
           <p>Learn better financing with us, wherever you are</p>          
         </section>
@@ -39,7 +39,7 @@ export default function Articles() {
             {
               data?.map(e => {
                 return (
-                  <Article title={e.title} tags={e.tags} image={e.image} desc={e.description} size={1} redirect={e.id} />
+                  <Article key={`ARTi-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={1} redirect={e.id} />
                 )
               })
             }

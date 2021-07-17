@@ -9,6 +9,8 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
     const [ saveState, setSaveState ] = useState(data.content);
 
     const closeAndUpdate = () => {
+        console.log(inputState, saveState);
+        
         setInputState({ ...inputState, content: saveState });
 
         onLeave({ ...inputState, content: saveState, input: false });

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import styles from '@styles/Stocks.module.css'
 
 import token from '@components/token'
-import { Line } from 'react-chartjs-2'
+import { Line, defaults } from 'react-chartjs-2'
+
+const {global, line} = defaults;
 
 export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, stockData }) => {
 	const labels = data.map(e => e.label);
@@ -12,7 +14,7 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
 
     return (
         <div className={`${styles.stockChart} ${positive ? styles.postiveChart : styles.negativeChart}`}>
-            {/* <Line 
+            <Line 
                 data={{
                     labels: labels,
                     datasets: [{
@@ -32,6 +34,8 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                 }} 
 
                 options={{
+                    ...global,
+                    ...line,
                     maintainAspectRatio: false,
                     aspectRatio: 3.5,
                     legend: {
@@ -97,9 +101,9 @@ export const StockChart: React.FC<{ data: any[], stockData: any }> = ({ data, st
                       
                           }]
                     }
-                    
+                 
                 }}
-            /> */}
+            />
         </div>
     )
 }

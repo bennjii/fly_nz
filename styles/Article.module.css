@@ -8,6 +8,11 @@
 
     display: flex;
     flex: 1 1 auto;
+
+    transition: .2s ease all;
+    border: 1px solid #d8dbde;
+
+    height: 100%;
 }
 
 .articleSmall p {
@@ -29,7 +34,7 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
-    object-fit: cover;
+    object-fit: contain;
     max-height: 200px;
 }
 
@@ -48,7 +53,7 @@
 }
 
 .articleSmall > div {
-    border: 1px solid #d8dbde;
+    /* border: 1px solid #d8dbde; */
     border-top: none;
 
     padding: 1.8rem 1.8rem;
@@ -66,6 +71,7 @@
 
     border-color: #bab8c2;
     background-color: #fafbfb;
+    /* box-shadow: 0px 0px 6px 1px #22242928; */
 }
 
 .articleLarge {
@@ -75,7 +81,12 @@
     flex-direction: row;
 
     max-height: 360px;
-    max-width: 45%;
+    max-width: 100%;
+
+    height: 100%;
+
+    transition: .2s ease all;
+    border: 1px solid #d8dbde;
 }
 
 .articleLarge img {
@@ -106,7 +117,7 @@
 }
 
 .articleLarge > div:not(.imagePlaceholder) {
-    border: 1px solid #d8dbde;
+    /* border: 1px solid #d8dbde; */
     border-left: none;
 
     padding: 1.8rem 1.8rem;
@@ -163,6 +174,11 @@
     margin: 0;
 
     padding: 17rem 0rem 1rem 0rem;
+
+    background-color: #62e6ac;
+    border: none;
+
+    background-size: cover;
 }
 
 .articleHeader > div {
@@ -445,6 +461,8 @@
     color: #ffbb00;
 
     user-select: none;
+
+    background-color: white;
 }
 
 .articleSyncing svg {
@@ -476,6 +494,9 @@
     color: #52dd12;
 
     user-select: none;
+
+    background-color: white;
+    color: #62e6ac;
 }
 
 .readonlyDiv {

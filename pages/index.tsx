@@ -72,7 +72,7 @@ export default function Home({ some_data }) { // { some_data }
 					{	
 						data?.map(e => {
 							return (
-								<Article key={`K-${e.id}`} title={e.title} tags={e.tags} image={e.image} desc={e.description} size={0} redirect={e.id}/>
+								<Article key={`K-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={0} redirect={e.id}/>
 							)
 						})
 					}

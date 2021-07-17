@@ -67,10 +67,9 @@ export const getStaticProps: GetStaticProps = async (
   }
 
 export default function Home({ some_data, index }) {
-
     const [ articleData, setArticleData ] = useState(some_data);
     const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(some_data.content);
-    const [ informationUpdated, setInformationUpdated ] = useState(false);
+    const [ informationUpdated, setInformationUpdated ] = useState(true);
 
     const [ articleSettingsOverlay, setArticleSettingsOverlay ] = useState(false);
 
@@ -78,49 +77,20 @@ export default function Home({ some_data, index }) {
     const INDEX = index;
 
     useEffect(() => {
-        console.log(some_data);
-
-        setArticleContent(articleData.content);
-        setInformationUpdated(true);
-    }, []);
-
-    // useEffect(() => {
-    //     if(process.browser && INDEX !== null)
-    //         client
-    //             .from('articles')
-    //             .select()
-    //             .eq('id', INDEX)
-    //             .then(e => {
-    //                 if(e.data) {
-    //                     setArticleData(
-    //                         { 
-    //                             ...e.data[0], 
-    //                             content: 
-    //                                 ( e.data[0].content == [] ? 
-    //                                     [{ type: "p", content: 'START WRITING HERE', input: false}] 
-    //                                     : 
-    //                                     e.data[0].content
-    //                                 ) 
-    //                         }
-    //                     );
-
-    //                     setArticleContent(e.data[0].content);
-    //                     setInformationUpdated(true);
-    //                 }
-    //             });
-    // }, [INDEX]);
+        console.log(`[${new Date().toISOString()}] Why?`)
+    }, [articleContent])
 
     useEffect(() => {
         if(!articleData) return;
         
-        const filteredData = articleContent?.filter(e => e.content !== '');
-        if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
+        const filteredData = articleContent?.filter(e => e.content.trim() !== '');
+        // if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
 
         if(JSON.stringify(articleData) !== JSON.stringify({ ...articleData, content: filteredData })) {
             setInformationUpdated(false);
 
             debounceStorageUpdate({ ...articleData, content: filteredData }, INDEX, (e) => {
-                setInformationUpdated(true)
+                if(!e.error) setInformationUpdated(true);
             });
         }
     }, [articleContent]);
@@ -204,13 +174,30 @@ export default function Home({ some_data, index }) {
                                     callback();
                                 });
                             }}></Button>
+
+                            <hr />
+
+                            <div>
+                                <h3>Background Image</h3> <p>{articleData?.background_image ? articleData?.background_image : "No Image"}</p>
+                            </div>
+
+                            <Input type={"text"} defaultValue={articleData?.background_image} onKeyDown={(e) => {
+                                if(e.code == "Enter") {
+                                    setInformationUpdated(false);
+
+                                    debounceStorageUpdate({ ...articleData, background_image: e.target.value }, INDEX, (e) => {
+                                        setArticleData(e.data[0]);
+                                        setInformationUpdated(true)
+                                    });
+                                } 
+                            }}/>
                         </div>
                     </div>
                     :
                     <></>
                 }
 
-                <section className={articleSyles.articleHeader}>
+                <section className={articleSyles.articleHeader} style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }}>
                     <div>
                         <h1>{ articleData?.title }</h1>
 
@@ -243,7 +230,7 @@ export default function Home({ some_data, index }) {
                         {
                             articleContent?.map((element, index) => {
                                 return (
-                                    <div key={Math.random() * 10000}>
+                                    <div key={`ELEMENT-${index}`}>
                                         <BuildParent content={[index, element]} callback={setArticleContent} />
 
                                         <NewElement index={index+1} callmap={articleContent} callback={setArticleContent} />
@@ -262,21 +249,23 @@ export default function Home({ some_data, index }) {
     )
 }
 
-let lastUpdate = new Date().getTime();
+const debounceStorageUpdate = debounce((data, info, callback) => {
+    client
+        .from('articles')
+        .update(data)
+        .eq('id', info)
+        .then(e => {
+            console.log(e)
 
-const debounceStorageUpdate = (data, info, callback) => {
-    if(new Date().getTime() - lastUpdate >= 1500) {
-        console.log("Debounce Failed")
+            if(!e.error) callback(e)
+        });
+});
 
-        client
-            .from('articles')
-            .update(data)
-            .eq('id', info)
-            .then(e => callback(e))
+function debounce(func, timeout = 1000){
+    let timer;
 
-        lastUpdate = new Date().getTime();
-    }else {
-        console.log("Debounce Failed")
-        setTimeout(() => debounceStorageUpdate(data, info, callback), 1500);
-    }
-}   
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+}

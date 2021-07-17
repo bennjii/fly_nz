@@ -31,9 +31,9 @@ export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc
                             <h3>{title}</h3>
                             <p>{desc}</p>
                             {
-                                tags?.map((e) => {
+                                tags?.map((e, index) => {
                                     return (
-                                        <Pill title={e.title} color={e.color}/>
+                                        <Pill title={e.title} color={e.color} key={`KEY__P_${index}`}/>
                                     )
                                 })
                             }
@@ -55,9 +55,9 @@ export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc
                             <h3>{title}</h3>
                             <p>{desc}</p>
                             {
-                                tags?.map((e) => {
+                                tags?.map((e, index) => {
                                     return (
-                                        <Pill title={e.title} color={e.color}/>
+                                        <Pill title={e.title} color={e.color} key={`KEY__P_${index}`}/>
                                     )
                                 })
                             }

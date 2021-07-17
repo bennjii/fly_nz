@@ -19,64 +19,68 @@ import Input from '@components/input'
 
 import _ from 'underscore'
 import BuildValue from '@components/build_value'
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 
-export default function Home() {
-    const [ articleData, setArticleData ] = useState(null);
-    const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(null);
+export const getStaticPaths: GetStaticPaths = async (a) => {
+    const articles = await client
+        .from('articles')
+        .select('id')
+        .eq('published', true)
+        .then(e => e.data)
+
+    const paths = articles?.map((article) => ({
+        params: { id: article.id.toString() },
+    }))
+
+    return {
+        paths: paths, //indicates that no page needs be created at build time
+        fallback: 'blocking' //indicates the type of fallback
+    }
+}
+
+export const getStaticProps: GetStaticProps = async (
+    context: GetStaticPropsContext
+  ) => {
+    const INDEX = context.params.id;
+
+    return {
+        props: {
+            some_data: await client
+                        .from('articles')
+                        .select()
+                        .eq('id', INDEX)
+                        .then(e => {
+                            if(e.data) {
+                                return { 
+                                        ...e.data[0], 
+                                        content: 
+                                            ( e.data[0].content == [] ? 
+                                                [{ type: "p", content: 'START WRITING HERE', input: false}] 
+                                                : 
+                                                e.data[0].content
+                                            ) 
+                                    }
+                            }
+                        }),
+            index: INDEX
+        }
+    }
+  }
+
+
+export default function Home({ some_data }) {
+    const [ articleData, setArticleData ] = useState(some_data);
+    const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(some_data.content);
     const [ informationUpdated, setInformationUpdated ] = useState(false);
 
-    const [ articleSettingsOverlay, setArticleSettingsOverlay ] = useState(false);
-
     const router = useRouter();
-    const INDEX = (router.query.id) ? router.query.id : null;
-
-    useEffect(() => {
-        if(process.browser && INDEX !== null)
-            client
-                .from('articles')
-                .select()
-                .eq('id', INDEX)
-                .then(e => {
-                    if(e.data) {
-                        setArticleData(
-                            { 
-                                ...e.data[0], 
-                                content: 
-                                    ( e.data[0].content == [] ? 
-                                        [{ type: "p", content: 'START WRITING HERE', input: false}] 
-                                        : 
-                                        e.data[0].content
-                                    ) 
-                            }
-                        );
-
-                        setArticleContent(e.data[0].content);
-                        setInformationUpdated(true);
-                    }
-                });
-    }, [INDEX]);
-
-    useEffect(() => {
-        if(!articleData) return;
-        
-        const filteredData = articleContent?.filter(e => e.content !== '');
-        if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
-
-        if(JSON.stringify(articleData) !== JSON.stringify({ ...articleData, content: filteredData })) {
-            setInformationUpdated(false);
-
-            debounceStorageUpdate({ ...articleData, content: filteredData }, INDEX, (e) => {
-                setInformationUpdated(true)
-            });
-        }
-    }, [articleContent]);
 
     return (
         <div className={styles.container}>
             <Header title={articleData?.title ? articleData?.title : 'create'} type={"user"}/>
             
             <div className={articleSyles.article}>
-                <section className={articleSyles.articleHeader}>
+                <section className={articleSyles.articleHeader} style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }}>
                     <div>
                         <h1>{ articleData?.title }</h1>
                     </div>
@@ -87,7 +91,7 @@ export default function Home() {
                         {
                             articleContent?.map((element, index) => {
                                 return (
-                                    <div key={Math.random() * 10000}>
+                                    <div key={`ARTICLE_${index}`}>
                                         <BuildValue content={[index, element]} callback={setArticleContent} readonly={true}/>
                                     </div>
                                 )
@@ -103,22 +107,3 @@ export default function Home() {
         </div>
     )
 }
-
-let lastUpdate = new Date().getTime();
-
-const debounceStorageUpdate = (data, info, callback) => {
-    if(new Date().getTime() - lastUpdate >= 1500) {
-        console.log("Debounce Failed")
-
-        client
-            .from('articles')
-            .update(data)
-            .eq('id', info)
-            .then(e => callback(e))
-
-        lastUpdate = new Date().getTime();
-    }else {
-        console.log("Debounce Failed")
-        setTimeout(() => debounceStorageUpdate(data, info, callback), 1500);
-    }
-}   

@@ -366,6 +366,7 @@
 
 .headerIcon svg {
   height: 1.1rem;
+  color: #62e6ac;
 }
 
 .headerLinks {
@@ -383,7 +384,8 @@
 }
 
 .headerLinks a:hover {
-  border-bottom: 2px solid #1d1929;
+  /* border-bottom: 2px solid #1d1929; */
+  border-bottom: 2px solid #62e6ac;
 }
 
 .input {
@@ -576,13 +578,14 @@
   background-color: #1414195b;
 
   transition: .55s ease all;
+  overflow: hidden;
 }
 
 .settingsOverlay > div {
   height: fit-content;
   width: 30%;
 
-  border: 1px solid #d8dbde;
+  /* border: 1px solid #d8dbde; */
   color: #262231;
   font-size: 1rem;
 
@@ -597,6 +600,24 @@
 
   font-weight: 400;
   box-shadow: #26223110 0px 1px 2px;
+
+  height: 60vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.settingsOverlay > div::-webkit-scrollbar {
+  background-color: transparent;
+  border-radius: 5px;
+
+  width: 6px;
+}
+
+.settingsOverlay > div::-webkit-scrollbar-thumb {
+  background-color: #62e6ac;
+
+  width: 5px !important;
+  border-radius: 5px;
 }
 
 .settingsOverlay > div div {
@@ -643,4 +664,12 @@
   left: 0;
 
   transform: scaleX(-1);
+}
+
+.articleMainBody {
+  padding: 30px 0px 80px !important;
+}
+
+.articleMainBody h1 {
+  margin-top: 1rem;
 }

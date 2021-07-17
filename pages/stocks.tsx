@@ -42,19 +42,19 @@ export default function Stocks() {
 
         <body className={styles.mainStockBody}>
             <div className={styles.bodyHeader}>
-            <div>
                 <div>
-                <h1>{page.replace(/^\w/, (c) => c.toUpperCase())}</h1>
-                </div>
+                    <div>
+                    <h1>{page.replace(/^\w/, (c) => c.toUpperCase())}</h1>
+                    </div>
 
-                <div>
-                <Search stockInfo={(response) => {
-                    setStockInfo(response)
-                }} chartInfo={(response) => {
-                    setChartInfo(response)
-                }}/>  
+                    <div>
+                    <Search stockInfo={(response) => {
+                        setStockInfo(response)
+                    }} chartInfo={(response) => {
+                        setChartInfo(response)
+                    }}/>  
+                    </div>
                 </div>
-            </div>
             </div>
 
             <section className={styles.searchStocks}>

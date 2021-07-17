@@ -74,10 +74,10 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                                     <Loader />
                                 </div>
                             :  
-                                usersArticles?.map(e => {
+                                usersArticles?.map((e, index) => {
                                     return (
                                         <div onClick={() => router.push(`/admin/create_article/${e.id}`)}>
-                                            <div key={Math.random() * 10000} className={styles.tableElement}>
+                                            <div key={`A_USERS_ARTICLES_${index}`} className={styles.tableElement}>
                                                 <h4>
                                                     { e.title }
                                                 </h4>
