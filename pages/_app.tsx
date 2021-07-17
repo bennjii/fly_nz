@@ -1,6 +1,7 @@
 
 import '../styles/globals.css'
 import type { AppProps /*, AppContext */ } from 'next/app'
+import dynamic from 'next/dynamic';
 
 function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
@@ -17,5 +18,9 @@ function App({ Component, pageProps }: AppProps) {
 
 //   return { ...appProps }
 // }
+
+// export default dynamic(() => Promise.resolve(App), {
+//   ssr: false,
+// });
 
 export default App

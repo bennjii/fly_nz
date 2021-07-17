@@ -9,19 +9,21 @@ import Button from '@components/button'
 import { useEffect, useState } from 'react'
 import supabase from '@components/client'
 
-export default function Articles() {
-  const [ data, setData ] = useState(null);
+export async function getStaticProps() {
+	return {
+		props: {
+			some_data: await supabase
+						.from('articles')
+						.select()
+						.eq('published', true)
+						.limit(25)
+						.then(e => e.data)
+		}
+	}
+}
 
-  useEffect(() => {
-    supabase
-      .from('articles')
-      .select()
-      .eq('published', true)
-      .limit(25)
-      .then(e => {
-        setData(e.data)
-      });
-  }, []);
+export default function Articles({ some_data }) {
+  const [ data, setData ] = useState(some_data);
 
   return (
     <div className={styles.container}>
