@@ -3,8 +3,13 @@ import styles from '@styles/Home.module.css'
 
 import client from '@components/client'
 import Auth from '@components/auth'
-import { AdminViewport } from '@components/admin_viewport'
+// import { AdminViewport } from '@components/admin_viewport'
 import { SupabaseClient } from '@supabase/supabase-js'
+import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import supabase from '@components/client'
+import dynamic from 'next/dynamic'
+
+const AdminViewport = dynamic(() => import('../public/components/admin_viewport'), { ssr: false })
 
 const fetcher = (url, token) =>
   fetch(url, {
@@ -12,6 +17,20 @@ const fetcher = (url, token) =>
     headers: new Headers({ 'Content-Type': 'application/json', token }),
     credentials: 'same-origin',
   }).then((res) => res.json())
+
+//   export const getServerSideProps: GetServerSideProps = async (
+//     context: GetServerSidePropsContext
+//   ) => {
+//     return {
+//         props: {
+//             some_data: await supabase
+//                         .from('articles')
+//                         .select()
+//                         .eq('authorID', supabase.auth.user().id)
+//                         .then(e => e.data)
+//         }
+//     }
+//   }
 
 const Index = () => {
     if(!process.browser) return null; 

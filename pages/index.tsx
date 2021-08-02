@@ -18,7 +18,7 @@ const NoSSRComponent = dynamic(() => import("@components/article_cover"), {
 	ssr: false,
 });
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	return {
 		props: {
 			some_data: await client
@@ -35,17 +35,17 @@ export default function Home({ some_data }) { // { some_data }
 	// if(!process.browser) return <div></div>
 	const [ data, setData ] = useState(some_data);
 
-	useEffect(() => {
-		client
-		.from('articles')
-		.select()
-		.eq('published', true)
-		.limit(25)
-		.then(e => {
-			setData(e.data)
-		});
+	// useEffect(() => {
+	// 	client
+	// 	.from('articles')
+	// 	.select()
+	// 	.eq('published', true)
+	// 	.limit(25)
+	// 	.then(e => {
+	// 		setData(e.data)
+	// 	});
 		
-	}, []);
+	// }, []);
 
 	return (
 		<div className={styles.container}>

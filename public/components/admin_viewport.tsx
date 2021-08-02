@@ -11,9 +11,8 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Button from './button'
 import Auth from './auth'
-import supabase from './client'
 
-const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ client, user }) => {
+const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ client, user  }) => {
     const [ usersArticles, setUsersArticles ] = useState(null);
     const router = useRouter();
 
@@ -115,4 +114,4 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
     )
 }
 
-export { AdminViewport }
+export default AdminViewport

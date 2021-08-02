@@ -18,26 +18,26 @@ import Button from '@components/button'
 import Input from '@components/input'
 
 import _ from 'underscore'
-import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
+import { GetServerSideProps, GetServerSidePropsContext, GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 
-export const getStaticPaths: GetStaticPaths = async (a) => {
-    const articles = await client
-        .from('articles')
-        .select('id')
-        .then(e => e.data)
+// export const getStaticPaths: GetStaticPaths = async (a) => {
+//     const articles = await client
+//         .from('articles')
+//         .select('id')
+//         .then(e => e.data)
 
-    const paths = articles.map((article) => ({
-        params: { id: article.id.toString() },
-    }))
+//     const paths = articles.map((article) => ({
+//         params: { id: article.id.toString() },
+//     }))
 
-    return {
-        paths: paths, //indicates that no page needs be created at build time
-        fallback: 'blocking' //indicates the type of fallback
-    }
-}
+//     return {
+//         paths: paths, //indicates that no page needs be created at build time
+//         fallback: 'blocking' //indicates the type of fallback
+//     }
+// }
 
-export const getStaticProps: GetStaticProps = async (
-    context: GetStaticPropsContext
+export const getServerSideProps: GetServerSideProps = async (
+    context: GetServerSidePropsContext
   ) => {
     
     const INDEX = context.params.id;
