@@ -28,7 +28,7 @@ const fetcher = (url, token) =>
 //                         .select()
 //                         .eq('authorID', supabase.auth.user().id)
 //                         .then(e => e.data)
-//         }
+//         
 //     }
 //   }
 
