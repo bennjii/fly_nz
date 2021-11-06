@@ -101,8 +101,8 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                 </section>
             </div>  
              
-            <div>
-                <h2>{client.auth.user().email}</h2>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'center', padding: '50px 0' }}>
+                <h2 style={{ margin: '0' }}>{client.auth.user().email}</h2>
                 <Button title={"Sign Out"} onClick={() => {
                     client.auth.signOut();
                 }}></Button>

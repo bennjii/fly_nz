@@ -10,7 +10,7 @@ interface State {
     activated: boolean
 }
 
-class Input extends React.Component<{type: string, title?: string, defaultValue?: string, onKeyDown?: Function, placeholder?: string, onChange?: Function, disabled?: boolean}, State> {
+class Input extends React.Component<{type: string, title?: string, defaultValue?: string, onBlur?: Function, onKeyDown?: Function, placeholder?: string, onChange?: Function, disabled?: boolean}, State> {
     constructor(props) {
         super(props)
 
@@ -18,6 +18,7 @@ class Input extends React.Component<{type: string, title?: string, defaultValue?
 
         this.handleChange = this.handleChange.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
+        this.onBlur = this.onBlur.bind(this);
     }
 
     handleChange(e) {
@@ -28,6 +29,12 @@ class Input extends React.Component<{type: string, title?: string, defaultValue?
 
         if(this.props.onChange) { 
             this.props.onChange(e);
+        }
+    }
+
+    onBlur(e) {
+        if(this.props.onBlur) { 
+            this.props.onBlur(e);
         }
     }
 
@@ -49,6 +56,7 @@ class Input extends React.Component<{type: string, title?: string, defaultValue?
                     onMouseLeave={() => this.setState({ hovered: false })}
                     disabled={this.props?.disabled}
                     placeholder={this.props?.placeholder}
+                    onBlur={this.onBlur}
                 />
             </div>
             

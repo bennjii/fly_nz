@@ -52,7 +52,7 @@
 }
 
 .footer {
-  width: 60%;
+  width: 80%;
 
   display: flex;
   flex-direction: row;
@@ -510,10 +510,10 @@
 
 .input:focus {
   outline: none;
-  border: 1px solid #222429;
-  background-color: #222429 !important;
+  box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(58 151 212 / 36%) 0px 0px 0px 4px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px;
+  /* background-color: #222429 !important; */
 
-  color: var(--text-normal);
+  /* color: var(--text-normal); */
 }
 
 .inputModule h4 {

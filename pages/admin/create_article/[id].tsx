@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react' 
+import { useEffect, useRef, useState } from 'react' 
 
 import styles from '@styles/Home.module.css'
 import articleStyles from '@styles/Article.module.css'
@@ -76,6 +76,10 @@ export default function Home({ some_data, index }) {
     const router = useRouter();
     const INDEX = index;
 
+    const article_title_ref = useRef(null);
+    const article_desc_ref = useRef(null);
+    const article_bg_img = useRef(null);
+
     useEffect(() => {
         console.log(`[${new Date().toISOString()}] Why?`)
     }, [articleContent])
@@ -106,6 +110,26 @@ export default function Home({ some_data, index }) {
                         //@ts-expect-error
                         if(e.target.classList.contains(styles.settingsOverlay)) {
                             setArticleSettingsOverlay(false);
+
+                            debounceStorageUpdate({ ...articleData, published: !articleData?.published }, INDEX, (e) => {
+                                setArticleData(e.data[0]);
+                                setInformationUpdated(true);
+                            });
+
+                            debounceStorageUpdate({ ...articleData, title: article_title_ref.current.value }, INDEX, (e) => {
+                                setArticleData(e.data[0]);
+                                setInformationUpdated(true)
+                            });
+
+                            debounceStorageUpdate({ ...articleData, description: article_desc_ref.current.value }, INDEX, (e) => {
+                                setArticleData(e.data[0]);
+                                setInformationUpdated(true)
+                            });
+
+                            debounceStorageUpdate({ ...articleData, background_image: article_bg_img.current.value }, INDEX, (e) => {
+                                setArticleData(e.data[0]);
+                                setInformationUpdated(true)
+                            });
                         }
                     }}>
                         <div>
@@ -131,7 +155,7 @@ export default function Home({ some_data, index }) {
                                 <h3>Title</h3> <p>{articleData?.title}</p>
                             </div>
 
-                            <Input type={"text"} defaultValue={articleData?.title} onKeyDown={(e) => {
+                            <Input type={"text"} ref={article_title_ref} placeholder={"Article Title"} defaultValue={articleData?.title} onKeyDown={(e) => {
                                 if(e.code == "Enter") {
                                     setInformationUpdated(false);
 
@@ -140,7 +164,14 @@ export default function Home({ some_data, index }) {
                                         setInformationUpdated(true)
                                     });
                                 }                           
-                            }}/>
+                            }} onBlur={(e) => {
+                                setInformationUpdated(false);
+
+                                debounceStorageUpdate({ ...articleData, title: e.target.value }, INDEX, (e) => {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                });
+                            }} />
 
                             <hr />
 
@@ -148,7 +179,7 @@ export default function Home({ some_data, index }) {
                                 <h3>Description</h3> <p>{articleData?.description}</p>
                             </div>
 
-                            <Input type={"text"} defaultValue={articleData?.description} onKeyDown={(e) => {
+                            <Input type={"text"} ref={article_desc_ref} placeholder={"Article Description"} defaultValue={articleData?.description} onKeyDown={(e) => {
                                 if(e.code == "Enter") {
                                     setInformationUpdated(false);
 
@@ -181,7 +212,7 @@ export default function Home({ some_data, index }) {
                                 <h3>Background Image</h3> <p>{articleData?.background_image ? articleData?.background_image : "No Image"}</p>
                             </div>
 
-                            <Input type={"text"} defaultValue={articleData?.background_image} onKeyDown={(e) => {
+                            <Input type={"text"} ref={article_bg_img} placeholder={"Image URL"} defaultValue={articleData?.background_image} onKeyDown={(e) => {
                                 if(e.code == "Enter") {
                                     setInformationUpdated(false);
 
