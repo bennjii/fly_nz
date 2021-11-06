@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
@@ -15,7 +15,7 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: "guillon";
+  font-family: "Public Sans";
 }
 
 
@@ -36,6 +36,20 @@ a {
   src: url("../public/guillon_bold.woff2");
   font-weight: 800;
 }
+
+@font-face {
+  font-family: "Public Sans";
+  src: url('../public/fonts/Public_Sans/PublicSans-VariableFont_wght.ttf');
+  font-weight: 1 999;
+}
+
+@font-face {
+  font-family: "Public Sans";
+  src: url('../public/fonts/Public_Sans/PublicSans-Italic-VariableFont_wght.ttf');
+  font-weight: 1 999;
+  font-style: italic;
+}
+
 
 :root {
   --header-primary: #edf2f9;

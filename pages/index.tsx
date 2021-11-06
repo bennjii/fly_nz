@@ -53,6 +53,7 @@ export default function Home({ some_data }) { // { some_data }
 		
 			<div className={styles.mainBodyBody}>
 				<div className={styles.homeArt}><img src="../art.svg" alt="" /></div>
+
 				<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
 					<div>
 						<h1>Fly New <br/>Zealand</h1>

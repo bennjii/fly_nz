@@ -51,7 +51,7 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                                     author: {
                                         id: user,
                                         data: {
-                                            name: "Template Name", // REPLACE IMMEDIATELYYYY
+                                            name: "Template Name", // REPLACE IMMEDIATELY
                                             iconURL: "",
                                         }
                                     },

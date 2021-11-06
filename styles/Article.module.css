@@ -1,3 +1,31 @@
+.articleContainer {
+    min-height: 100vh;
+  
+    width: 100%;
+    margin: 0 auto;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    font-family: "Public Sans";
+}
+
+.articleContainer > *:not(.article) {
+    width: 60%;
+}
+
+@media only screen and (max-width: 600px) {
+    .articleContainer {
+        width: 100%;
+    }
+
+    .articleContainer > *:not(.article) {
+        width: 80%;
+    }
+}
+
 .articleSmall {
     flex-direction: column;
 
@@ -144,7 +172,6 @@
 .article {
     flex: 1 1;
     width: 100%;
-    /* padding: 42px 0px 0px; */
     display: flex;
     flex-direction: column;
 
@@ -386,7 +413,7 @@
     max-height: 1px;
 }
 
-.invisivblePageLine {
+.invisiblePageLine {
     opacity: 0;
 }
 
@@ -443,6 +470,12 @@
 
 .relativeEditorContent {
     width: 100%;
+    border-radius: 3px;
+}
+
+.relativeEditorContent:focus {
+    outline: none;
+    /* box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(58 151 212 / 36%) 0px 0px 0px 4px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 16%) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px; */
 }
 
 .articleSyncing {

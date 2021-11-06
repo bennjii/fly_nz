@@ -76,7 +76,7 @@ export default function Home({ some_data }) {
     const router = useRouter();
 
     return (
-        <div className={styles.container}>
+        <div className={articleSyles.articleContainer}>
             <Header title={articleData?.title ? articleData?.title : 'create'} type={"user"}/>
             
             <div className={articleSyles.article}>
@@ -92,7 +92,7 @@ export default function Home({ some_data }) {
                             articleContent?.map((element, index) => {
                                 return (
                                     <div key={`ARTICLE_${index}`}>
-                                        <BuildValue content={[index, element]} callback={setArticleContent} readonly={true}/>
+                                        <BuildValue content={[index, element]} callback={setArticleContent} readonly={true} onLeave={() => {}}/>
                                     </div>
                                 )
                             })

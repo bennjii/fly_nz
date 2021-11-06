@@ -21,15 +21,16 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
 
     return (
         <div className={styles.inputContainer}>
-            <textarea 
-                autoFocus
+            <div
+                contentEditable 
                 placeholder={"Type here..."}
-                defaultValue={inputState.content}
+                
                 onChange={(e) => { 
+                    //@ts-expect-error
                     setSaveState(e.target.value);
                     // setInformationUpdated(false);
                 }}
-                rows={inputState.content.split(/\r\n|\r|\n/).length}
+                // rows={inputState.content.split(/\r\n|\r|\n/).length}
                 onKeyDown={(e) => {
                     if(e.code == "Enter") {
                         closeAndUpdate();
@@ -54,7 +55,7 @@ export const BuildInput: React.FC<{ content: [number, { type: string, content: s
                     ${styles[`articleInput_${data.type}`]}
                     `
                 }
-            />
+            >{inputState.content}</div>
         </div>
     )
 }

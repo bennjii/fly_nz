@@ -18,20 +18,6 @@ const fetcher = (url, token) =>
     credentials: 'same-origin',
   }).then((res) => res.json())
 
-//   export const getServerSideProps: GetServerSideProps = async (
-//     context: GetServerSidePropsContext
-//   ) => {
-//     return {
-//         props: {
-//             some_data: await supabase
-//                         .from('articles')
-//                         .select()
-//                         .eq('authorID', supabase.auth.user().id)
-//                         .then(e => e.data)
-//         
-//     }
-//   }
-
 const Index = () => {
     if(!process.browser) return null; 
     const session = client.auth.session()
@@ -39,7 +25,7 @@ const Index = () => {
 	const [ cssProperties, setCssProperties ] = useState({
 		"--color-primary": "#7289da",
 		"--color-primary-rgb": "114, 137, 218"
-	}) // Fetch User prefernces
+	}) // Fetch User preferences
 
 	const [ user, setUser ] = useState(client.auth.user());
 	const [ authView, setAuthView ] = useState('sign_in')
@@ -57,9 +43,7 @@ const Index = () => {
 
     if(client.auth.user() || user)
         return (
-            <div className={styles.container}>
-                <AdminViewport client={client} user={user}/>
-            </div>
+            <AdminViewport client={client} user={user}/>
         ) 
     else 
         return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react' 
 
 import styles from '@styles/Home.module.css'
-import articleSyles from '@styles/Article.module.css'
+import articleStyles from '@styles/Article.module.css'
 
 import Header from '@components/header'
 import Footer from '@components/footer'
@@ -96,10 +96,10 @@ export default function Home({ some_data, index }) {
     }, [articleContent]);
 
     return (
-        <div className={styles.container}>
+        <div className={articleStyles.articleContainer}>
             <Header title={articleData?.title ? articleData?.title : 'create'} type={"admin"}/>
             
-            <div className={articleSyles.article}>
+            <div className={articleStyles.article}>
                 {
                     articleSettingsOverlay ?
                     <div className={styles.settingsOverlay} onClick={(e) => {
@@ -112,7 +112,7 @@ export default function Home({ some_data, index }) {
                             <h1>Settings</h1>
 
                             <div>
-                                <h3>Article Visiblity</h3> <p>{articleData?.published ? "Published" : "Draft"}</p>
+                                <h3>Article Visibility</h3> <p>{articleData?.published ? "Published" : "Draft"}</p>
                             </div>
 
                             <Button title={articleData?.published ? "Redact" : "Publish"} onClick={(e, callback) => {
@@ -197,7 +197,7 @@ export default function Home({ some_data, index }) {
                     <></>
                 }
 
-                <section className={articleSyles.articleHeader} style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }}>
+                <section className={articleStyles.articleHeader} style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }}>
                     <div>
                         <h1>{ articleData?.title }</h1>
 
@@ -210,12 +210,12 @@ export default function Home({ some_data, index }) {
 
                             {
                                 informationUpdated ?
-                                <div className={articleSyles.articleSynced}>
+                                <div className={articleStyles.articleSynced}>
                                     Synced 
                                     <Check size={18} />
                                 </div>
                                 :
-                                <div className={articleSyles.articleSyncing}>
+                                <div className={articleStyles.articleSyncing}>
                                     Syncing
                                     <RefreshCw size={18} />
                                 </div>
@@ -224,7 +224,7 @@ export default function Home({ some_data, index }) {
                     </div>
                 </section>
 
-                <section className={articleSyles.articleBody}>
+                <section className={articleStyles.articleBody}>
                     <ClientContext.Provider value={{ articleContent, setArticleContent, setInformationUpdated }}>
                         <NewElement index={0} callmap={articleContent} callback={setArticleContent}/>
                         {

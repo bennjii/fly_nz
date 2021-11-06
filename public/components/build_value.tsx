@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from '@styles/Article.module.css'
 
 import { Search as SearchIcon } from 'react-feather'
@@ -9,11 +9,14 @@ import PageBreak from './page_break'
 
 import { MoreVertical } from 'react-feather'
 
-export const BuildValue: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function, readonly?: boolean }> = ({ content, callback, readonly }) => {
+export const BuildValue: React.FC<{ content: [number, { type: string, content: string, input: boolean }], callback: Function, onLeave: Function, readonly?: boolean }> = ({ content, callback, onLeave, readonly }) => {
     const [ index, data ] = content;
 
     const [ hovered, setHovered ] = useState(false);
     const [ itemSettings, setItemSettings ] = useState(false); 
+
+    const [ inputState, setInputState ] = useState(data); 
+    const [ saveState, setSaveState ] = useState(data.content);
 
     let clone = data.content;
 
@@ -26,6 +29,24 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
 
     const updateParent = (e) => {
         console.log(e.target.value)
+    }
+
+    const input_field = useRef(null);
+
+    useEffect(() => {
+        if(data.input == true) {
+            console.log(input_field.current);
+            input_field.current.children[0].focus();
+        }
+    })
+
+    const closeAndUpdate = () => {
+        console.log(inputState, saveState);
+        
+        setInputState({ ...inputState, content: saveState });
+
+        onLeave({ ...inputState, content: saveState, input: false });
+        callback({  ...inputState, content: saveState, input: false });
     }
 
     if(readonly)
@@ -98,11 +119,26 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                     setItemSettings(!itemSettings)
                 }}/>
             </div>
-            <div className={styles.relativeEditorContent} onClick={(e) => {
-                console.log(e.target)
-                //@ts-expect-error
-                if(e.target.tagName !== 'svg') callback({ ...content[1], input: true });
-            }}>
+
+            <div 
+                className={styles.relativeEditorContent} 
+                contentEditable
+                ref={input_field}
+                onBlur={() => {
+                    onLeave({ ...inputState, input: false });
+                    callback({ ...inputState, input: false });
+
+                    closeAndUpdate();
+                }}
+                onKeyPress={(e) => {
+                    //@ts-expect-error
+                    if(e.target.children[0].innerHTML) setSaveState(e.target.children[0].innerHTML);
+                }}
+                onClick={(e) => {
+                    console.log(e.target)
+                    // @ts-expect-error
+                    if(e.target.tagName !== 'svg') callback({ ...content[1], input: true });
+                }}>
                 {
                     (() => {
                         switch(data.type) {

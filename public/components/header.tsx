@@ -15,6 +15,7 @@ export const Header: React.FC<{ title: string, type: string }> = ({ title, type 
                 <Head>
                     <title>{title}</title>
                     <link rel="icon" href="/favicon.ico" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 </Head>
 
                 <div>
@@ -34,7 +35,7 @@ export const Header: React.FC<{ title: string, type: string }> = ({ title, type 
                             <a>Advice</a>
                         </Link>
 
-                        <a href="/stocks">Stocks</a>
+                        {/* <a href="/stocks">Stocks</a> */}
 
                         <Link href={"/articles"}>
                             <a>Articles</a>
