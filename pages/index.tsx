@@ -22,11 +22,11 @@ export async function getServerSideProps() {
 	return {
 		props: {
 			some_data: await client
-						.from('articles')
-						.select()
-						.eq('published', true)
-						.limit(25)
-						.then(e => e.data)
+				.from('articles')
+				.select("*")
+				.eq('published', true)
+				.limit(25)
+				.then(e => e.data)
 		}
 	}
 }
@@ -64,7 +64,7 @@ export default function Home({ some_data }) { // { some_data }
 						}}></Button> */}
 					</div>
 
-					<div>
+					<div className={styles.notOnMobile}>
 						<img src={'../plane.png'}></img>
 					</div>
 				</section>

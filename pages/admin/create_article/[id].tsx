@@ -188,7 +188,14 @@ export default function Home({ some_data, index }) {
                                         setInformationUpdated(true)
                                     });
                                 } 
-                            }}/>
+                            }} onBlur={(e) => {
+                                setInformationUpdated(false);
+
+                                debounceStorageUpdate({ ...articleData, description: e.target.value }, INDEX, (e) => {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                });
+                            }} />
 
                             <hr />
 
@@ -221,7 +228,14 @@ export default function Home({ some_data, index }) {
                                         setInformationUpdated(true)
                                     });
                                 } 
-                            }}/>
+                            }} onBlur={(e) => {
+                                setInformationUpdated(false);
+
+                                debounceStorageUpdate({ ...articleData, background_image: e.target.value }, INDEX, (e) => {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                });
+                            }} />
                         </div>
                     </div>
                     :

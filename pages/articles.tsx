@@ -42,7 +42,7 @@ export default function Articles({ some_data }) {
 				{
 				data?.map(e => {
 					return (
-					<Article key={`ARTi-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={1} redirect={e.id} />
+						<Article key={`ARTi-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={window.matchMedia("only screen and (max-width: 760px)").matches ? 0 : 1} redirect={e.id} />
 					)
 				})
 				}

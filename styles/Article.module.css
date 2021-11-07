@@ -41,6 +41,11 @@
     border: 1px solid #d8dbde;
 
     height: 100%;
+    max-height: 250px;
+
+    max-width: 350px;
+    width: auto;
+    /* max-width: 100%; */
 }
 
 .articleSmall p {
@@ -62,8 +67,8 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 
-    object-fit: contain;
-    max-height: 200px;
+    object-fit: cover;
+    max-height: 45%;
 }
 
 .articleSmall .imagePlaceholder {
@@ -230,6 +235,23 @@
 .articleHeader > div {
     width: 60%;
     margin: .8rem auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .articleHeader h1 {
+        font-size: 4rem !important;
+        font-weight: 900;
+    
+        margin: 0;
+    }
+
+    .articleHeader > div {
+        width: 80%;
+    }
+
+    .article section:not(:first-of-type) {
+        width: 70%;
+    }
 }
 
 .articleBody {
@@ -545,6 +567,6 @@
     height: auto;
     width: auto;
 
-    max-width: 25%;
-    max-height: 35%;
+    max-width: 100%;
+    max-height: 100%;
 }
