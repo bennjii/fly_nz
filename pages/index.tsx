@@ -21,7 +21,7 @@ const NoSSRComponent = dynamic(() => import("@components/article_cover"), {
 export async function getServerSideProps() {
 	return {
 		props: {
-			some_data: await client
+			articles: await client
 				.from('articles')
 				.select("*")
 				.eq('published', true)
@@ -31,29 +31,14 @@ export async function getServerSideProps() {
 	}
 }
 
-export default function Home({ some_data }) { // { some_data }
-	// if(!process.browser) return <div></div>
-	const [ data, setData ] = useState(some_data);
-
-	// useEffect(() => {
-	// 	client
-	// 	.from('articles')
-	// 	.select()
-	// 	.eq('published', true)
-	// 	.limit(25)
-	// 	.then(e => {
-	// 		setData(e.data)
-	// 	});
-		
-	// }, []);
+export default function Home({ articles }) {
+	const [ data, setData ] = useState(articles);
 
 	return (
 		<div className={styles.container}>
 			<Header title={"Home"} type={"user"}/>
 		
 			<div className={styles.mainBodyBody}>
-				{/* <div className={styles.homeArt}><img src="../art.svg" alt="" /></div> */}
-
 				<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
 					<div>
 						<h1>Financial <br /> Literacy Youth <br /> NZ</h1>
@@ -73,7 +58,7 @@ export default function Home({ some_data }) { // { some_data }
 					{	
 						data?.map(e => {
 							return (
-								<NoSSRComponent key={`K-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={0} redirect={e.title.replaceAll(" ", "-").toLowerCase()}/>
+								<NoSSRComponent key={`K-${e?.id}`} title={e?.title} tags={e?.tags} image={e?.background_image} desc={e?.description} size={0} redirect={e?.title?.replaceAll(" ", "-")?.toLowerCase()}/>
 							)
 						})
 					}
