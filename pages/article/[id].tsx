@@ -25,6 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
   ) => {
     const INDEX: any = context.params.id;
+    const ILikeTitle = INDEX ? INDEX.replaceAll("-", " ") : "";
 
     return {
         props: {
@@ -42,7 +43,7 @@ export const getServerSideProps: GetServerSideProps = async (
                             tags
                         `)
                         // .select()
-                        .ilike('title', `%${INDEX.replaceAll("-", " ")}%`)
+                        .ilike('title', `%${ILikeTitle}%`)
                         .then(e => {
                             if(e.data) {
                                 return { 
