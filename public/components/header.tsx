@@ -26,6 +26,8 @@ export const Header: React.FC<{ title: string, type: string }> = ({ title, type 
                             <h3>
                                 fly
                             </h3> 
+
+                            {/* <h3 style={{ fontWeight: 300 }}>Articles</h3> */}
                         </div>
                     </Link>
                     

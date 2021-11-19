@@ -39,8 +39,8 @@ export const Footer: React.FC<{ }> = ({ }) => {
 
                     <div>
                         <p>Social</p>
-                        <a href="">Instagram</a>
-                        <a href="">Discord</a>
+                        <a href="https://www.instagram.com/flynz_org/">Instagram</a>
+                        <a href="https://discord.gg/NRBm34gM">Discord</a>
                         <a href="">Help</a>
                     </div>
                 </div>

@@ -365,19 +365,6 @@
   position: relative;
 }
 
-/* .homeSection > div:first-of-type h1::after {
-  height: 1rem;
-  width: 1rem;
-
-  border-radius: 50%;
-  background-color: #62e6ac;
-
-  right: -1rem;
-  content: "";
-  position: absolute;
-  bottom: 1rem;
-} */
-
 .homeSection > div:first-of-type button {
   margin-bottom: 2rem;
 }
@@ -469,7 +456,7 @@
 
 .headerIcon svg {
   height: 1.1rem;
-  color: #62e6ac;
+  color: #5de993;
   /* color: #0f0f0f77; */
 }
 
@@ -489,7 +476,7 @@
 
 .headerLinks a:hover {
   /* border-bottom: 2px solid #1d1929; */
-  border-bottom: 2px solid #62e6ac;
+  border-bottom: 2px solid #aaeaab;
 }
 
 .input {

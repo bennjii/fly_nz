@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react' 
 
 import styles from '@styles/Home.module.css'
-import articleSyles from '@styles/Article.module.css'
+import articleStyles from '@styles/Article.module.css'
 
 import Header from '@components/header'
 import Footer from '@components/footer'
@@ -21,23 +21,6 @@ import _ from 'underscore'
 import BuildValue from '@components/build_value'
 import { GetServerSideProps, GetServerSidePropsContext, GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 
-// export const getStaticPaths: GetStaticPaths = async (a) => {
-//     const articles = await client
-//         .from('articles')
-//         .select('id')
-//         .eq('published', true)
-//         .then(e => e.data)
-
-//     const paths = articles?.map((article) => ({
-//         params: { id: article.id.toString() },
-//     }))
-
-//     return {
-//         paths: paths, //indicates that no page needs be created at build time
-//         fallback: 'blocking' //indicates the type of fallback
-//     }
-// }
-
 export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
   ) => {
@@ -45,9 +28,20 @@ export const getServerSideProps: GetServerSideProps = async (
 
     return {
         props: {
-            some_data: await client
+            article_content: await client
                         .from('articles')
-                        .select()
+                        .select(`
+                            title,
+                            description,
+                            author:author_id ( username, iconURL ),
+                            published,
+                            content,
+                            creation_date,
+                            date,
+                            background_image,
+                            tags
+                        `)
+                        // .select()
                         .ilike('title', `%${INDEX.replaceAll("-", " ")}%`)
                         .then(e => {
                             if(e.data) {
@@ -68,25 +62,45 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 
 
-export default function Home({ some_data }) {
-    const [ articleData, setArticleData ] = useState(some_data);
-    const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(some_data.content);
+export default function Home({ article_content }) {
+    const [ articleData, setArticleData ] = useState(article_content);
+    const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(article_content.content);
     const [ informationUpdated, setInformationUpdated ] = useState(false);
 
     const router = useRouter();
+    const [ time_to_read, setTTR ] = useState(articleContent.flatMap(e => `${e.content} `).join(' ').replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(' ').length / 250);
 
     return (
-        <div className={articleSyles.articleContainer}>
+        <div className={articleStyles.articleContainer}>
             <Header title={articleData?.title ? articleData?.title : 'create'} type={"user"}/>
             
-            <div className={articleSyles.article}>
-                <section className={articleSyles.articleHeader} style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }}>
+            <div className={articleStyles.article}>
+                <section className={articleStyles.articleHeader}> {/* style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }} */}
                     <div>
+                        <div className={articleStyles.articleTags}>
+                            <div>COMPOUND INTEREST</div>
+                            <p>{ new Date(articleData?.creation_date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})  }</p>
+                            
+                            <p>{ articleData?.author.username }</p>
+                            {/* 250wpm    x words / 250wpm = avg. time */}
+                            <div>
+                                { 
+                                    time_to_read < 1
+                                    ? '<1 min read'
+                                    : `${Math.round(time_to_read)} min read` 
+                                }
+                            </div>
+                        </div>
+
                         <h1>{ articleData?.title }</h1>
+                        <p>{ articleData?.description }</p>
                     </div>
                 </section>
 
-                <section className={articleSyles.articleBody + " " + articleSyles.articleBodyView}>
+                <section className={articleStyles.articleImage} style={{ backgroundImage: articleData.background_image ? `url(${articleData?.background_image}` : 'linear-gradient(90deg, rgba(170,234,171,1) 0%, rgba(198,215,245,1) 100%)' }}>
+                </section>
+
+                <section className={articleStyles.articleBody + " " + articleStyles.articleBodyView}>
                     <ClientContext.Provider value={{ articleContent, setArticleContent, setInformationUpdated }}>
                         {
                             articleContent?.map((element, index) => {

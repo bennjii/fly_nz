@@ -54,13 +54,11 @@ export const Search: React.FC<{ stockInfo: Function, chartInfo: Function }> = ({
                     onKeyDown={(e) => {
                         if(e.nativeEvent.key == "ArrowDown" && searchIndex+1 < searchSymbols.length)
                         {
-                            console.log(searchSymbols[searchIndex+1].symbol);
                             setSearchIndex(searchIndex+1);
                         }
 
                         if(e.nativeEvent.key == "ArrowUp" && searchIndex >= 0)
                         {
-                            console.log(searchSymbols[searchIndex-1].symbol);
                             setSearchIndex(searchIndex-1);
                         }
                         

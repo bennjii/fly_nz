@@ -59,10 +59,7 @@ const Index = () => {
 let lastUpdate = new Date().getTime();
 
 const debounceStorageUpdate = (data) => {
-    console.log(new Date().getTime() - lastUpdate);
-
     if(new Date().getTime() - lastUpdate >= 2500) {
-        console.log('UPDATED!!!')
 
         lastUpdate = new Date().getTime();
     }else {

@@ -9,12 +9,20 @@ import { callbackify } from 'util'
 import { Check } from 'react-feather';
 import { Router, useRouter } from 'next/router'
 
+const fetcher = (url, body) =>
+  fetch(url, {
+    method: 'POST',
+    credentials: 'same-origin',
+    body: JSON.stringify(body)
+  }).then((res) => res.json())
+
 const Auth = ({ callback }) => {
     const [ authState, setAuthState ] = useState('auth-login');
     const [ authInputState, setAuthInputState ] = useState({
         email: "",
         password: "",
-        username: ""
+        username: "",
+        proxy_code: "",
     });
 
 	return (
@@ -61,26 +69,24 @@ const Auth = ({ callback }) => {
                                 <Input title={"USERNAME"} defaultValue={authInputState.username} type="text" onChange={(e) => setAuthInputState({ ...authInputState, username: e.target.value })}/>
                                 <br />
                                 <Input title={"PASSWORD"} defaultValue={authInputState.password} type="password" onChange={(e) => setAuthInputState({ ...authInputState, password: e.target.value })}/>
+                                <br />
+                                <Input title={"PROXY"} defaultValue={authInputState.proxy_code} type="text" onChange={(e) => setAuthInputState({ ...authInputState, proxy_code: e.target.value })}/>
                             </div>
 
                             <div>
                                 <Button title={"Sign Up"} onClick={async (e, callback) => {
                                     if(authInputState.email && authInputState.password && authInputState.username) {
-                                        const usr = await client.auth.signUp({
-                                            email: authInputState.email,
-                                            password: authInputState.password,
-                                        }).then(u => {
-                                            console.log(u);
-                                            client.from('users').insert(
-                                                {
-                                                    id: u.user.id,
-                                                    username: authInputState.username,
-                                                }
-                                            ).then(e => {
+                                        fetcher('../api/verify_signup', {
+                                            ...authInputState
+                                        }).then(e => {
+                                            if(e.error) {
+                                                alert(e.error);
                                                 callback();
-                                                setAuthState('auth-email')
-                                            });
-                                        });
+                                            }else {
+                                                setAuthState('auth-login');
+                                                callback();
+                                            }
+                                        })
                                     }   
                                 }}/>
                                 <p>Already have an account? <a href="#" onClick={() => setAuthState('auth-login')}>Log in</a></p> 

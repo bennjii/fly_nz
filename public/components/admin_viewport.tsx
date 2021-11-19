@@ -12,7 +12,7 @@ import Link from 'next/link'
 import Button from './button'
 import Auth from './auth'
 
-const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ client, user  }) => {
+const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ client, user }) => {
     const [ usersArticles, setUsersArticles ] = useState(null);
     const router = useRouter();
 
@@ -20,11 +20,10 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
         client
             .from('articles')
             .select()
-            .eq('authorID', client.auth.user().id)
+            .eq('author_id', client.auth.user().id)
             .then(e => {
                 setUsersArticles(e.data);
             })
-
     }, [])
 
     return (
@@ -48,18 +47,13 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                                         content: 'Click here to begin',
                                         input: false
                                     }],
-                                    author: {
-                                        id: user,
-                                        data: {
-                                            name: "Template Name", // REPLACE IMMEDIATELY
-                                            iconURL: "",
-                                        }
-                                    },
-                                    authorID: user.id,
+                                    author_id: user.id,
                                     creation_date: new Date()
                                 })
                                 .then(e => {
-                                    setUsersArticles([ ...usersArticles, e.data ]);
+                                    console.error(e);
+
+                                    setUsersArticles([ ...usersArticles, e.data[0] ]);
                                     callback();
                                 })
                         }}></Button>
@@ -75,10 +69,10 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                             :  
                                 usersArticles?.map((e, index) => {
                                     return (
-                                        <div onClick={() => router.push(`/admin/create_article/${e.id}`)}>
-                                            <div key={`A_USERS_ARTICLES_${index}`} className={styles.tableElement}>
+                                        <div onClick={() => router.push(`/admin/create_article/${e.id}`)} key={`article-${e.id}`}>
+                                            <div className={styles.tableElement}>
                                                 <h4>
-                                                    { e.title }
+                                                    { e?.title }
                                                 </h4>
 
                                                 <p>
@@ -86,7 +80,7 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                                                 </p>
 
                                                 <p>
-                                                    { format(new Date(e.creation_date)) }
+                                                    { format(new Date(e?.creation_date)) }
                                                 </p>
 
                                                 <div className={e?.published ? styles.articlePublished : styles.articleDraft }>

@@ -19,8 +19,6 @@ export const NewElement: React.FC<{ index: number, callmap: { content: string, t
                 };
                 
                 callback([...callmap.slice(0, index), newContent, ...callmap.slice(index, callmap.length)]);
-
-                console.log([...callmap.slice(0, index), newContent, ...callmap.slice(index, callmap.length)]);
             }}
         > 
             <Plus strokeWidth={1.5}/> 

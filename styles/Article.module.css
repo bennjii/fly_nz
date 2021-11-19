@@ -72,7 +72,7 @@
 }
 
 .articleSmall .imagePlaceholder {
-    background-color: #62e6ac;
+    background-color: #5de993;
 
     border-radius: 0px;
     border-top-left-radius: 5px;
@@ -133,7 +133,8 @@
 }
 
 .articleLarge .imagePlaceholder {
-    background-color: #62e6ac;
+    /* background: rgb(170,234,171); */
+    background: linear-gradient(90deg, rgba(170,234,171,1) 0%, rgba(198,215,245,1) 100%);
 
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -146,6 +147,7 @@
 
     width: 100%;
     flex: 1 1;
+    min-height: 40%;
     min-width: 150px;
 }
 
@@ -188,6 +190,14 @@
     margin: 4rem auto;
 }
 
+.article section.articleImage {
+    width: 100%;
+    margin: 0;
+
+    object-fit: cover;
+    height: 400px;
+}
+
 .articleBody * {
     line-height: 1.6rem !important;
 }
@@ -197,24 +207,25 @@
 }
 
 .articleHeader {
-    --color: #fdfdfd;
+    --color: #0f0f0f;
     --background-light: #222429;
     --background-dark: rgb(20, 20, 25); 
     --border-color: #282a2e;
 
     border-bottom: 2px solid var(--background-light);
-    background-color: var(--background-dark);
+    /* background-color: var(--background-dark); */
     color: var(--color);
 
     width: 100%;
     margin: 0;
 
-    padding: 17rem 0rem 1rem 0rem;
-
-    background-color: #62e6ac;
+    padding: 6rem 0rem 6rem 0rem;
     border: none;
 
     background-size: cover;
+
+    width: 35%;
+    margin: 0 auto;
 }
 
 .articleHeader > div {
@@ -226,31 +237,77 @@
 }
 
 .articleHeader h1 {
-    font-size: 5rem;
+    font-size: 6rem;
     font-weight: 900;
+    padding-top: 3rem;
+    line-height: 6rem;
 
     margin: 0;
 }
 
+.articleHeader > div > p {
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
 .articleHeader > div {
-    width: 60%;
-    margin: .8rem auto;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+}
+
+.articleTags {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.articleTags >* {
+    font-size: .9rem;
+    opacity: .7;
+}
+
+.articleTags div {
+    background-color: #e8ece9;
+    padding: .4rem 1rem;
+    border-radius: 5px;
+}
+
+.article *:focus {
+    outline: none;
 }
 
 @media only screen and (max-width: 600px) {
     .articleHeader h1 {
-        font-size: 4rem !important;
+        font-size: 3.7rem !important;
         font-weight: 900;
+        line-height: 3.6rem;
+        overflow: hidden;
     
         margin: 0;
     }
 
-    .articleHeader > div {
+    .articleHeader {
         width: 80%;
     }
 
-    .article section:not(:first-of-type) {
+    .article section:not(:first-of-type):not(.articleImage) {
         width: 70%;
+    }
+
+    .articleTags > div:first-of-type {
+        display: none;
+    }
+
+    .articleHeader {
+        padding-top: 0rem;
+    }
+
+    .articleImage {
+        height: 300px !important;
     }
 }
 
@@ -519,6 +576,8 @@
     background-color: #f0a83c5d;
     color: #ffbb00;
 
+    color: #0f0f0f;
+
     user-select: none;
 
     background-color: white;
@@ -555,7 +614,6 @@
     user-select: none;
 
     background-color: white;
-    /* color: #62e6ac; */
     color: #0f0f0f;
 }
 

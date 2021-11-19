@@ -20,22 +20,6 @@ import Input from '@components/input'
 import _ from 'underscore'
 import { GetServerSideProps, GetServerSidePropsContext, GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 
-// export const getStaticPaths: GetStaticPaths = async (a) => {
-//     const articles = await client
-//         .from('articles')
-//         .select('id')
-//         .then(e => e.data)
-
-//     const paths = articles.map((article) => ({
-//         params: { id: article.id.toString() },
-//     }))
-
-//     return {
-//         paths: paths, //indicates that no page needs be created at build time
-//         fallback: 'blocking' //indicates the type of fallback
-//     }
-// }
-
 export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
   ) => {
@@ -46,7 +30,16 @@ export const getServerSideProps: GetServerSideProps = async (
         props: {
             some_data: await client
                         .from('articles')
-                        .select()
+                        .select(`
+                            title,
+                            description,
+                            published,
+                            content,
+                            creation_date,
+                            date,
+                            background_image,
+                            tags
+                        `)
                         .eq('id', INDEX)
                         .then(e => {
                             if(e.data) {
@@ -79,10 +72,6 @@ export default function Home({ some_data, index }) {
     const article_title_ref = useRef(null);
     const article_desc_ref = useRef(null);
     const article_bg_img = useRef(null);
-
-    useEffect(() => {
-        console.log(`[${new Date().toISOString()}] Why?`)
-    }, [articleContent])
 
     useEffect(() => {
         if(!articleData) return;
@@ -242,31 +231,59 @@ export default function Home({ some_data, index }) {
                     <></>
                 }
 
-                <section className={articleStyles.articleHeader} style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }}>
+                <section className={articleStyles.articleHeader}> {/* style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }} */}
                     <div>
-                        <h1>{ articleData?.title }</h1>
+                        <div className={articleStyles.articleTags}>
+                            <div>COMPOUND INTEREST</div>
+                            <p>{ new Date(articleData?.creation_date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})  }</p>
+                            
+                            {/* <p>{ articleData?.author?.username }</p> */}
+                            {/* 250wpm    x words / 250wpm = avg. time */}
 
-                        <div className={styles.headerTitleAid}>
-                            <div onClick={() => {
-                                setArticleSettingsOverlay(!articleSettingsOverlay);
-                            }}>
-                                <MoreVertical size={18} />
+                            <div className={styles.headerTitleAid} style={{ padding: 0 }}>
+                                <div onClick={() => {
+                                    setArticleSettingsOverlay(!articleSettingsOverlay);
+                                }}>
+                                    <MoreVertical size={18} color={"#0f0f0f"} />
+                                </div>
+
+                                {
+                                    informationUpdated ?
+                                    <div className={articleStyles.articleSynced} >
+                                        Synced 
+                                        <Check size={18} />
+                                    </div>
+                                    :
+                                    <div className={articleStyles.articleSyncing}>
+                                        Syncing
+                                        <RefreshCw size={18} />
+                                    </div>
+                                }
                             </div>
-
-                            {
-                                informationUpdated ?
-                                <div className={articleStyles.articleSynced}>
-                                    Synced 
-                                    <Check size={18} />
-                                </div>
-                                :
-                                <div className={articleStyles.articleSyncing}>
-                                    Syncing
-                                    <RefreshCw size={18} />
-                                </div>
-                            }
                         </div>
+
+                        <h1 contentEditable onBlur={(e) => {
+                            setInformationUpdated(false);
+
+                            debounceStorageUpdate({ ...articleData, title: e.target.innerHTML }, INDEX, (e) => {
+                                setArticleData(e.data[0]);
+                                setInformationUpdated(true)
+                            });
+
+                        }}>{ articleData?.title }</h1>
+                        <p contentEditable onBlur={(e) => {
+                            setInformationUpdated(false);
+
+                            debounceStorageUpdate({ ...articleData, description: e.target.innerHTML }, INDEX, (e) => {
+                                setArticleData(e.data[0]);
+                                setInformationUpdated(true)
+                            });
+
+                        }}>{ articleData?.description }</p>
                     </div>
+                </section>
+
+                <section className={articleStyles.articleImage} style={{ backgroundImage: articleData.background_image ? `url(${articleData?.background_image}` : 'linear-gradient(90deg, rgba(170,234,171,1) 0%, rgba(198,215,245,1) 100%)' }}>
                 </section>
 
                 <section className={articleStyles.articleBody}>
@@ -300,8 +317,6 @@ const debounceStorageUpdate = debounce((data, info, callback) => {
         .update(data)
         .eq('id', info)
         .then(e => {
-            console.log(e)
-
             if(!e.error) callback(e)
         });
 });
