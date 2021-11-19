@@ -1,17 +1,9 @@
-
-import Head from 'next/head'
-import Router from 'next/router'
-
 import styles from '@styles/Home.module.css'
-
 import Header from '@components/header'
-import Button from '@components/button'
 import Footer from '@components/footer'
-import { useEffect, useState } from 'react'
-import client from '@components/client'
-import Article from '@components/article_cover'
-import Link from 'next/link'
+import { useState } from 'react'
 
+import client from '@components/client'
 import dynamic from "next/dynamic"
 
 const NoSSRComponent = dynamic(() => import("@components/article_cover"), {
@@ -58,7 +50,7 @@ export default function Home({ articles }) {
 					{	
 						data?.map(e => {
 							return (
-								<NoSSRComponent key={`K-${e?.id}`} title={e?.title} tags={e?.tags} image={e?.background_image} desc={e?.description} size={0} redirect={e?.title?.replaceAll(" ", "-")?.toLowerCase()}/>
+								<NoSSRComponent key={`K-${e?.id}`} title={e?.title} tags={e?.tags} image={e?.background_image} desc={e?.description} size={0} />
 							)
 						})
 					}

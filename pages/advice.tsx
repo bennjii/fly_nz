@@ -1,15 +1,7 @@
-
-import { Router } from 'next/router'
-
 import styles from '@styles/Home.module.css'
-
-import Article from '@components/article_cover'
 import Header from '@components/header'
-import Button from '@components/button'
-import { useEffect, useState } from 'react'
-import supabase from '@components/client'
+import { useState } from 'react'
 import Footer from '@components/footer'
-
 
 export default function Articles({ some_data }) {
   const [ data, setData ] = useState(some_data);

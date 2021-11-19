@@ -1,12 +1,7 @@
-
-import { Router } from 'next/router'
-
 import styles from '@styles/Home.module.css'
-
 import Article from '@components/article_cover'
 import Header from '@components/header'
-import Button from '@components/button'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import supabase from '@components/client'
 import Footer from '@components/footer'
 
@@ -42,7 +37,7 @@ export default function Articles({ some_data }) {
 				{
 				data?.map(e => {
 					return (
-						<Article key={`ARTi-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={window.matchMedia("only screen and (max-width: 760px)").matches ? 0 : 1} redirect={e.title.replaceAll(" ", "-").toLowerCase()} />
+						<Article key={`ARTi-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={window.matchMedia("only screen and (max-width: 760px)").matches ? 0 : 1} />
 					)
 				})
 				}

@@ -9,8 +9,10 @@ interface Tag {
     color: Color
 }
 
-export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc: string, size: 0 | 1, redirect: string }> = ({ title, tags, image, desc, size, redirect }) => {
+export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc: string, size: 0 | 1 }> = ({ title, tags, image, desc, size }) => {
     const router = useRouter();
+
+    const [ redirect, setRedirect ] = useState(title ? title.replaceAll(" ", "-")?.toLowerCase() : "");
 
     return (   
         <div 
