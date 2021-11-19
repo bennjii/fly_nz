@@ -27,22 +27,15 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
     clone = clone.split('\r').join('<br/>');
     clone = clone.split('\n\r').join('<br/>');
 
-    const updateParent = (e) => {
-        console.log(e.target.value)
-    }
-
     const input_field = useRef(null);
 
     useEffect(() => {
         if(data.input == true) {
-            console.log(input_field.current);
             input_field.current.children[0].focus();
         }
     })
 
     const closeAndUpdate = () => {
-        console.log(inputState, saveState);
-        
         setInputState({ ...inputState, content: saveState });
 
         onLeave({ ...inputState, content: saveState, input: false });
@@ -135,7 +128,6 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                     if(e.target.children[0].innerHTML) setSaveState(e.target.children[0].innerHTML);
                 }}
                 onClick={(e) => {
-                    console.log(e.target)
                     // @ts-expect-error
                     if(e.target.tagName !== 'svg') callback({ ...content[1], input: true });
                 }}>
