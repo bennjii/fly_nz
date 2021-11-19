@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
   ) => {
     const INDEX: any = context.params.id;
-    const ILikeTitle = INDEX ? INDEX.replaceAll(/-/g, " ") : "";
+    const ILikeTitle = INDEX ? INDEX.replace(/-/g, " ") : "";
 
     return {
         props: {

@@ -12,7 +12,7 @@ interface Tag {
 export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc: string, size: 0 | 1 }> = ({ title, tags, image, desc, size }) => {
     const router = useRouter();
 
-    const [ redirect, setRedirect ] = useState(title ? title.replaceAll(/ /g, "-")?.toLowerCase() : "");
+    const [ redirect, setRedirect ] = useState(title ? title.replace(/ /g, "-")?.toLowerCase() : "");
 
     return (   
         <div 
