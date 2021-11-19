@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
   ) => {
     const INDEX: any = context.params.id;
-    const ILikeTitle = INDEX ? INDEX.replaceAll("-", " ") : "";
+    const ILikeTitle = INDEX ? INDEX.replaceAll(/-/g, " ") : "";
 
     return {
         props: {
@@ -42,7 +42,6 @@ export const getServerSideProps: GetServerSideProps = async (
                             background_image,
                             tags
                         `)
-                        // .select()
                         .ilike('title', `%${ILikeTitle}%`)
                         .then(e => {
                             if(e.data) {
