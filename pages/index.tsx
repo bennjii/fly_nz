@@ -52,11 +52,11 @@ export default function Home({ some_data }) { // { some_data }
 			<Header title={"Home"} type={"user"}/>
 		
 			<div className={styles.mainBodyBody}>
-				<div className={styles.homeArt}><img src="../art.svg" alt="" /></div>
+				{/* <div className={styles.homeArt}><img src="../art.svg" alt="" /></div> */}
 
 				<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
 					<div>
-						<h1>Fly New <br/>Zealand</h1>
+						<h1>Financial <br /> Literacy Youth <br /> NZ</h1>
 						<p>Learn better financing with us, wherever you are</p>
 
 						{/* <Button title={"Get Started"} router={Router} onClick={(e, callback) => {
@@ -73,7 +73,7 @@ export default function Home({ some_data }) { // { some_data }
 					{	
 						data?.map(e => {
 							return (
-								<NoSSRComponent key={`K-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={0} redirect={e.id}/>
+								<NoSSRComponent key={`K-${e.id}`} title={e.title} tags={e.tags} image={e.background_image} desc={e.description} size={0} redirect={e.title.replaceAll(" ", "-").toLowerCase()}/>
 							)
 						})
 					}

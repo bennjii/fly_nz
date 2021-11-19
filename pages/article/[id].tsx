@@ -41,14 +41,14 @@ import { GetServerSideProps, GetServerSidePropsContext, GetStaticPaths, GetStati
 export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
   ) => {
-    const INDEX = context.params.id;
+    const INDEX: any = context.params.id;
 
     return {
         props: {
             some_data: await client
                         .from('articles')
                         .select()
-                        .eq('id', INDEX)
+                        .ilike('title', `%${INDEX.replaceAll("-", " ")}%`)
                         .then(e => {
                             if(e.data) {
                                 return { 

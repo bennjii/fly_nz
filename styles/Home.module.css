@@ -365,7 +365,7 @@
   position: relative;
 }
 
-.homeSection > div:first-of-type h1::after {
+/* .homeSection > div:first-of-type h1::after {
   height: 1rem;
   width: 1rem;
 
@@ -376,7 +376,7 @@
   content: "";
   position: absolute;
   bottom: 1rem;
-}
+} */
 
 .homeSection > div:first-of-type button {
   margin-bottom: 2rem;
