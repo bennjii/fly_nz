@@ -485,7 +485,7 @@
   box-sizing: border-box;
   width: 100%;
   border-radius: 3px;
-  background-color: #222429;
+  background-color: #fff;
   border: 1px solid transparent;
 
   transition: border-color .2s ease-in-out;
@@ -497,7 +497,6 @@
 
   border: 1px solid #d8dbde49;
   font-size: .9rem;
-  background-color: var(--background-light);
 
   border-radius: 5px;
 
@@ -695,6 +694,9 @@
   height: 60vh;
   overflow: auto;
   overflow-x: hidden;
+
+  background-color: #e8ece9;
+  border-radius: 5px;
 }
 
 .settingsOverlay > div::-webkit-scrollbar {
@@ -705,7 +707,7 @@
 }
 
 .settingsOverlay > div::-webkit-scrollbar-thumb {
-  background-color: #62e6ac;
+  /* background-color: #62e6ac; */
 
   width: 5px !important;
   border-radius: 5px;
