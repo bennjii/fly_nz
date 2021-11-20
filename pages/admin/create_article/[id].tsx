@@ -17,6 +17,7 @@ import { Check, RefreshCw, MoreVertical, Loader } from 'react-feather'
 import Button from '@components/button'
 import Input from '@components/input'
 
+import { StickyContainer, Sticky } from 'react-sticky';
 import _ from 'underscore'
 import { GetServerSideProps, GetServerSidePropsContext, GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 
@@ -69,28 +70,9 @@ export default function Home({ some_data, index }) {
     const router = useRouter();
     const INDEX = index;
 
-    const tag_ref = useRef(null);
-
     const article_title_ref = useRef(null);
     const article_desc_ref = useRef(null);
     const article_bg_img = useRef(null);
-
-    const [ isSticky, setIsSticky ] = useState(false);
-
-    useEffect(() => {
-        const cachedRef = tag_ref.current,
-              observer = new IntersectionObserver(
-                ([e]) => setIsSticky(e.intersectionRatio < 1),
-                {threshold: [1]}
-              )
-    
-        observer.observe(cachedRef)
-        
-        // unmount
-        return function(){
-          observer.unobserve(cachedRef)
-        }
-    }, [])
 
     useEffect(() => {
         if(!articleData) return;
@@ -110,35 +92,8 @@ export default function Home({ some_data, index }) {
     return (
         <div className={articleStyles.articleContainer}>
             <Header title={articleData?.title ? articleData?.title : 'create'} type={"admin"}/>
-
-            {/* <div className={articleStyles.stickyHeader} style={{ display: showTempHeader ? 'flex' : 'none' }}>
-                <div className={articleStyles.articleTags}>
-                    <h4>{ articleData?.title }</h4>
-
-                    <div className={styles.headerTitleAid} style={{ padding: 0 }}>
-                        <div onClick={() => {
-                            setArticleSettingsOverlay(!articleSettingsOverlay);
-                        }}>
-                            <MoreVertical size={18} color={"#0f0f0f"} />
-                        </div>
-
-                        {
-                            informationUpdated ?
-                            <div className={articleStyles.articleSynced} >
-                                Synced&nbsp;
-                                <Check size={18} />
-                            </div>
-                            :
-                            <div className={articleStyles.articleSyncing}>
-                                Syncing
-                                <Loader size={18} />
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div> */}
             
-            <div className={articleStyles.article}>
+            <StickyContainer className={articleStyles.article}>
                 {
                     articleSettingsOverlay ?
                     <div className={styles.settingsOverlay} onClick={(e) => {
@@ -277,48 +232,58 @@ export default function Home({ some_data, index }) {
                     <></>
                 }
 
-                <section className={articleStyles.articleHeader}> {/* style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }} */}
-                    <div>
-                        <div className={articleStyles.articleTags} style={{ position: 'sticky' }} ref={tag_ref}>
-                            {
-                                isSticky ? 
-                                <h4>{ articleData?.title }</h4>
-                                :
-                                <div>COMPOUND INTEREST</div>
-                            }
-                            
-                            {
-                                !isSticky ?
-                                    <p>{ new Date(articleData?.creation_date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})  }</p>
-                                :
-                                    <></>
-                            }
-                            
-                            {/* <p>{ articleData?.author?.username }</p> */}
-                            {/* 250wpm    x words / 250wpm = avg. time */}
-
-                            <div className={styles.headerTitleAid} style={{ padding: 0 }}>
-                                <div onClick={() => {
-                                    setArticleSettingsOverlay(!articleSettingsOverlay);
-                                }}>
-                                    <MoreVertical size={18} color={"#0f0f0f"} />
-                                </div>
-
+                <Sticky >
+                    {({
+                        isSticky,
+                        style
+                    }) => (
+                        <div className={articleStyles.articleTags} style={style}>
+                            <div >
                                 {
-                                    informationUpdated ?
-                                    <div className={articleStyles.articleSynced} >
-                                        Synced&nbsp;
-                                        <Check size={18} />
-                                    </div>
+                                    isSticky ? 
+                                    <h4>{ articleData?.title }</h4>
                                     :
-                                    <div className={articleStyles.articleSyncing}>
-                                        Syncing
-                                        <Loader size={18} />
-                                    </div>
+                                    <div>COMPOUND INTEREST</div>
                                 }
+                                
+                                {
+                                    !isSticky ?
+                                        <p>{ new Date(articleData?.creation_date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})  }</p>
+                                    :
+                                        <></>
+                                }
+                                
+                                {/* <p>{ articleData?.author?.username }</p> */}
+                                {/* 250wpm    x words / 250wpm = avg. time */}
+
+                                <div className={styles.headerTitleAid} style={{ padding: 0 }}>
+                                    <div onClick={() => {
+                                        setArticleSettingsOverlay(!articleSettingsOverlay);
+                                    }}>
+                                        <MoreVertical size={18} color={"#0f0f0f"} />
+                                    </div>
+
+                                    {
+                                        informationUpdated ?
+                                        <div className={articleStyles.articleSynced} >
+                                            Synced&nbsp;
+                                            <Check size={18} />
+                                        </div>
+                                        :
+                                        <div className={articleStyles.articleSyncing}>
+                                            Syncing
+                                            <Loader size={18} />
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
+                        
+                    )}
+                </Sticky>
 
+                <section className={articleStyles.articleHeader}> {/* style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }} */}
+                    <div>
                         <h1 contentEditable onBlur={(e) => {
                             setInformationUpdated(false);
 
@@ -361,7 +326,7 @@ export default function Home({ some_data, index }) {
 
                     
                 </section>
-            </div>  
+            </StickyContainer>  
 
             <Footer />  
         </div>

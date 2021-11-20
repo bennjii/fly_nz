@@ -19,6 +19,7 @@ import Input from '@components/input'
 
 import _ from 'underscore'
 import BuildValue from '@components/build_value'
+import { StickyContainer, Sticky } from 'react-sticky';
 import { GetServerSideProps, GetServerSidePropsContext, GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -74,24 +75,42 @@ export default function Home({ article_content }) {
         <div className={articleStyles.articleContainer}>
             <Header title={articleData?.title ? articleData?.title : 'create'} type={"user"}/>
             
-            <div className={articleStyles.article}>
-                <section className={articleStyles.articleHeader}> {/* style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }} */}
-                    <div>
-                        <div className={articleStyles.articleTags}>
-                            <div>COMPOUND INTEREST</div>
-                            <p>{ new Date(articleData?.creation_date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})  }</p>
-                            
-                            <p>{ articleData?.author.username }</p>
-                            {/* 250wpm    x words / 250wpm = avg. time */}
-                            <div>
-                                { 
-                                    time_to_read < 1
-                                    ? '<1 min read'
-                                    : `${Math.round(time_to_read)} min read` 
+            <StickyContainer className={articleStyles.article}>
+                <Sticky>
+                    {({
+                        isSticky,
+                        style
+                    }) => (
+                        <div className={articleStyles.articleTags} style={style}>
+                            <div className={isSticky ? articleStyles.articleTagsSticky : articleStyles.nothingInteresting}>
+                                {
+                                    !isSticky ? <div>COMPOUND INTEREST</div>
+                                    : <h4>{ articleData?.title }</h4>
                                 }
+                                
+                                <p>{ new Date(articleData?.creation_date).toLocaleDateString('en-us', { year:"numeric", month:"short", day:"numeric"})  }</p>
+                                
+                                {
+                                    !isSticky ? <p>{ articleData?.author.username }</p>
+                                    : <></>
+                                }
+                                
+                                {/* 250wpm    x words / 250wpm = avg. time */}
+                                <div>
+                                    { 
+                                        time_to_read < 1
+                                        ? '<1 min read'
+                                        : `${Math.round(time_to_read)} min read` 
+                                    }
+                                </div>
                             </div>
                         </div>
-
+                        
+                    )}
+                </Sticky>
+            
+                <section className={articleStyles.articleHeader}> {/* style={{ backgroundImage: articleData?.background_image && `linear-gradient(180deg, rgba(255,70,70,0) 0%, rgba(55,57,57,1) 100%), url(${articleData?.background_image}` }} */}
+                    <div>
                         <h1>{ articleData?.title }</h1>
                         <p>{ articleData?.description }</p>
                     </div>
@@ -115,7 +134,7 @@ export default function Home({ article_content }) {
 
                     
                 </section>
-            </div>  
+            </StickyContainer>  
 
             <Footer />  
         </div>
