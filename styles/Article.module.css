@@ -182,6 +182,8 @@
     display: flex;
     flex-direction: column;
 
+    margin-top: 6rem;
+
     /* position: relative; */
 }
 
@@ -333,6 +335,10 @@
 
     .articleImage {
         height: 300px !important;
+    }
+
+    .article {
+        margin-top: 0;
     }
 }
 
@@ -534,17 +540,44 @@
     position: relative;
 
     align-items: center;
+    gap: 1rem;
 
     transition: .55s ease all;
 }
 
 .relativeEditor {
-    position: absolute;
-    left: -30px;
+    /* position: absolute; */
+    left: -1%;
+
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
 }
 
 .relativeEditor:hover {
     cursor: pointer;
+}
+
+.relativeEditor > div svg {
+    height: 20px;
+    width: 20px;   
+}
+
+.relativeEditor > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+
+    padding: .1rem;    
+}
+
+.relativeEditor > div:hover {
+    background-color: #e8ece9;
+}
+
+.relativeEditor > div.hoveredElem {
+    background-color: #e8ece9;
 }
 
 .inputModule {
@@ -553,18 +586,27 @@
 
 .editorSettings {
     position: absolute;
-    bottom: 20px;
+    z-index: 700;
+    bottom: 100%;
     border: 0px solid #22242921;
 
     background-color: #fdfdfd;
     border-radius: 5px;
-    padding: .3rem .8rem;
+    padding: .8rem;
 
     width: 130px;
     box-shadow: #13151b63 0px 2px 6px;
+
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
 }
 
-.editorSettings p {
+.editorSettings * {
+    user-select: none;
+}
+
+.editorSettings div {
     width: 100%;
     background-color: #fafbfb;
 
@@ -572,8 +614,8 @@
     padding: .2rem .5rem;
 }
 
-.editorSettings p:hover {
-    background-color: #a2a3a518;
+.editorSettings div:hover {
+    background-color: #e8ece9;
 }
 
 .relativeEditorContent {

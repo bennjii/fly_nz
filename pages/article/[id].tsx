@@ -125,7 +125,7 @@ export default function Home({ article_content }) {
                             articleContent?.map((element, index) => {
                                 return (
                                     <div key={`ARTICLE_${index}`}>
-                                        <BuildValue content={[index, element]} callback={setArticleContent} readonly={true} onLeave={() => {}}/>
+                                        <BuildValue content={[index, element]} readonly={true} />
                                     </div>
                                 )
                             })

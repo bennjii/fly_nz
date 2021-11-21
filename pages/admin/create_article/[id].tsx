@@ -20,6 +20,7 @@ import Input from '@components/input'
 import { StickyContainer, Sticky } from 'react-sticky';
 import _ from 'underscore'
 import { GetServerSideProps, GetServerSidePropsContext, GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
+import BuildValue from '@components/build_value'
 
 export const getServerSideProps: GetServerSideProps = async (
     context: GetServerSidePropsContext
@@ -234,7 +235,7 @@ export default function Home({ some_data, index }) {
                                 setInformationUpdated(true)
                             });
 
-                        }}>{ articleData?.title }</h1>
+                        }}>{ articleData?.title }</h1>  {/* MAKE THESE INPUTS NO CONTENTEDITABLE */}
                         <p contentEditable onBlur={(e) => {
                             setInformationUpdated(false);
 
@@ -252,14 +253,11 @@ export default function Home({ some_data, index }) {
 
                 <section className={articleStyles.articleBody}>
                     <ClientContext.Provider value={{ articleContent, setArticleContent, setInformationUpdated }}>
-                        <NewElement index={0} callmap={articleContent} callback={setArticleContent}/>
                         {
                             articleContent?.map((element, index) => {
                                 return (
                                     <div key={`ELEMENT-${index}`}>
-                                        <BuildParent content={[index, element]} callback={setArticleContent} />
-
-                                        <NewElement index={index+1} callmap={articleContent} callback={setArticleContent} />
+                                        <BuildValue content={[index, element]} />
                                     </div>
                                 )
                             })
