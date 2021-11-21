@@ -13,7 +13,7 @@ import { ClientContext } from '@components/context'
 import client from '@components/client'
 import { useRouter } from 'next/router'
 
-import { Check, RefreshCw, MoreVertical, Loader } from 'react-feather'
+import { Check, RefreshCw, MoreVertical, Loader, X } from 'react-feather'
 import Button from '@components/button'
 import Input from '@components/input'
 
@@ -39,6 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (
                             content,
                             creation_date,
                             date,
+                            category,
                             background_image,
                             tags
                         `)
@@ -65,29 +66,34 @@ export default function Home({ some_data, index }) {
     const [ articleData, setArticleData ] = useState(some_data);
     const [ articleContent, setArticleContent ] = useState<{type: string, content: string, input: boolean}[]>(some_data.content);
     const [ informationUpdated, setInformationUpdated ] = useState(true);
+    const [ syncFailed, setSyncFailed ] = useState(false);
 
     const [ articleSettingsOverlay, setArticleSettingsOverlay ] = useState(false);
 
     const router = useRouter();
     const INDEX = index;
 
-    const article_title_ref = useRef(null);
-    const article_desc_ref = useRef(null);
     const article_bg_img = useRef(null);
+    const article_category = useRef(null);
 
     useEffect(() => {
         if(!articleData) return;
         
-        const filteredData = articleContent?.filter(e => e.content.trim() !== '');
-        // if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
+        // const filteredData = articleContent?.filter(e => e.content.trim() !== '');
+        // // if(JSON.stringify(articleContent) !== JSON.stringify(filteredData)) setArticleContent(filteredData);
 
-        if(JSON.stringify(articleData) !== JSON.stringify({ ...articleData, content: filteredData })) {
-            setInformationUpdated(false);
+        setInformationUpdated(false);
 
-            debounceStorageUpdate({ ...articleData, content: filteredData }, INDEX, (e) => {
-                if(!e.error) setInformationUpdated(true);
-            });
-        }
+        debounceStorageUpdate({ ...articleData, content: articleContent }, INDEX, (e) => {
+            if(e.error) {
+                setSyncFailed(true);
+                return;
+            }else {
+                setInformationUpdated(true)
+            }
+
+            console.log(e);
+        });
     }, [articleContent]);
 
     return (
@@ -103,13 +109,33 @@ export default function Home({ some_data, index }) {
                             setArticleSettingsOverlay(false);
 
                             debounceStorageUpdate({ ...articleData, published: !articleData?.published }, INDEX, (e) => {
-                                setArticleData(e.data[0]);
-                                setInformationUpdated(true);
+                                if(e.error) {
+                                    setSyncFailed(true);
+                                    return;
+                                }else {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                }
                             });
 
                             debounceStorageUpdate({ ...articleData, background_image: article_bg_img.current.value }, INDEX, (e) => {
-                                setArticleData(e.data[0]);
-                                setInformationUpdated(true)
+                                if(e.error) {
+                                    setSyncFailed(true);
+                                    return;
+                                }else {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                }
+                            });
+
+                            debounceStorageUpdate({ ...articleData, category: article_category.current.value }, INDEX, (e) => {
+                                if(e.error) {
+                                    setSyncFailed(true);
+                                    return;
+                                }else {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                }
                             });
                         }
                     }}>
@@ -124,25 +150,36 @@ export default function Home({ some_data, index }) {
                                 setInformationUpdated(false);
 
                                 debounceStorageUpdate({ ...articleData, published: !articleData?.published }, INDEX, (e) => {
-                                    setArticleData(e.data[0]);
-                                    setInformationUpdated(true);
-                                    callback();
+                                    if(e.error) {
+                                        setSyncFailed(true);
+                                        return;
+                                    }else {
+                                        setArticleData(e.data[0]);
+                                        setInformationUpdated(true);
+                                        callback();
+                                    }
                                 });
                             }}></Button>
 
                             <br />
 
                             <div>
-                                <h3>Sync Status</h3> <p>{informationUpdated ? "Synced" : "Syncing"}</p>
+                                <h3>Sync Status</h3> <p>{informationUpdated ? "Synced" : syncFailed ? "Failed" : "Syncing"}</p>
                             </div>
 
                             <Button title={"Force Sync"} onClick={(e, callback) => {
                                 setInformationUpdated(false);
 
                                 debounceStorageUpdate(articleData, INDEX, (e) => {
-                                    setArticleData(e.data[0]);
-                                    setInformationUpdated(true);
-                                    callback();
+                                    if(e.error) {
+                                        setSyncFailed(true);
+                                        callback();
+                                        return;
+                                    }else {
+                                        setArticleData(e.data[0]);
+                                        setInformationUpdated(true);
+                                        callback();
+                                    }
                                 });
                             }}></Button>
 
@@ -157,16 +194,60 @@ export default function Home({ some_data, index }) {
                                     setInformationUpdated(false);
 
                                     debounceStorageUpdate({ ...articleData, background_image: e.target.value }, INDEX, (e) => {
-                                        setArticleData(e.data[0]);
-                                        setInformationUpdated(true)
+                                        if(e.error) {
+                                            setSyncFailed(true);
+                                            return;
+                                        }else {
+                                            setArticleData(e.data[0]);
+                                            setInformationUpdated(true);
+                                        }
                                     });
                                 } 
                             }} onBlur={(e) => {
                                 setInformationUpdated(false);
 
                                 debounceStorageUpdate({ ...articleData, background_image: e.target.value }, INDEX, (e) => {
-                                    setArticleData(e.data[0]);
-                                    setInformationUpdated(true)
+                                    if(e.error) {
+                                        setSyncFailed(true);
+                                        return;
+                                    }else {
+                                        setArticleData(e.data[0]);
+                                        setInformationUpdated(true);
+                                    }
+                                });
+                            }} />
+
+                            <br />
+
+                            <div>
+                                <h3>Category</h3> <p>{articleData?.category}</p>
+                            </div>
+
+                            <Input type={"text"} ref={article_category} defaultValue={articleData?.category} onKeyDown={(e) => {
+                                if(e.code == "Enter") {
+                                    setInformationUpdated(false);
+
+                                    debounceStorageUpdate({ ...articleData, category: e.target.value }, INDEX, (e) => {
+                                        if(e.error) {
+                                            setSyncFailed(true);
+                                            return;
+                                        }else {
+                                            setArticleData(e.data[0]);
+                                            setInformationUpdated(true);
+                                        }
+                                    });
+                                } 
+                            }} onBlur={(e) => {
+                                setInformationUpdated(false);
+
+                                debounceStorageUpdate({ ...articleData, category: e.target.value }, INDEX, (e) => {
+                                    if(e.error) {
+                                        setSyncFailed(true);
+                                        return;
+                                    }else {
+                                        setArticleData(e.data[0]);
+                                        setInformationUpdated(true);
+                                    }
                                 });
                             }} />
                         </div>
@@ -186,7 +267,7 @@ export default function Home({ some_data, index }) {
                                     isSticky ? 
                                     <h4>{ articleData?.title }</h4>
                                     :
-                                    <div>COMPOUND INTEREST</div>
+                                    <div>{ articleData?.category?.toUpperCase() }</div>
                                 }
                                 
                                 {
@@ -213,6 +294,12 @@ export default function Home({ some_data, index }) {
                                             <Check size={18} />
                                         </div>
                                         :
+                                        syncFailed ? 
+                                        <div className={articleStyles.articleFailed}>
+                                            Failed
+                                            <X size={18} />
+                                        </div>
+                                        :
                                         <div className={articleStyles.articleSyncing}>
                                             Syncing
                                             <Loader size={18} />
@@ -231,8 +318,13 @@ export default function Home({ some_data, index }) {
                             setInformationUpdated(false);
 
                             debounceStorageUpdate({ ...articleData, title: e.target.innerHTML }, INDEX, (e) => {
-                                setArticleData(e.data[0]);
-                                setInformationUpdated(true)
+                                if(e.error) {
+                                    setSyncFailed(true);
+                                    return;
+                                }else {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                }
                             });
 
                         }}>{ articleData?.title }</h1>  {/* MAKE THESE INPUTS NO CONTENTEDITABLE */}
@@ -240,8 +332,13 @@ export default function Home({ some_data, index }) {
                             setInformationUpdated(false);
 
                             debounceStorageUpdate({ ...articleData, description: e.target.innerHTML }, INDEX, (e) => {
-                                setArticleData(e.data[0]);
-                                setInformationUpdated(true)
+                                if(e.error) {
+                                    setSyncFailed(true);
+                                    return;
+                                }else {
+                                    setArticleData(e.data[0]);
+                                    setInformationUpdated(true)
+                                }
                             });
 
                         }}>{ articleData?.description }</p>
@@ -274,6 +371,7 @@ export default function Home({ some_data, index }) {
 }
 
 const debounceStorageUpdate = debounce((data, info, callback) => {
+    console.log(`SYNCING`, data);
     client
         .from('articles')
         .update({
@@ -282,7 +380,8 @@ const debounceStorageUpdate = debounce((data, info, callback) => {
         })
         .eq('id', info)
         .then(e => {
-            if(!e.error) callback(e)
+            callback(e);
+            console.log(`SYNCED`, e.data);
         });
 });
 

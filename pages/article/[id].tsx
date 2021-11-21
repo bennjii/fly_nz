@@ -39,6 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (
                             published,
                             content,
                             creation_date,
+                            category,
                             date,
                             background_image,
                             tags
@@ -69,7 +70,7 @@ export default function Home({ article_content }) {
     const [ informationUpdated, setInformationUpdated ] = useState(false);
 
     const router = useRouter();
-    const [ time_to_read, setTTR ] = useState(articleContent.flatMap(e => `${e.content} `).join(' ').replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(' ').length / 250);
+    const [ time_to_read, setTTR ] = useState(articleContent.flatMap(e => `${e.content} `).join(' ').replace(/(^\s*)|(\s*$)/gi,"").replace(/[ ]{2,}/gi," ").replace(/\n /,"\n").split(' ').length / 100);
 
     return (
         <div className={articleStyles.articleContainer}>
@@ -81,10 +82,10 @@ export default function Home({ article_content }) {
                         isSticky,
                         style
                     }) => (
-                        <div className={articleStyles.articleTags} style={style}>
+                        <div className={`${articleStyles.articleTags} ${isSticky ? articleStyles.articleStickyHeader : " "}`} style={style}>
                             <div className={isSticky ? articleStyles.articleTagsSticky : articleStyles.nothingInteresting}>
                                 {
-                                    !isSticky ? <div>COMPOUND INTEREST</div>
+                                    !isSticky ? <div>{ articleData?.category?.toUpperCase() }</div>
                                     : <h4>{ articleData?.title }</h4>
                                 }
                                 
@@ -119,7 +120,7 @@ export default function Home({ article_content }) {
                 <section className={articleStyles.articleImage} style={{ backgroundImage: articleData.background_image ? `url(${articleData?.background_image}` : 'linear-gradient(90deg, rgba(170,234,171,1) 0%, rgba(198,215,245,1) 100%)' }}>
                 </section>
 
-                <section className={articleStyles.articleBody + " " + articleStyles.articleBodyView}>
+                <section className={articleStyles.articleBody}>
                     <ClientContext.Provider value={{ articleContent, setArticleContent, setInformationUpdated }}>
                         {
                             articleContent?.map((element, index) => {

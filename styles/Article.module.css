@@ -295,6 +295,13 @@
     border-radius: 5px;
 }
 
+.articleTags p {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .article *:focus {
     outline: none;
 }
@@ -325,8 +332,16 @@
         display: none;
     }
 
+    .articleTagsSticky > div {
+        display: none;
+    }
+
     .articleTagsSticky p {
         display: none;
+    }
+
+    .articleStickyHeader {
+        border-bottom: 1px solid #eaeaea;
     }
 
     .articleHeader {
@@ -340,6 +355,21 @@
     .article {
         margin-top: 0;
     }
+
+    .articleBody h1 {
+        font-size: 1.5rem !important;
+        font-weight: 800 !important;
+    }
+
+    .articleBody h2 {
+        font-size: 1.3rem !important;
+        font-weight: 600 !important;
+        margin-top: 1.4rem !important;
+    }
+    
+    .articleBody h3 {
+        margin-top: 1.2rem !important;
+    }
 }
 
 .articleBody {
@@ -350,7 +380,7 @@
 }
 
 .articleBody h1 {
-    font-weight: 600;
+    font-weight: 700;
     font-size: 2rem;
     font-family: "guillon", sans-serif;
     line-height: 1.23em;
@@ -368,7 +398,7 @@
 }
 
 .articleBody h3 {
-    font-weight: 400;
+    font-weight: 500;
     font-size: 1.2rem;
 
     margin: .4rem 0rem;
@@ -406,7 +436,7 @@
 }
 
 .articleInput_h1 {
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     font-size: 2rem !important;
     font-family: "guillon", sans-serif !important;
     line-height: 1.23em !important;
@@ -424,7 +454,7 @@
 }
 
 .articleInput_h3 {
-    font-weight: 400 !important;
+    font-weight: 500 !important;
     font-size: 1.2rem !important;
 
     margin: .4rem 0rem !important;
@@ -652,6 +682,26 @@
 
 .articleSyncing svg {
     animation: Spin infinite 2s ease-in-out;
+}
+
+.articleFailed {
+    border-radius: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: .7rem;
+
+    padding: .5rem 1rem;
+    width: auto;
+
+    background-color: #f0a83c5d;
+    color: #bc4242;
+
+    user-select: none;
+
+    background-color: white;
 }
 
 @keyframes Spin {

@@ -67,6 +67,13 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
         if(!itemSettings) setItemSettings(false);
     });
 
+    const changeType = (type) => {
+        setItemSettings(false);
+        setInputState({ ...inputState, type: type });
+        articleContent.splice(content[0], 1, { ...inputState, type: type });
+        setArticleContent([...articleContent]);
+    }
+
     if(inputState.type == "deleted")
         return <></>;
 
@@ -141,13 +148,18 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                     {
                         itemSettings &&
                         <div className={styles.editorSettings} ref={editor_settings}>
-                            <div onClick={() => { setInputState({ ...inputState, type: 'h1' }); setItemSettings(false) }}>Header 1</div>
-                            <div onClick={() => { setInputState({ ...inputState, type: 'h2' }); setItemSettings(false) }}>Header 2</div>
-                            <div onClick={() => { setInputState({ ...inputState, type: 'h3' }); setItemSettings(false) }}>Header 3</div>
-                            <div onClick={() => { setInputState({ ...inputState, type: 'p' }); setItemSettings(false) }}>Text</div>
-                            <div onClick={() => { setInputState({ ...inputState, type: 'img' }); setItemSettings(false) }}>Image</div>
-                            <div onClick={() => { setInputState({ ...inputState, type: 'pageBreak' }); setItemSettings(false) }}>Page Break</div>
-                            <div style={{ color: '#f00f00a4', backgroundColor: '#f00f000e' }} onClick={() => { setInputState({ content: '', type: 'deleted', input: false }); setItemSettings(false); onLeave({ ...inputState, input: false }) }}>Delete</div>
+                            <div style={{ backgroundColor: inputState.type == 'h1' ? "antiquewhite" : "" }} onClick={() => changeType('h1')}>Header 1</div>
+                            <div style={{ backgroundColor: inputState.type == 'h2' ? "antiquewhite" : "" }} onClick={() => changeType('h2')}>Header 2</div>
+                            <div style={{ backgroundColor: inputState.type == 'h3' ? "antiquewhite" : "" }} onClick={() => changeType('h3')}>Header 3</div>
+                            <div style={{ backgroundColor: inputState.type == 'p' ? "antiquewhite" : "" }} onClick={() => changeType('p')}>Text</div>
+                            <div style={{ backgroundColor: inputState.type == 'img' ? "antiquewhite" : "" }} onClick={() => changeType('img')}>Image</div>
+                            <div style={{ backgroundColor: inputState.type == 'pageBreak' ? "antiquewhite" : "" }} onClick={() => changeType('pageBreak')}>Page Break</div>
+                            <div style={{ color: '#f00f00a4', backgroundColor: '#f00f000e' }} onClick={() => { 
+                                articleContent.splice(content[0], 1); 
+                                setItemSettings(false); 
+                                // onLeave({ content: '', type: 'deleted', input: false });
+                                setArticleContent([...articleContent]);
+                            }}>Delete</div>
                         </div>
                     }
                 </div>
@@ -156,9 +168,6 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
             <div 
                 className={styles.relativeEditorContent} 
                 ref={input_field}
-                onBlur={() => {
-                    onLeave({ ...inputState, input: false });
-                }}
                 onKeyDown={(e) =>{
                     if(e.key == "Enter") {
                         e.preventDefault();
@@ -182,26 +191,37 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                             case "h1":
                                 return (
                                     <h1 contentEditable onBlur={(e) => {
-                                        if(e.target.innerHTML) setInputState({ ...inputState, content: e.target.innerHTML })
+                                        if(e.target.innerHTML) {
+                                            setInputState({ ...inputState, content: e.target.innerHTML })
+                                            onLeave({ ...inputState, content: e.target.innerHTML, input: false });
+                                        }
                                     }}>{data.content}</h1>
                                 )
                             case "h2":
                                 return (
                                     <h2 contentEditable onBlur={(e) => {
-                                        if(e.target.innerHTML) setInputState({ ...inputState, content: e.target.innerHTML })
+                                        if(e.target.innerHTML) {
+                                            setInputState({ ...inputState, content: e.target.innerHTML })
+                                            onLeave({ ...inputState, content: e.target.innerHTML, input: false });
+                                        }
                                     }}>{data.content}</h2>
                                 )
                             case "h3":
                                 return (
                                     <h3 contentEditable onBlur={(e) => {
-                                        if(e.target.innerHTML) setInputState({ ...inputState, content: e.target.innerHTML })
+                                        if(e.target.innerHTML) {
+                                            setInputState({ ...inputState, content: e.target.innerHTML })
+                                            onLeave({ ...inputState, content: e.target.innerHTML, input: false });
+                                        }
                                     }}>{data.content}</h3>
                                 )
                             case "p":
                                 return (
                                     <p contentEditable onBlur={(e) => {
-                                        console.log(e);
-                                        if(e.target.innerHTML) setInputState({ ...inputState, content: e.target.innerHTML })
+                                        if(e.target.innerHTML) {
+                                            setInputState({ ...inputState, content: e.target.innerHTML })
+                                            onLeave({ ...inputState, content: e.target.innerHTML, input: false });
+                                        }
                                     }}>{data.content}</p>
                                 )
                             case "img":

@@ -55,7 +55,7 @@ export const Header: React.FC<{ title: string, type: string }> = ({ title, type 
                 </Head>
 
                 <div>
-                    <Link href={"/"}>
+                    <Link href={"/admin"}>
                         <div className={styles.headerIcon}>
                             <FontAwesomeIcon icon={faPaperPlane} /> 
 
