@@ -76,12 +76,13 @@
   flex-direction: row;
   gap: 4rem;
 
-  width: calc(100% * 0.3);
+  width: calc(100% * 0.4);
 }
 
 .footer > div:not(:first-of-type) p {
   font-weight: 700;
   font-size: 1rem;
+  margin-top: 0rem;
 }
 
 .footer > div:not(:first-of-type) a {
@@ -360,13 +361,75 @@
   flex-direction: column;
 }
 
+.homeSection {
+  text-align: center;
+  width: 100%;
+
+  /* background: linear-gradient(90deg, rgba(170,234,171,1) 0%, rgba(198,215,245,1) 100%); */
+}
+
+.homeSection strong {
+  font-family: "guillon";
+  background: linear-gradient(90deg, rgba(170,234,171,1) 0%, rgba(198,215,245,1) 100%);
+
+  background: -webkit-linear-gradient(0deg, rgba(170,234,171,1) 0%, rgba(198,215,245,1) 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.homeSection > div:first-of-type {
+  text-align: center;
+  width: 100%;
+  flex: 1;
+
+  padding: 20% 0;
+}
+
+.homeSection h2 {
+  margin: 0;
+  font-size: 4rem;
+  font-family: "guillon";
+}
+
 .homeSection > div:first-of-type h1 {
-  font-size: 8rem;
+  font-size: 5rem;
   position: relative;
+  margin: 0;
 }
 
 .homeSection > div:first-of-type button {
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
+  width: fit-content;
+}
+
+.homeSection > div > div:not(:first-of-type) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.tempButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  background: linear-gradient(90deg, rgba(170,234,171,.3) 0%, rgba(198,215,245,.3) 100%);
+  margin: 0;
+  color: #000;
+
+  padding: .8rem 1rem;
+  border-radius: 3px;
+}
+
+.tempButton * {
+  margin: 0;
+}
+
+.homeSection > div {
+  gap: 3rem;
 }
 
 .homeSection > div:not(:first-of-type) {

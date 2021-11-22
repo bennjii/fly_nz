@@ -30,7 +30,7 @@ export const Footer: React.FC<{ }> = ({ }) => {
                 <div>
                     <div>
                         <p>Fly NZ</p>
-                        <a href="">Product</a>
+                        <a href="">Mission</a>
                         <a href="">The Team</a>
                         <a href="">About Us</a>
                         <a href="">Media Kit</a>

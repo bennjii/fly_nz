@@ -46,6 +46,12 @@
     max-width: 350px;
     width: auto;
     /* max-width: 100%; */
+
+    gap: .8rem;
+}
+
+.articleSmall * {
+    margin: 0;
 }
 
 .articleSmall p {
@@ -90,11 +96,15 @@
     border-top: none;
 
     padding: 1.8rem 1.8rem;
-    padding-top: .5rem;
+    padding-top: 1rem;
 
     border-radius: 5px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
+
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
 
     overflow: hidden;
 }

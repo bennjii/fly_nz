@@ -5,6 +5,9 @@ import { useState } from 'react'
 
 import client from '@components/client'
 import dynamic from "next/dynamic"
+import Button from '@components/button'
+import { useRouter } from 'next/router'
+import { ArrowRight } from 'react-feather'
 
 const NoSSRComponent = dynamic(() => import("@components/article_cover"), {
 	ssr: false,
@@ -26,6 +29,8 @@ export async function getServerSideProps() {
 export default function Home({ articles }) {
 	const [ data, setData ] = useState(articles);
 
+	const Router = useRouter();
+
 	return (
 		<div className={styles.container}>
 			<Header title={"Home"} type={"user"}/>
@@ -33,24 +38,37 @@ export default function Home({ articles }) {
 			<div className={styles.mainBodyBody}>
 				<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
 					<div>
-						<h1>Financial <br /> Literacy Youth <br /> NZ</h1>
-						<p>Learn better financing with us, wherever you are</p>
+						<div>
+							<h2>What if saving one person could save <strong>generations?</strong></h2>
+							<p>Financial Literacy Youth New Zealand</p>
+						</div>
 
-						{/* <Button title={"Get Started"} router={Router} onClick={(e, callback) => {
-							callback();
-						}}></Button> */}
+						<div>
+							{/* <Button title={"Learn More"} router={Router} onClick={(e, callback) => {
+								callback();
+							}}></Button> */}
+
+							<div className={styles.tempButton} onClick={() => {
+								Router.push('./')
+							}}>
+								<p>Learn More</p>
+								<ArrowRight strokeWidth={2} size={18} />
+							</div>
+							{/* <a>Learn More</a> */}
+						</div>
+						
 					</div>
 
-					<div className={styles.notOnMobile}>
+					{/* <div className={styles.notOnMobile}>
 						<img src={'../plane.png'}></img>
-					</div>
+					</div> */}
 				</section>
 
 				<section className={styles.articlesList}>
 					{	
 						data?.map(e => {
 							return (
-								<NoSSRComponent key={`K-${e?.id}`} title={e?.title} tags={e?.tags} image={e?.background_image} desc={e?.description} size={0} />
+								<NoSSRComponent key={`K-${e?.id}`} title={e?.title} tags={[ e?.category ]} image={e?.background_image} desc={e?.description} size={0} />
 							)
 						})
 					}

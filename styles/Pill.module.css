@@ -1,5 +1,5 @@
 .button {
-    border: 1px solid #d8dbde;
+    /* border: 1px solid #d8dbde;
     color: #262231;
     font-size: 1rem;
 
@@ -10,7 +10,12 @@
     width: fit-content;
 
     font-weight: 400;
-    box-shadow: #26223110 0px 1px 2px;
+    box-shadow: #26223110 0px 1px 2px; */
+
+    background-color: #e8ece9;
+    padding: .4rem 1rem;
+    border-radius: 5px;
+    width: fit-content;
 }
 
 .button:focus {

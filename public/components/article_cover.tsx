@@ -9,7 +9,7 @@ interface Tag {
     color: Color
 }
 
-export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc: string, size: 0 | 1 }> = ({ title, tags, image, desc, size }) => {
+export const Article: React.FC<{ title: string, tags: string[], image: string, desc: string, size: 0 | 1 }> = ({ title, tags, image, desc, size }) => {
     const router = useRouter();
 
     const [ redirect, setRedirect ] = useState(title ? title.replace(/ /g, "-")?.toLowerCase() : "");
@@ -35,7 +35,7 @@ export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc
                             {
                                 tags?.map((e, index) => {
                                     return (
-                                        <Pill title={e.title} color={e.color} key={`KEY__P_${index}`}/>
+                                        <Pill title={e} key={`KEY__P_${index}`}/>
                                     )
                                 })
                             }
@@ -59,7 +59,7 @@ export const Article: React.FC<{ title: string, tags: Tag[], image: string, desc
                             {
                                 tags?.map((e, index) => {
                                     return (
-                                        <Pill title={e.title} color={e.color} key={`KEY__P_${index}`}/>
+                                        <Pill title={e} key={`KEY__P_${index}`}/>
                                     )
                                 })
                             }

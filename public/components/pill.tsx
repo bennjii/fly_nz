@@ -11,7 +11,7 @@ export interface Color {
     foreground: string  // darker bcolor
 }
 
-export const Pill: React.FC<{ title: string, color: Color, disabled?: boolean }> = ({ title, color, disabled }) => {
+export const Pill: React.FC<{ title: string, color?: Color, disabled?: boolean }> = ({ title, color, disabled }) => {
     const [ buttonState, setButtonState ] = useState({
         hovered: false,
         value: title,
