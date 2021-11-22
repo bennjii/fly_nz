@@ -191,36 +191,36 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
                             case "h1":
                                 return (
                                     <h1 contentEditable onBlur={(e) => {
-                                        if(e.target.innerHTML) {
-                                            setInputState({ ...inputState, content: e.target.innerHTML })
-                                            onLeave({ ...inputState, content: e.target.innerHTML, input: false });
+                                        if(e.target.innerText) {
+                                            setInputState({ ...inputState, content: e.target.innerText })
+                                            onLeave({ ...inputState, content: e.target.innerText, input: false });
                                         }
                                     }}>{data.content}</h1>
                                 )
                             case "h2":
                                 return (
                                     <h2 contentEditable onBlur={(e) => {
-                                        if(e.target.innerHTML) {
-                                            setInputState({ ...inputState, content: e.target.innerHTML })
-                                            onLeave({ ...inputState, content: e.target.innerHTML, input: false });
+                                        if(e.target.innerText) {
+                                            setInputState({ ...inputState, content: e.target.innerText })
+                                            onLeave({ ...inputState, content: e.target.innerText, input: false });
                                         }
                                     }}>{data.content}</h2>
                                 )
                             case "h3":
                                 return (
                                     <h3 contentEditable onBlur={(e) => {
-                                        if(e.target.innerHTML) {
-                                            setInputState({ ...inputState, content: e.target.innerHTML })
-                                            onLeave({ ...inputState, content: e.target.innerHTML, input: false });
+                                        if(e.target.innerText) {
+                                            setInputState({ ...inputState, content: e.target.innerText })
+                                            onLeave({ ...inputState, content: e.target.innerText, input: false });
                                         }
                                     }}>{data.content}</h3>
                                 )
                             case "p":
                                 return (
                                     <p contentEditable onBlur={(e) => {
-                                        if(e.target.innerHTML) {
-                                            setInputState({ ...inputState, content: e.target.innerHTML })
-                                            onLeave({ ...inputState, content: e.target.innerHTML, input: false });
+                                        if(e.target.innerText) {
+                                            setInputState({ ...inputState, content: e.target.innerText })
+                                            onLeave({ ...inputState, content: e.target.innerText, input: false });
                                         }
                                     }}>{data.content}</p>
                                 )

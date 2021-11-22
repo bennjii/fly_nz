@@ -317,7 +317,7 @@ export default function Home({ some_data, index }) {
                         <h1 contentEditable onBlur={(e) => {
                             setInformationUpdated(false);
 
-                            debounceStorageUpdate({ ...articleData, title: e.target.innerHTML }, INDEX, (e) => {
+                            debounceStorageUpdate({ ...articleData, title: e.target.innerText }, INDEX, (e) => {
                                 if(e.error) {
                                     setSyncFailed(true);
                                     return;
@@ -331,7 +331,7 @@ export default function Home({ some_data, index }) {
                         <p contentEditable onBlur={(e) => {
                             setInformationUpdated(false);
 
-                            debounceStorageUpdate({ ...articleData, description: e.target.innerHTML }, INDEX, (e) => {
+                            debounceStorageUpdate({ ...articleData, description: e.target.innerText }, INDEX, (e) => {
                                 if(e.error) {
                                     setSyncFailed(true);
                                     return;
