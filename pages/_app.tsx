@@ -16,10 +16,8 @@ function App({ Component, pageProps }: AppProps) {
 	return (
 		<>
 			<Head> 
-				{/* <link
-					rel="stylesheet"
-					href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css"
-				/>  */}
+				<title>FlyNZ</title>
+				<link rel="icon" href="/icon.png" />
 			</Head>
 
 			<Component {...pageProps} />

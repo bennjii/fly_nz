@@ -33,7 +33,7 @@ export default function Home({ articles }) {
 
 	return (
 		<div className={styles.container}>
-			<Header title={"Home"} type={"user"}/>
+			<Header title={"FlyNZ"} type={"user"}/>
 		
 			<div className={styles.mainBodyBody}>
 				<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
