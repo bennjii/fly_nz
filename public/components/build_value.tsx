@@ -37,11 +37,11 @@ export const BuildValue: React.FC<{ content: [number, { type: string, content: s
 
     const [ inputState, setInputState ] = useState(data); 
 
-    useEffect(() => {
-        if(data.input == true) {
-            input_field.current.children[0].focus();
-        }
-    }, [])
+    // useEffect(() => {
+    //     if(data.input == true) {
+    //         input_field.current.children[0].focus();
+    //     }
+    // }, [])
 
     useEffect(() => {
         // onLeave({ ...inputState });

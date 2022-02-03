@@ -331,7 +331,7 @@
     }
 
     .article section:not(:first-of-type):not(.articleImage) {
-        width: 70%;
+        width: 80%;
     }
 
     .articleTags > div:first-of-type {

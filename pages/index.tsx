@@ -39,7 +39,7 @@ export default function Home({ articles }) {
 				<section className={`${styles.homeSection} ${styles.mainHomeSection}`}>
 					<div>
 						<div>
-							<h2>What if saving one person could save <strong>generations?</strong></h2>
+							<h2>Building <strong>strong</strong> financial skills</h2>
 							<p>Financial Literacy Youth New Zealand</p>
 						</div>
 

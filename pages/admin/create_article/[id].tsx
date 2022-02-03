@@ -250,6 +250,14 @@ export default function Home({ some_data, index }) {
                                     }
                                 });
                             }} />
+
+                            <br />
+
+                            <div>
+                                <h3>Publish Date</h3> <p>{articleData?.publishDate}</p>
+                            </div>
+
+                            <input type="date" style={{ width: 'fit-content' }} defaultValue={articleData?.publishDate}></input>
                         </div>
                     </div>
                     :

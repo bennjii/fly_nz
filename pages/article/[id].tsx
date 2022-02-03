@@ -132,8 +132,6 @@ export default function Home({ article_content }) {
                             })
                         }
                     </ClientContext.Provider>
-
-                    
                 </section>
             </StickyContainer>  
 
