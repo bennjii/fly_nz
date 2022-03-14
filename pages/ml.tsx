@@ -8,12 +8,12 @@ export default function Articles({ some_data }) {
 
   return (
 	<div className={styles.container}>
-	  <Header title={"Articles"} type={"user"}/>
+	  <Header title={"ML"} type={"user"}/>
 	  
 		<div className={styles.mainBody}>
 			<section className={styles.homeSection + " " + styles.articleMainBody}>
-			<h1>Advice</h1>
-			<p>Learn better financing with us, wherever you are</p>          
+			<h1>Financial Modeling</h1>
+			<p>Jyupter Notebook</p>          
 			</section>
 
 		</div>  

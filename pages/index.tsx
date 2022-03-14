@@ -49,7 +49,7 @@ export default function Home({ articles }) {
 							}}></Button> */}
 
 							<div className={styles.tempButton} onClick={() => {
-								Router.push('./')
+								Router.push('./articles')
 							}}>
 								<p>Learn More</p>
 								<ArrowRight strokeWidth={2} size={18} />

@@ -22,16 +22,7 @@ export const Article: React.FC<{ title: string, tags: string[], image: string, d
                 // Small
                 <Link href={`/article/${redirect}`}>
                     <div className={styles.articleSmall}>
-                        {
-                            image ? 
-                            <img src={image} alt=""/>
-                            :
-                            <div className={styles.imagePlaceholder}></div>           
-                        }
-
                         <div>
-                            <h3>{title}</h3>
-                            <p>{desc}</p>
                             {
                                 tags?.map((e, index) => {
                                     return (
@@ -39,6 +30,19 @@ export const Article: React.FC<{ title: string, tags: string[], image: string, d
                                     )
                                 })
                             }
+
+                            {   
+                                image ? 
+                                <img src={image} alt=""/>
+                                :
+                                <div className={styles.imagePlaceholder}></div>           
+                            }
+                        </div>
+                        
+                        <div>
+                            <h3>{title}</h3>
+                            <p>{desc}</p>
+                            
                         </div>
                     </div>
                 </Link>

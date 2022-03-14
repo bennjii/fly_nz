@@ -33,8 +33,8 @@ export const Header: React.FC<{ title: string, type: string }> = ({ title, type 
                     
 
                     <div className={styles.headerLinks}>
-                        <Link href={"/advice"}>
-                            <a>Advice</a>
+                        <Link href={"/ml"}>
+                            <a style={{ backgroundColor: "rgb(237 237 237)", borderRadius: '3px', margin: 0, padding: '0px 4px' }}>ML</a>
                         </Link>
 
                         {/* <a href="/stocks">Stocks</a> */}

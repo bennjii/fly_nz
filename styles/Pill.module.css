@@ -12,7 +12,9 @@
     font-weight: 400;
     box-shadow: #26223110 0px 1px 2px; */
 
-    background-color: #e8ece9;
+    background-color: #ffffff;
+    border: 1px solid #d8dbde;
+
     padding: .4rem 1rem;
     border-radius: 5px;
     width: fit-content;
