@@ -68,7 +68,7 @@ export default function Home({ articles }) {
 					{	
 						data?.map(e => {
 							return (
-								<NoSSRComponent key={`K-${e?.id}`} title={e?.title} tags={[ e?.category ]} image={e?.background_image} desc={e?.description} size={0} />
+								<NoSSRComponent key={`K-${e?.id}`} title={e?.title} type={1} tags={[ e?.category ]} image={e?.background_image} desc={e?.description} size={0} />
 							)
 						})
 					}

@@ -32,19 +32,19 @@ export default function Articles({ some_data }) {
 	  
 		<div className={styles.mainBody}>
 			<section className={styles.homeSection + " " + styles.articleMainBody}>
-			<h1>Articles</h1>
-			<p>Learn better financing with us, wherever you are</p>          
+				<h1>Articles</h1>
+				<p>Learn better financing with us, wherever you are</p>          
 			</section>
 
 			<section className={styles.articlesList}>
-					{	
-						data?.map(e => {
-							return (
-								<NoSSRComponent key={`K-${e?.id}`} title={e?.title} tags={[ e?.category ]} image={e?.background_image} desc={e?.description} size={0} />
-							)
-						})
-					}
-				</section>
+				{	
+					data?.map(e => {
+						return (
+							<NoSSRComponent key={`K-${e?.id}`} type={1} title={e?.title} tags={[ e?.category ]} image={e?.background_image} desc={e?.description} size={0} />
+						)
+					})
+				}
+			</section>
 		</div>  
 
 		<Footer />  

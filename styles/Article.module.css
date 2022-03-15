@@ -410,8 +410,14 @@
 .articleBody {
     color: #222429;
 
+    font-family: "consolas";
+
     display: flex;
     flex-direction: column;
+}
+
+.articleBody * {
+    font-family: "consolas" !important;
 }
 
 .articleBody h1 {

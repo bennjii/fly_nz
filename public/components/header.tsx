@@ -51,7 +51,8 @@ export const Header: React.FC<{ title: string, type: string }> = ({ title, type 
             <div className={styles.header}>
                 <Head>
                     <title>{title}</title>
-                    <link rel="icon" href="/favicon.ico" />
+                    <link rel="icon" href="/icon.png" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 </Head>
 
                 <div>

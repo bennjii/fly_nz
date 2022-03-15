@@ -9,7 +9,7 @@ interface Tag {
     color: Color
 }
 
-export const Article: React.FC<{ title: string, tags: string[], image: string, desc: string, size: 0 | 1 }> = ({ title, tags, image, desc, size }) => {
+export const Article: React.FC<{ title: string, tags: string[], image: string, desc: string, size: 0 | 1, type: 0 | 1 }> = ({ title, tags, image, desc, size, type=1 }) => {
     const router = useRouter();
 
     const [ redirect, setRedirect ] = useState(title ? title.replace(/ /g, "-")?.toLowerCase() : "");
@@ -20,7 +20,7 @@ export const Article: React.FC<{ title: string, tags: string[], image: string, d
             {
                 (size == 0) ?
                 // Small
-                <Link href={`/article/${redirect}`}>
+                <Link href={`/${type == 1 ? 'articles' : 'ml'}/${redirect}`}>
                     <div className={styles.articleSmall}>
                         <div>
                             {
@@ -48,7 +48,7 @@ export const Article: React.FC<{ title: string, tags: string[], image: string, d
                 </Link>
                 :
                 // Large
-                <Link href={`/article/${redirect}`}>
+                <Link href={`/${type == 1 ? 'articles' : 'ml'}/${redirect}`}>
                     <div className={styles.articleLarge}>
                         {
                             image ? 
