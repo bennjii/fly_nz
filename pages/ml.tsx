@@ -13,11 +13,11 @@ export async function getServerSideProps() {
 	return {
 		props: {
 			some_data: await supabase
-						.from('ml')
-						.select('*')
-						.eq('published', true)
-						.limit(25)
-						.then(e => e.data)
+				.from('ml')
+				.select('*')
+				.eq('published', true)
+				.limit(25)
+				.then(e => e.data)
 		}
 	}
 }

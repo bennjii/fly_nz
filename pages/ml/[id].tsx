@@ -38,7 +38,8 @@ export const getServerSideProps: GetServerSideProps = async (
                             author:author_id ( username, iconURL ),
                             published,
                             content,
-                            created_at
+                            created_at,
+                            category
                         `)
                         .ilike('title', `%${ILikeTitle}%`)
                         .then(e => {

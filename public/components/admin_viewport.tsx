@@ -21,9 +21,21 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
             .from('articles')
             .select()
             .eq('author_id', client.auth.user().id)
-            .then(e => {
-                setUsersArticles(e.data);
+            .then(p => {
+                // if(usersArticles) setUsersArticles([ ...usersArticles, ...e.data ]);
+                // else setUsersArticles(e.data);
+
+                client
+                .from('ml')
+                .select()
+                .eq('author_id', client.auth.user().id)
+                .then(e => {
+                    e.data.forEach(e => e.type = "ML")
+                    setUsersArticles([ ...p.data, ...e.data ]);
+                })
             })
+
+        
     }, [])
 
     return (
@@ -57,6 +69,24 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                                     callback();
                                 })
                         }}></Button>
+
+                        <Button title={"Create ML"} onClick={(__e, callback) => {
+                            client
+                                .from('ml')
+                                .insert({
+                                    title: 'New ML Project',
+                                    description: "A New ML Desc",
+                                    published: false,
+                                    content: {},
+                                    author_id: user.id
+                                })
+                                .then(e => {
+                                    console.error(e);
+
+                                    setUsersArticles([ ...usersArticles, e.data[0] ]);
+                                    callback();
+                                })
+                        }}></Button>
                     </div>
                     
 
@@ -69,7 +99,7 @@ const AdminViewport: React.FC<{ client: SupabaseClient, user: User }> = ({ clien
                             :  
                                 usersArticles?.map((e, index) => {
                                     return (
-                                        <div onClick={() => router.push(`/admin/create_article/${e.id}`)} key={`article-${e.id}`}>
+                                        <div onClick={() => router.push(`/admin/${e?.type == "ML" ? 'create_ml' : 'create_article'}/${e.id}`)} key={`article-${e.id}`}>
                                             <div className={styles.tableElement}>
                                                 <h4>
                                                     { e?.title }

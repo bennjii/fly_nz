@@ -569,6 +569,25 @@
     border-radius: 5px;
 }
 
+.dropBox {
+    border: 2px solid #d8dbde;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    justify-content: center;
+    align-items: center;
+
+    padding:  1rem .5rem;
+
+    background-color: #eaeaea;
+}
+
+.dropBox * {
+    margin: 0 !important;
+}
+
 .pageLine {
     display: flex;
     flex-direction: row;
