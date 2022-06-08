@@ -9,7 +9,7 @@ import Footer from '@components/footer'
 import NewElement from '@components/new_element_arc'
 
 import 'katex/dist/katex.min.css';
-import "react-ipynb-renderer/dist/styles/grade3-green.css";
+import "react-ipynb-renderer/dist/styles/grade3.css";
 
 import BuildParent from '@components/build_parent'
 import { ClientContext } from '@components/context'
