@@ -416,7 +416,7 @@
     flex-direction: column;
 }
 
-.articleBody * {
+.MLArticleBody * {
     font-family: "consolas" !important;
 }
 

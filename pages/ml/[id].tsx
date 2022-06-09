@@ -115,7 +115,7 @@ export default function Home({ article_content }) {
                 <section className={articleStyles.articleImage} style={{ backgroundImage: articleData.background_image ? `url(${articleData?.background_image}` : 'linear-gradient(90deg, rgba(170,234,171,1) 0%, rgba(198,215,245,1) 100%)' }}>
                 </section>
 
-                <section className={articleStyles.articleBody} style={{ fontFamily: 'monospace !important' }}>
+                <section className={articleStyles.articleBody + " " + articleStyles.MLArticleBody} style={{ fontFamily: 'monospace !important' }}>
                     <IpynbRenderer
                         ipynb={ipynb}
                         syntaxTheme="ghcolors"
