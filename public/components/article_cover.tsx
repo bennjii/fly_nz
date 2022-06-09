@@ -20,7 +20,7 @@ export const Article: React.FC<{ title: string, tags: string[], image: string, d
             {
                 (size == 0) ?
                 // Small
-                <Link href={`/${type == 1 ? 'articles' : 'ml'}/${redirect}`}>
+                <Link href={`/${type == 1 ? 'article' : 'ml'}/${redirect}`}>
                     <div className={styles.articleSmall}>
                         <div>
                             {
@@ -48,7 +48,7 @@ export const Article: React.FC<{ title: string, tags: string[], image: string, d
                 </Link>
                 :
                 // Large
-                <Link href={`/${type == 1 ? 'articles' : 'ml'}/${redirect}`}>
+                <Link href={`/${type == 1 ? 'article' : 'ml'}/${redirect}`}>
                     <div className={styles.articleLarge}>
                         {
                             image ? 
